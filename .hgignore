@@ -1,3 +1,6 @@
 syntax: glob
 build-*
+curl-7.20.1/
+curl-7.20.1-*.tar.bz2
 autobuild-parabuild-bootstrap/
+stage/

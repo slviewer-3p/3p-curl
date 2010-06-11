@@ -1,5 +1,51 @@
 <?xml version="1.0" ?>
 <llsd>
 <map>
-</map>
+    <key>curl</key>
+    <map>
+      <key>build</key>
+      <map>
+        <key>common</key>
+        <map>
+          <key>command</key>
+          <string>bash ./build-cmd.sh</string>
+        </map>
+      </map>
+      <key>builddir</key>
+      <string>stage</string>
+      <key>license</key>
+      <string>curl</string>
+      <key>licensefile</key>
+      <string>LICENSES/curl.txt</string>
+      <key>manifest</key>
+      <map>
+        <key>common</key>
+        <map>
+          <key>files</key>
+          <array>
+            <string>include/curl/*.h</string>
+            <string>LICENSES/curl.txt</string>
+          </array>
+        </map>
+        <key>windows</key>
+        <map>
+          <key>files</key>
+          <array>
+            <string>lib/debug/libcurld.lib</string>
+            <string>lib/release/libcurl.lib</string>
+          </array>
+        </map>
+      </map>
+      <key>source</key>
+      <string>http://hg.lindenlab.com/brad/curl-autobuild</string>
+      <key>sourcedir</key>
+      <string>curl-7.20.1</string>
+      <key>sourcetype</key>
+      <string>hg</string>
+      <key>uploadtos3</key>
+      <boolean>true</boolean>
+      <key>version</key>
+      <string>7.20.1</string>
+    </map>
+  </map>
 </llsd>
