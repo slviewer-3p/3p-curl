@@ -7,27 +7,19 @@ if [ -z "$AUTOBUILD" ] ; then
     AUTOBUILD="$(which autobuild)"
 fi
 
-# *NOTE: temporary workaround until autobuild is installed on the build farm
 autobuild_installed ()
 {
-    local hardcoded_rev="parabuild-bootstrap"
-    local bootstrap_url="http://pdp47.lindenlab.com/cgi-bin/hgwebdir.cgi/brad/autobuild/archive/$hardcoded_rev.tar.bz2"
-
-    # hg.lindenlab.com is kind of hosed right now.
-    #local hardcoded_rev="c8062b08a710"
-    #local boostrap_url="http://hg.lindenlab.com/brad/autobuild-trunk/get/$hardcoded_rev.bz2"
-
     if [ -z "$AUTOBUILD" ] || [ ! -x "$AUTOBUILD" ] ; then
-        echo "failed to find executable autobuild $AUTOBUILD" >&2
-
-        echo "fetching autobuild rev $hardcoded_rev from $bootstrap_url"
-        curl "$bootstrap_url" | tar -xj
-        AUTOBUILD="$(pwd)/autobuild-$hardcoded_rev/bin/autobuild"
-        if [ ! -x "$AUTOBUILD" ] ; then
-            echo "failed to bootstrap autobuild!"
-            return 1
-        fi
+		if [ -z "$helper" ] ; then
+			helper=.
+		fi
+		for AUTOBUILD in `which autobuild` "$helper/../autobuild/bin/autobuild" ; do
+			if [ -x "$AUTOBUILD" ] ; then
+				break
+			fi
+		done
     fi
+
     echo "located autobuild tool: '$AUTOBUILD'"
 }
 
