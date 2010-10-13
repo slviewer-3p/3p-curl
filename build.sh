@@ -42,8 +42,8 @@ eval "$("$AUTOBUILD" source_environment)"
 
 "$AUTOBUILD" package
 
-CURL_INSTALLABLE_PACKAGE_FILENAME="$(ls -1 curl-$CURL_VERSION-$AUTOBUILD_PLATFORM-$(date +%Y%m%d)*.tar.bz2)"
-"$AUTOBUILD" upload "$CURL_INSTALLABLE_PACKAGE_FILENAME"
+CURL_INSTALLABLE_PACKAGE_FILENAME="$(ls -1 curl-*-$AUTOBUILD_PLATFORM-$(date +%Y%m%d)*.tar.bz2)"
+upload_item installer "$CURL_INSTALLABLE_PACKAGE_FILENAME" binary/octet-stream
 
 CURL_INSTALLABLE_PACKAGE_MD5="$(calc_md5 "$CURL_INSTALLABLE_PACKAGE_FILENAME")"
 echo "{'md5':'$CURL_INSTALLABLE_PACKAGE_MD5', 'url':'http://s3.amazonaws.com/viewer-source-downloads/install_pkgs/$CURL_INSTALLABLE_PACKAGE_FILENAME'}" > "output.json"
