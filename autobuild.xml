@@ -1,7 +1,73 @@
 <?xml version="1.0" ?>
 <llsd>
 <map>
-    <key>curl</key>
+    <key>installables</key>
+    <map>
+      <key>ares</key>
+      <map>
+        <key>archives</key>
+        <map>
+          <key>windows</key>
+          <map>
+            <key>md5sum</key>
+            <string>f46027f63a312a66124aebfb31396ffd</string>
+            <key>url</key>
+            <string>http://s3.amazonaws.com/viewer-source-downloads/install_pkgs/ares-1.7.1-windows-20100610.tar.bz2</string>
+          </map>
+        </map>
+        <key>copyright</key>
+        <string>Copyright 1998 by the Massachusetts Institute of Technology.</string>
+        <key>description</key>
+        <string>Library for performing DNS requests and name resolves asynchronously. Used with libcurl to keep all HTTP operations async.</string>
+        <key>license</key>
+        <string>c-ares</string>
+        <key>licensefile</key>
+        <string>LICENSES/c-ares.txt</string>
+      </map>
+      <key>openssl</key>
+      <map>
+        <key>archives</key>
+        <map>
+          <key>windows</key>
+          <map>
+            <key>md5sum</key>
+            <string>0a84d68067e5ca096882988fc5feda58</string>
+            <key>url</key>
+            <string>http://s3.amazonaws.com/viewer-source-downloads/install_pkgs/openssl-0.9.8j-windows-20100611.tar.bz2</string>
+          </map>
+        </map>
+        <key>copyright</key>
+        <string />
+        <key>description</key>
+        <string />
+        <key>license</key>
+        <string>openssl</string>
+        <key>licensefile</key>
+        <string>LICENSES/openssl.txt</string>
+      </map>
+      <key>zlib</key>
+      <map>
+        <key>archives</key>
+        <map>
+          <key>windows</key>
+          <map>
+            <key>md5sum</key>
+            <string>477e0b0fd3fd981356252e3240764fc7</string>
+            <key>url</key>
+            <string>http://s3.amazonaws.com/viewer-source-downloads/install_pkgs/zlib-1.2.3-windows-20100611.tar.bz2</string>
+          </map>
+        </map>
+        <key>copyright</key>
+        <string>Copyright (C) 1995-2003 Jean-loup Gailly and Mark Adler</string>
+        <key>description</key>
+        <string>A Massively Spiffy Yet Delicately Unobtrusive Compression Library (Also Free - Not to Mention Unencumbered by Patents)</string>
+        <key>license</key>
+        <string>zlib</string>
+        <key>licensefile</key>
+        <string>LICENSES/zlib.txt</string>
+      </map>
+    </map>
+    <key>package_definition</key>
     <map>
       <key>build</key>
       <map>
@@ -9,10 +75,10 @@
         <map>
           <key>command</key>
           <string>bash ./build-cmd.sh</string>
+          <key>directory</key>
+          <string>stage</string>
         </map>
       </map>
-      <key>builddir</key>
-      <string>stage</string>
       <key>license</key>
       <string>curl</string>
       <key>licensefile</key>
@@ -36,6 +102,8 @@
           </array>
         </map>
       </map>
+      <key>name</key>
+      <string>curl</string>
       <key>source</key>
       <string>http://hg.lindenlab.com/brad/curl-autobuild</string>
       <key>sourcedir</key>
