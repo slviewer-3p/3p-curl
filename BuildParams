@@ -1,0 +1,9 @@
+# BuildParams
+#
+# Please refer to:
+#  https://wiki.secondlife.com/wiki/Automated_Build_System
+
+# Use Public Upload Locations
+public_build = true
+
+# eof
