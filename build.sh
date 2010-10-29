@@ -38,7 +38,7 @@ fi
 # load autbuild provided shell functions and variables
 eval "$("$AUTOBUILD" source_environment)"
 
-"$AUTOBUILD" build
+"$AUTOBUILD" build --use-cwd
 
 "$AUTOBUILD" package
 

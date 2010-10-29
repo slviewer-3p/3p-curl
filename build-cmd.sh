@@ -49,7 +49,8 @@ pushd "$CURL_SOURCE_DIR"
             cp -a "include/curl/" "$stage/include/"
         ;;
         "darwin")
-            CFLAGS=-m32 CXXFLAGS=-m32 ./configure --prefix="$stage"
+            opts='-arch i386 -iwithsysroot /Developer/SDKs/MacOSX10.4u.sdk'
+            CFLAGS="$opts" CXXFLAGS="$opts" ./configure --prefix="$stage"
             make
             make install
         ;;
