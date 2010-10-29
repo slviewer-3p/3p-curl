@@ -96,21 +96,11 @@
       <map>
         <key>common</key>
         <map>
-          <key>manifest</key>
-          <array>
-            <string>include/curl/*.h</string>
-            <string>LICENSES/curl.txt</string>
-          </array>
-          <key>name</key>
-          <string>common</string>
-        </map>
-        <key>linux</key>
-        <map>
           <key>build_directory</key>
           <string>stage</string>
           <key>configurations</key>
           <map>
-            <key>RelWithDebInfo</key>
+            <key>default</key>
             <map>
               <key>build</key>
               <map>
@@ -124,14 +114,67 @@
               <key>default</key>
               <boolean>true</boolean>
               <key>name</key>
-              <string>RelWithDebInfo</string>
+              <string>default</string>
             </map>
           </map>
+          <key>manifest</key>
+          <array>
+            <string>include/curl/*.h</string>
+            <string>LICENSES/curl.txt</string>
+          </array>
+          <key>name</key>
+          <string>common</string>
+        </map>
+        <key>darwin</key>
+        <map>
+          <key>configurations</key>
+          <map>
+            <key>default</key>
+            <map>
+              <key>default</key>
+              <boolean>true</boolean>
+              <key>name</key>
+              <string>default</string>
+            </map>
+          </map>
+          <key>manifest</key>
+          <array>
+            <string>lib/libcurl.a</string>
+          </array>
+          <key>name</key>
+          <string>darwin</string>
+        </map>
+        <key>linux</key>
+        <map>
+          <key>configurations</key>
+          <map>
+            <key>default</key>
+            <map>
+              <key>default</key>
+              <boolean>true</boolean>
+              <key>name</key>
+              <string>default</string>
+            </map>
+          </map>
+          <key>manifest</key>
+          <array>
+            <string>lib/libcurl.a</string>
+          </array>
           <key>name</key>
           <string>linux</string>
         </map>
         <key>windows</key>
         <map>
+          <key>configurations</key>
+          <map>
+            <key>default</key>
+            <map>
+              <key>default</key>
+              <boolean>true</boolean>
+              <key>name</key>
+              <string>default</string>
+            </map>
+          </map>
           <key>manifest</key>
           <array>
             <string>lib/debug/libcurld.lib</string>
