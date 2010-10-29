@@ -48,8 +48,13 @@ pushd "$CURL_SOURCE_DIR"
             mkdir -p "$stage/include"
             cp -a "include/curl/" "$stage/include/"
         ;;
-        *)
-            ./configure --prefix="$stage"
+        "darwin")
+            CFLAGS=-m32 CXXFLAGS=-m32 ./configure --prefix="$stage"
+            make
+            make install
+        ;;
+        "linux")
+            CFLAGS=-m32 CXXFLAGS=-m32 ./configure --prefix="$stage"
             make
             make install
         ;;
