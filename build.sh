@@ -38,10 +38,7 @@ fi
 # load autbuild provided shell functions and variables
 eval "$("$AUTOBUILD" source_environment)"
 
-if "$AUTOBUILD_PLATFORM" == "windows" ; then
-  # *TODO - fix this up for other platforms.
-  "$AUTOBUILD" install
-fi
+"$AUTOBUILD" install
 
 "$AUTOBUILD" build --use-cwd
 
