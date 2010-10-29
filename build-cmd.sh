@@ -28,7 +28,7 @@ stage="$(pwd)/stage"
 pushd "$CURL_SOURCE_DIR"
     case "$AUTOBUILD_PLATFORM" in
         "windows")
-            packages="$(cygpath -m "$top/build-vc90/packages")"
+            packages="$(cygpath -m "$top/packages")"
             load_vsvars
 
             patch -p1 < "../000-rename-dbg-zlib.patch"
