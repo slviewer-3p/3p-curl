@@ -31,13 +31,13 @@ pushd "$CURL_SOURCE_DIR"
             packages="$(cygpath -m "$stage/packages")"
             load_vsvars
 
-            patch -p1 < "../000-rename-dbg-zlib.patch"
+            patch -p1 < "../000-rename-dbg-zlib-ares.patch"
             cd lib
             nmake /f Makefile.vc8 CFG=debug-ssl-zlib \
-                INCLUDE="$INCLUDE;$packages/include;$packages/include/openssl" \
+                INCLUDE="$INCLUDE;$packages/include;$packages/include/openssl;$packages/include/ares" \
                 LIB="$LIB;$packages/lib/debug"
             nmake /f Makefile.vc8 CFG=release-ssl-zlib \
-                INCLUDE="$INCLUDE;$packages/include;$packages/include/openssl" \
+                INCLUDE="$INCLUDE;$packages/include;$packages/include/openssl;$packages/include/ares" \
                 LIB="$LIB;$packages/lib/release"
             cd ..
 
