@@ -46,9 +46,9 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>f46027f63a312a66124aebfb31396ffd</string>
+              <string>4b84738eec2e21b0c096d53b79ee2681</string>
               <key>url</key>
-              <string>http://s3.amazonaws.com/viewer-source-downloads/install_pkgs/ares-1.7.1-windows-20100610.tar.bz2</string>
+              <string>http://s3.amazonaws.com/viewer-source-downloads/install_pkgs/ares-1.7.1-windows-20100611a.tar.bz2</string>
             </map>
             <key>name</key>
             <string>windows</string>

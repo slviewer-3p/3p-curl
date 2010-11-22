@@ -34,10 +34,10 @@ pushd "$CURL_SOURCE_DIR"
             patch -p1 < "../000-rename-dbg-zlib-ares.patch"
             cd lib
             nmake /f Makefile.vc8 CFG=debug-ssl-zlib \
-                INCLUDE="$INCLUDE;$packages/include;$packages/include/openssl;$packages/include/ares" \
+                INCLUDE="$INCLUDE;$packages/include;$packages/include/openssl;$packages/libraries/include/ares" \
                 LIB="$LIB;$packages/lib/debug"
             nmake /f Makefile.vc8 CFG=release-ssl-zlib \
-                INCLUDE="$INCLUDE;$packages/include;$packages/include/openssl;$packages/include/ares" \
+                INCLUDE="$INCLUDE;$packages/include;$packages/include/openssl;$packages/libraries/include/ares" \
                 LIB="$LIB;$packages/lib/release"
             cd ..
 
