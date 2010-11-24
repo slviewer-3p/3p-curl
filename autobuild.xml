@@ -189,7 +189,7 @@
           </map>
           <key>manifest</key>
           <array>
-            <string>include/curl/*.h</string>
+            <string>libraries/include/curl/*.h</string>
             <string>LICENSES/curl.txt</string>
           </array>
           <key>name</key>
@@ -211,7 +211,7 @@
           </map>
           <key>manifest</key>
           <array>
-            <string>lib/libcurl.a</string>
+            <string>libraries/universal-darwin/lib_release/libcurl.a</string>
           </array>
           <key>name</key>
           <string>darwin</string>
@@ -232,7 +232,7 @@
           </map>
           <key>manifest</key>
           <array>
-            <string>lib/libcurl.a</string>
+            <string>libraries/i686-linux/lib_release_client/libcurl.a</string>
           </array>
           <key>name</key>
           <string>linux</string>
@@ -253,8 +253,8 @@
           </map>
           <key>manifest</key>
           <array>
-            <string>lib/debug/libcurld.lib</string>
-            <string>lib/release/libcurl.lib</string>
+            <string>libraries/i686-win32/lib/debug/libcurld.lib</string>
+            <string>libraries/i686-win32/lib/release/libcurl.lib</string>
           </array>
           <key>name</key>
           <string>windows</string>
