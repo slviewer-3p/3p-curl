@@ -81,21 +81,28 @@ popd
 
 # *TODO - add a way to enable/disable this via BuildParams or something
 if true ; then
-    mkdir -p "$stage/$legacy_lib_base"
+	rm -rf "$stage/$legacy_lib_base"
+    mkdir -p "$stage/$legacy_lib_debug"
+    mkdir -p "$stage/$legacy_lib_release"
 
-    mv "$stage/include" "$stage/$legacy_include"
+	if [ -d "$stage/$legacy_include" ]; then
+		rm -rf "$stage/$legacy_include"
+	fi
+    mv -T "$stage/include" "$stage/$legacy_include"
 
     if [ -d "$stage/lib/debug" ] ; then
-        mv "$stage/lib/debug" "$stage/$legacy_lib_debug"
+        mv -T "$stage/lib/debug" "$stage/$legacy_lib_debug"
     fi
 
     if [ -d "$stage/lib/release" ] ; then
-        mv "$stage/lib/release" "$stage/$legacy_lib_release"
+        mv -T "$stage/lib/release" "$stage/$legacy_lib_release"
     else
         mkdir -p "$stage/$legacy_lib_release"
     fi
 
-    mv "$stage/lib/"* "$stage/$legacy_lib_release"
+	if [ "$(ls -A $stage/lib)" ]; then
+		mv "$stage/lib/"* "$stage/$legacy_lib_release"
+	fi
 fi
 
 pass
