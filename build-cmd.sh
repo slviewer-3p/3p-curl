@@ -49,7 +49,7 @@ pushd "$CURL_SOURCE_DIR"
             cp -a "include/curl/" "$stage/include/"
 
             legacy_include="libraries/include"
-            legacy_lib_base="libraries/i686-win32"
+            legacy_lib_base="libraries/i686-win32/lib"
             legacy_lib_debug="libraries/i686-win32/lib/debug"
             legacy_lib_release="libraries/i686-win32/lib/release"
         ;;
@@ -81,21 +81,16 @@ popd
 
 # *TODO - add a way to enable/disable this via BuildParams or something
 if true ; then
-	rm -rf "$stage/$legacy_lib_base"
-    mkdir -p "$stage/$legacy_lib_debug"
-    mkdir -p "$stage/$legacy_lib_release"
+    mkdir -p "$stage/$legacy_lib_base"
 
-	if [ -d "$stage/$legacy_include" ]; then
-		rm -rf "$stage/$legacy_include"
-	fi
-    mv -T "$stage/include" "$stage/$legacy_include"
+    mv "$stage/include" "$stage/$legacy_include"
 
     if [ -d "$stage/lib/debug" ] ; then
-        mv -T "$stage/lib/debug" "$stage/$legacy_lib_debug"
+        mv "$stage/lib/debug" "$stage/$legacy_lib_debug"
     fi
 
     if [ -d "$stage/lib/release" ] ; then
-        mv -T "$stage/lib/release" "$stage/$legacy_lib_release"
+        mv "$stage/lib/release" "$stage/$legacy_lib_release"
     else
         mkdir -p "$stage/$legacy_lib_release"
     fi
