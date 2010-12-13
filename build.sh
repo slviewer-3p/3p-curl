@@ -44,11 +44,18 @@ eval "$("$AUTOBUILD" source_environment)"
 
 "$AUTOBUILD" package
 
-CURL_INSTALLABLE_PACKAGE_FILENAME="$(ls -1 curl-*-$AUTOBUILD_PLATFORM-$(date +%Y%m%d)*.tar.bz2)"
-upload_item installer "$CURL_INSTALLABLE_PACKAGE_FILENAME" binary/octet-stream
+PACKAGE_FILENAME="$(ls -1 ${PACKAGE_NAME}-*-$AUTOBUILD_PLATFORM-$(date +%Y%m%d)*.tar.bz2)"
 
-CURL_INSTALLABLE_PACKAGE_MD5="$(calc_md5 "$CURL_INSTALLABLE_PACKAGE_FILENAME")"
-echo "{'md5':'$CURL_INSTALLABLE_PACKAGE_MD5', 'url':'http://s3.amazonaws.com/viewer-source-downloads/install_pkgs/$CURL_INSTALLABLE_PACKAGE_FILENAME'}" > "output.json"
+if "$build_legacy_package" ; then
+    # repackage_legacy is defined in the branch independent BuildParams defaults
+    "$repackage_legacy" "$PACKAGE_FILENAME"
+fi
+
+upload_item installer "$PACKAGE_FILENAME" binary/octet-stream
+
+PACKAGE_MD5="$(calc_md5 "$PACKAGE_FILENAME")"
+PACKAGE_DST="$S3PUT_URL""$S3PREFIX""repo/$repo/rev/$revision/arch/$arch/installer/$(basename "$PACKAGE_FILENAME")"
+echo "{'md5':'$PACKAGE_MD5', 'url':'$PACKAGE_DST'}" > "output.js"
 
 upload_item installer "output.json" text/plain
 
