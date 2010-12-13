@@ -55,7 +55,7 @@ upload_item installer "$PACKAGE_FILENAME" binary/octet-stream
 
 PACKAGE_MD5="$(calc_md5 "$PACKAGE_FILENAME")"
 PACKAGE_DST="$S3PUT_URL""$S3PREFIX""repo/$repo/rev/$revision/arch/$arch/installer/$(basename "$PACKAGE_FILENAME")"
-echo "{'md5':'$PACKAGE_MD5', 'url':'$PACKAGE_DST'}" > "output.js"
+echo "{'md5':'$PACKAGE_MD5', 'url':'$PACKAGE_DST'}" > "output.json"
 
 upload_item installer "output.json" text/plain
 
