@@ -47,11 +47,6 @@ pushd "$CURL_SOURCE_DIR"
 
             mkdir -p "$stage/include"
             cp -a "include/curl/" "$stage/include/"
-
-            legacy_include="libraries/include"
-            legacy_lib_base="libraries/i686-win32/lib"
-            legacy_lib_debug="libraries/i686-win32/lib/debug"
-            legacy_lib_release="libraries/i686-win32/lib/release"
         ;;
         "darwin")
             # TODO: this produces a package that actually will create link errors when building the viewer. Notes:
@@ -62,48 +57,17 @@ pushd "$CURL_SOURCE_DIR"
             CFLAGS="$opts" CXXFLAGS="$opts" ./configure  --disable-ldap --disable-ldaps --with-ssl --prefix="$stage"
             make
             make install
-
-            legacy_include="libraries/include"
-            legacy_lib_base="libraries/universal-darwin"
-            legacy_lib_debug="libraries/universal-darwin/lib_debug"
-            legacy_lib_release="libraries/universal-darwin/lib_release"
         ;;
         "linux")
             # TODO: see darwin notes here above
             CFLAGS=-m32 CXXFLAGS=-m32 ./configure --disable-ldap --disable-ldaps --with-ssl --prefix="$stage"
             make
             make install
-
-            legacy_include="libraries/include"
-            legacy_lib_base="libraries/i686-linux"
-            legacy_lib_debug="libraries/i686-linux/lib_debug"
-            legacy_lib_release="libraries/i686-linux/lib_release_client"
         ;;
     esac
     mkdir -p "$stage/LICENSES"
     cp COPYING "$stage/LICENSES/curl.txt"
 popd
-
-# *TODO - add a way to enable/disable this via BuildParams or something
-if true ; then
-    mkdir -p "$stage/$legacy_lib_base"
-
-    mv "$stage/include" "$stage/$legacy_include"
-
-    if [ -d "$stage/lib/debug" ] ; then
-        mv "$stage/lib/debug" "$stage/$legacy_lib_debug"
-    fi
-
-    if [ -d "$stage/lib/release" ] ; then
-        mv "$stage/lib/release" "$stage/$legacy_lib_release"
-    else
-        mkdir -p "$stage/$legacy_lib_release"
-    fi
-
-	if [ "$(ls -A $stage/lib)" ]; then
-		mv "$stage/lib/"* "$stage/$legacy_lib_release"
-	fi
-fi
 
 pass
 
