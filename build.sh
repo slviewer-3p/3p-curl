@@ -50,7 +50,7 @@ INSTALLABLE_PACKAGE_FILENAME="$(ls -1 ${PACKAGE_NAME}-*-$AUTOBUILD_PLATFORM-$(da
 
 if "$build_legacy_package" ; then
     # repackage_legacy is defined in the branch independent BuildParams defaults
-    "$repackage_legacy" "$INSTALLABLE_PACKAGE_FILENAME"
+    eval "python \"$repackage_legacy\" '$INSTALLABLE_PAKCAGE_FILENAME'"
 fi
 
 upload_item installer "$INSTALLABLE_PACKAGE_FILENAME" binary/octet-stream
