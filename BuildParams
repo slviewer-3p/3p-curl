@@ -6,9 +6,9 @@
 # Use Public Upload Locations
 public_build = true
 
-# work in progress flag for configuring whether the package layout is for legacy indra builds or autobuild builds.
+# Set to true to package files in legacy build layout.
 # see https://wiki.lindenlab.com/wiki/Autobuild/Package_Layout
-curl-autobuild.build_legacy_package = true
+curl-autobuild.build_legacy_package = false
 
 curl-autobuild.PACKAGE_NAME = curl
 

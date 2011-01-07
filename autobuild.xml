@@ -168,6 +168,8 @@
       <map>
         <key>common</key>
         <map>
+          <key>build_directory</key>
+          <string>stage</string>
           <key>configurations</key>
           <map>
             <key>default</key>
@@ -176,7 +178,7 @@
               <map>
                 <key>arguments</key>
                 <array>
-                  <string>./build-cmd.sh</string>
+                  <string>../build-cmd.sh</string>
                 </array>
                 <key>command</key>
                 <string>bash</string>
@@ -197,8 +199,6 @@
         </map>
         <key>darwin</key>
         <map>
-          <key>build_directory</key>
-          <string>stage</string>
           <key>configurations</key>
           <map>
             <key>default</key>
@@ -211,15 +211,13 @@
           </map>
           <key>manifest</key>
           <array>
-            <string>libraries/universal-darwin/lib_release/libcurl.a</string>
+            <string>lib/libcurl.a</string>
           </array>
           <key>name</key>
           <string>darwin</string>
         </map>
         <key>linux</key>
         <map>
-          <key>build_directory</key>
-          <string>stage</string>
           <key>configurations</key>
           <map>
             <key>default</key>
@@ -232,15 +230,13 @@
           </map>
           <key>manifest</key>
           <array>
-            <string>libraries/i686-linux/lib_release_client/libcurl.a</string>
+            <string>lib/libcurl.a</string>
           </array>
           <key>name</key>
           <string>linux</string>
         </map>
         <key>windows</key>
         <map>
-          <key>build_directory</key>
-          <string>stage</string>
           <key>configurations</key>
           <map>
             <key>default</key>
@@ -253,8 +249,8 @@
           </map>
           <key>manifest</key>
           <array>
-            <string>libraries/i686-win32/lib/debug/libcurld.lib</string>
-            <string>libraries/i686-win32/lib/release/libcurl.lib</string>
+            <string>lib/debug/libcurld.lib</string>
+            <string>lib/release/libcurl.lib</string>
           </array>
           <key>name</key>
           <string>windows</string>
