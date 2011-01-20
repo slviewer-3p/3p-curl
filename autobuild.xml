@@ -191,8 +191,8 @@
           </map>
           <key>manifest</key>
           <array>
-            <string>libraries/include/curl/*.h</string>
             <string>LICENSES/curl.txt</string>
+            <string>include/curl/*.h</string>
           </array>
           <key>name</key>
           <string>common</string>
