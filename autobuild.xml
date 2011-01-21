@@ -211,7 +211,7 @@
           </map>
           <key>manifest</key>
           <array>
-            <string>lib/libcurl.a</string>
+            <string>lib/release/libcurl.a</string>
           </array>
           <key>name</key>
           <string>darwin</string>
@@ -230,7 +230,7 @@
           </map>
           <key>manifest</key>
           <array>
-            <string>lib/libcurl.a</string>
+            <string>lib/release/libcurl.a</string>
           </array>
           <key>name</key>
           <string>linux</string>

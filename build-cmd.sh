@@ -59,12 +59,16 @@ pushd "$CURL_SOURCE_DIR"
             CFLAGS="$opts" CXXFLAGS="$opts" ./configure  --disable-ldap --disable-ldaps --with-ssl --prefix="$stage"
             make
             make install
+            mkdir -p "$stage/lib/release"
+            cp "$stage/lib/libcurl.a" "$stage/lib/release"
         ;;
         "linux")
             # TODO: see darwin notes here above
             CFLAGS=-m32 CXXFLAGS=-m32 ./configure --disable-ldap --disable-ldaps --with-ssl --prefix="$stage"
             make
             make install
+            mkdir -p "$stage/lib/release"
+            cp "$stage/lib/libcurl.a" "$stage/lib/release"
         ;;
     esac
     mkdir -p "$stage/LICENSES"
