@@ -17,12 +17,9 @@ fi
 
 CURL_VERSION=7.21.1
 CURL_SOURCE_DIR="curl-$CURL_VERSION"
-CURL_ARCHIVE="curl-$CURL_VERSION.tar.gz"
 
 # load autbuild provided shell functions and variables
 eval "$("$AUTOBUILD" source_environment)"
-
-extract "$CURL_ARCHIVE"
 
 top="$(pwd)"
 stage="$(pwd)/stage"
