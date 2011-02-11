@@ -525,10 +525,10 @@
  */
 
 /* Define USE_ARES to enable c-ares asynchronous DNS lookups */
-/* #define USE_ARES 1 */
+#define USE_ARES 1
 
 /* Define USE_THREADS_WIN32 to enable threaded asynchronous DNS lookups */
-#define USE_THREADS_WIN32 1
+/* #define USE_THREADS_WIN32 1 */
 
 #if defined(USE_ARES) && defined(USE_THREADS_WIN32)
 #  error "Only one DNS lookup specialty may be defined at most"

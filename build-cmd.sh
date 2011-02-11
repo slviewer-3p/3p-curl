@@ -30,15 +30,14 @@ pushd "$CURL_SOURCE_DIR"
             packages="$(cygpath -m "$stage/packages")"
             load_vsvars
 
-            patch -p1 < "../000-rename-dbg-zlib-ares.patch"
-            cd lib
-            nmake /f Makefile.vc8 CFG=debug-ssl-zlib \
-                INCLUDE="$INCLUDE;$packages/include;$packages/include/openssl;$packages/libraries/include/ares" \
+            pushd lib
+            nmake /f Makefile.vc10 CFG=debug-ssl-zlib \
+                INCLUDE="$INCLUDE;$packages/include;$packages/include/zlib;$packages/include/openssl;$packages/include/ares" \
                 LIB="$LIB;$packages/lib/debug"
-            nmake /f Makefile.vc8 CFG=release-ssl-zlib \
-                INCLUDE="$INCLUDE;$packages/include;$packages/include/openssl;$packages/libraries/include/ares" \
+            nmake /f Makefile.vc10 CFG=release-ssl-zlib \
+                INCLUDE="$INCLUDE;$packages/include;$packages/include/zlib;$packages/include/openssl;$packages/include/ares" \
                 LIB="$LIB;$packages/lib/release"
-            cd ..
+            popd
 
             mkdir -p "$stage/lib"/{debug,release}
             cp "lib/debug-ssl-zlib/libcurld.lib" "$stage/lib/debug/libcurld.lib"
