@@ -47,10 +47,6 @@ pushd "$CURL_SOURCE_DIR"
             cp -a "include/curl/" "$stage/include/"
         ;;
         "darwin")
-            # TODO: this produces a package that actually will create link errors when building the viewer. Notes:
-            # - Try to compile and link against our own OpenSSL (right now though, openssl-autobuild does not build for Mac)
-            # - May be same thing for zlib
-            # - Disabling ldap suppresses half of the link errors so that's something to keep
             opts='-arch i386 -iwithsysroot /Developer/SDKs/MacOSX10.4u.sdk'
             CFLAGS="$opts" CXXFLAGS="$opts" ./configure  --disable-ldap --disable-ldaps --with-ssl --prefix="$stage"
             make
@@ -59,7 +55,6 @@ pushd "$CURL_SOURCE_DIR"
             cp "$stage/lib/libcurl.a" "$stage/lib/release"
         ;;
         "linux")
-            # TODO: see darwin notes here above
             CFLAGS=-m32 CXXFLAGS=-m32 ./configure --disable-ldap --disable-ldaps --with-ssl --prefix="$stage"
             make
             make install
