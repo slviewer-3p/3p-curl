@@ -47,8 +47,12 @@ pushd "$CURL_SOURCE_DIR"
             cp -a "include/curl/" "$stage/include/"
         ;;
         "darwin")
-            opts='-arch i386 -iwithsysroot /Developer/SDKs/MacOSX10.4u.sdk'
-            CFLAGS="$opts" CXXFLAGS="$opts" ./configure  --disable-ldap --disable-ldaps --with-ssl --prefix="$stage"
+            cp -R "$stage/packages/lib/release/" "$stage/packages/lib/"
+            cp -R "$stage/packages/include/ares/" "$stage/packages/include/"
+            opts='-arch i386 -iwithsysroot /Developer/SDKs/MacOSX10.5.sdk'
+            CFLAGS="$opts" CXXFLAGS="$opts" ./configure  --disable-ldap --disable-ldaps  \
+                --prefix="$stage" --enable-ares="$stage/packages" --with-ssl="$stage/packages" \
+                --with-zlib="$stage/packages"
             make
             make install
             mkdir -p "$stage/lib/release"
