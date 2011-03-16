@@ -22,9 +22,9 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>577e89e72a6df485ee0c42ef7bfd8c34</string>
+              <string>086b8a43d8c6a9355f3abc33ce854a68</string>
               <key>url</key>
-              <string>http://s3.amazonaws.com/viewer-source-downloads/install_pkgs/ares-1.7.1-darwin-20101004.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/3p-ares/rev/223293/arch/Darwin/installer/ares-1.7.1-darwin-20110309.tar.bz2</string>
             </map>
             <key>name</key>
             <string>darwin</string>
@@ -70,9 +70,9 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>1cadf86fe77cf8b12bd5a8ea202e15a4</string>
+              <string>64544512ed2e9fc48e1fda0b490daa74</string>
               <key>url</key>
-              <string>http://s3.amazonaws.com/viewer-source-downloads/install_pkgs/openssl-0.9.8j-darwin-20101027.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/3p-openssl/rev/223711/arch/Darwin/installer/openssl-0.9.8q-darwin-20110314.tar.bz2</string>
             </map>
             <key>name</key>
             <string>darwin</string>
@@ -122,9 +122,9 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>1a79307828cfe36a0912c4ce43c08640</string>
+              <string>c68b839b5f5b19f3322299b97b7c0871</string>
               <key>url</key>
-              <string>http://s3.amazonaws.com/viewer-source-downloads/install_pkgs/zlib-1.2.3-darwin-20100423.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/3p-zlib/rev/223739/arch/Darwin/installer/zlib-1.2.5-darwin-20110314.tar.bz2</string>
             </map>
             <key>name</key>
             <string>darwin</string>

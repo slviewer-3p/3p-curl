@@ -47,7 +47,6 @@ pushd "$CURL_SOURCE_DIR"
             cp -a "include/curl/" "$stage/include/"
         ;;
         "darwin")
-            cp -R "$stage/packages/lib/release/" "$stage/packages/lib/"
             cp -R "$stage/packages/include"/{ares,zlib}/*.h "$stage/packages/include/"
             opts='-arch i386 -iwithsysroot /Developer/SDKs/MacOSX10.5.sdk'
             CFLAGS="$opts" CXXFLAGS="$opts" ./configure  --disable-ldap --disable-ldaps  \
