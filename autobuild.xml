@@ -34,9 +34,9 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>3bf8f0f3c960cc594b2315b986b948fb</string>
+              <string>858818570f73fa1c0de3b7668d52d909</string>
               <key>url</key>
-              <string>http://s3.amazonaws.com/viewer-source-downloads/install_pkgs/ares-1.7.1-linux-20100929.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/3p-ares/rev/223290/arch/Linux/installer/ares-1.7.1-linux-20110310.tar.bz2</string>
             </map>
             <key>name</key>
             <string>linux</string>
@@ -82,9 +82,9 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>8045937b7769cca70795db41a990cc78</string>
+              <string>cc159598ef3fcd34fd33a8a0ef846165</string>
               <key>url</key>
-              <string>http://s3.amazonaws.com/viewer-source-downloads/install_pkgs/openssl-0.9.8j-linux-20101027.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/3p-openssl/rev/223711/arch/Linux/installer/openssl-0.9.8q-linux-20110314.tar.bz2</string>
             </map>
             <key>name</key>
             <string>linux</string>
@@ -134,9 +134,9 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>0faaca2e59a44e5b4f27955a8bb2c1da</string>
+              <string>7b4cf3aa2c04937d0a20761516587896</string>
               <key>url</key>
-              <string>http://s3.amazonaws.com/viewer-source-downloads/install_pkgs/zlib-1.2.3-linux-20100525.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/3p-zlib/rev/223739/arch/Linux/installer/zlib-1.2.5-linux-20110314.tar.bz2</string>
             </map>
             <key>name</key>
             <string>linux</string>

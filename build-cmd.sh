@@ -59,7 +59,11 @@ pushd "$CURL_SOURCE_DIR"
             cp "$stage/lib/libcurl.a" "$stage/lib/release"
         ;;
         "linux")
-            CFLAGS=-m32 CXXFLAGS=-m32 ./configure --disable-ldap --disable-ldaps --with-ssl --prefix="$stage"
+            cp -a "$stage/packages/lib/release/libcares.a" "$stage/packages/lib"
+            cp -a "$stage/packages/include/ares"/{ares.h,ares_build.h,ares_dns.h,ares_rules.h,ares_version.h} "$stage/packages/include"
+            CFLAGS=-m32 CXXFLAGS=-m32 ./configure --disable-ldap --disable-ldaps --prefix="$stage" \
+                --prefix="$stage" --enable-ares="$stage/packages" --with-ssl \
+                --with-zlib="$stage/packages"
             make
             make install
             mkdir -p "$stage/lib/release"
