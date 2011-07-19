@@ -22,9 +22,9 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>086b8a43d8c6a9355f3abc33ce854a68</string>
+              <string>6299f1fd01147820e05195b84a3fe1d7</string>
               <key>url</key>
-              <string>http://s3.amazonaws.com/viewer-source-downloads/install_pkgs/ares-1.7.1-darwin-20110309.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/3p-ares/rev/233053/arch/Darwin/installer/ares-1.7.4-darwin-20110616.tar.bz2</string>
             </map>
             <key>name</key>
             <string>darwin</string>
@@ -34,9 +34,9 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>858818570f73fa1c0de3b7668d52d909</string>
+              <string>b62efd5a68e5dd38314f60a20e651d43</string>
               <key>url</key>
-              <string>http://s3.amazonaws.com/viewer-source-downloads/install_pkgs/ares-1.7.1-linux-20110310.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/3p-ares/rev/233053/arch/Linux/installer/ares-1.7.4-linux-20110616.tar.bz2</string>
             </map>
             <key>name</key>
             <string>linux</string>
@@ -46,9 +46,9 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>1dcec6babd249a2597114d4ac226c461</string>
+              <string>c2f4ea23619f3d453e799d6e89ff6930</string>
               <key>url</key>
-              <string>http://s3.amazonaws.com/viewer-source-downloads/install_pkgs/ares-1.7.1-windows-20110211.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/3p-ares/rev/233053/arch/CYGWIN/installer/ares-1.7.4-windows-20110616.tar.bz2</string>
             </map>
             <key>name</key>
             <string>windows</string>
@@ -70,9 +70,9 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>64544512ed2e9fc48e1fda0b490daa74</string>
+              <string>1aecd89fee54741f2c4fd65c082d2604</string>
               <key>url</key>
-              <string>http://s3.amazonaws.com/viewer-source-downloads/install_pkgs/openssl-0.9.8q-darwin-20110314.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/3p-openssl/rev/227862/arch/Darwin/installer/openssl-1.0.0d-darwin-20110427.tar.bz2</string>
             </map>
             <key>name</key>
             <string>darwin</string>
@@ -82,9 +82,9 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>cc159598ef3fcd34fd33a8a0ef846165</string>
+              <string>eab3a49d1ef77a651a3896d1d4864a78</string>
               <key>url</key>
-              <string>http://s3.amazonaws.com/viewer-source-downloads/install_pkgs/openssl-0.9.8q-linux-20110314.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/3p-openssl/rev/227862/arch/Linux/installer/openssl-1.0.0d-linux-20110427.tar.bz2</string>
             </map>
             <key>name</key>
             <string>linux</string>
@@ -94,9 +94,9 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>774c7f0a0312bee3054757a623e227bc</string>
+              <string>8ba049ecc76bb1adf3ab3e5bad64c39e</string>
               <key>url</key>
-              <string>http://s3.amazonaws.com/viewer-source-downloads/install_pkgs/openssl-0.9.8q-windows-20110211.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/3p-openssl/rev/227862/arch/CYGWIN/installer/openssl-1.0.0d-windows-20110427.tar.bz2</string>
             </map>
             <key>name</key>
             <string>windows</string>
