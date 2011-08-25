@@ -259,11 +259,11 @@
       <key>source</key>
       <string>http://hg.lindenlab.com/brad/curl-autobuild</string>
       <key>source_directory</key>
-      <string>curl-7.21.1</string>
+      <string>curl-7.21.7</string>
       <key>source_type</key>
       <string>hg</string>
       <key>version</key>
-      <string>7.21.1</string>
+      <string>7.21.7</string>
     </map>
     <key>type</key>
     <string>autobuild</string>
