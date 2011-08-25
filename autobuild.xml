@@ -22,9 +22,9 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>6299f1fd01147820e05195b84a3fe1d7</string>
+              <string>4dd93da518dc00319cadac43dce2676b</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/3p-ares/rev/233053/arch/Darwin/installer/ares-1.7.4-darwin-20110616.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/3p-ares/rev/239515/arch/Darwin/installer/ares-1.7.5-darwin-20110825.tar.bz2</string>
             </map>
             <key>name</key>
             <string>darwin</string>
@@ -34,9 +34,9 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>b62efd5a68e5dd38314f60a20e651d43</string>
+              <string>c223c0df8ebdab02a5bd785c21459875</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/3p-ares/rev/233053/arch/Linux/installer/ares-1.7.4-linux-20110616.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/3p-ares/rev/239515/arch/Linux/installer/ares-1.7.5-linux-20110825.tar.bz2</string>
             </map>
             <key>name</key>
             <string>linux</string>
@@ -46,9 +46,9 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>c2f4ea23619f3d453e799d6e89ff6930</string>
+              <string>a0a002359e44a9c68f897b45217abf7e</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/3p-ares/rev/233053/arch/CYGWIN/installer/ares-1.7.4-windows-20110616.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/3p-ares/rev/239515/arch/CYGWIN/installer/ares-1.7.5-windows-20110825.tar.bz2</string>
             </map>
             <key>name</key>
             <string>windows</string>
@@ -70,9 +70,9 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>1aecd89fee54741f2c4fd65c082d2604</string>
+              <string>c418c3823cb3dd6715c3800fef6db112</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/3p-openssl/rev/227862/arch/Darwin/installer/openssl-1.0.0d-darwin-20110427.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/3p-openssl/rev/239531/arch/Darwin/installer/openssl-1.0.0d-darwin-20110825.tar.bz2</string>
             </map>
             <key>name</key>
             <string>darwin</string>
@@ -82,9 +82,9 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>eab3a49d1ef77a651a3896d1d4864a78</string>
+              <string>ee2b2833f8abe753f9471b1610566155</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/3p-openssl/rev/227862/arch/Linux/installer/openssl-1.0.0d-linux-20110427.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/3p-openssl/rev/239531/arch/Linux/installer/openssl-1.0.0d-linux-20110825.tar.bz2</string>
             </map>
             <key>name</key>
             <string>linux</string>
@@ -94,9 +94,9 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>8ba049ecc76bb1adf3ab3e5bad64c39e</string>
+              <string>352e516b1aa5df8f4857cbdbd4f2c293</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/3p-openssl/rev/227862/arch/CYGWIN/installer/openssl-1.0.0d-windows-20110427.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/3p-openssl/rev/239531/arch/CYGWIN/installer/openssl-1.0.0d-windows-20110825.tar.bz2</string>
             </map>
             <key>name</key>
             <string>windows</string>
