@@ -32,11 +32,17 @@ pushd "$CURL_SOURCE_DIR"
 
             pushd lib
             nmake /f Makefile.vc10 CFG=debug-ssl-zlib \
+                OPENSSL_PATH="$packages/include/openssl" \
+                ZLIB_PATH="$packages/include/zlib" ZLIB_NAME="zlibd.lib" \
                 INCLUDE="$INCLUDE;$packages/include;$packages/include/zlib;$packages/include/openssl;$packages/include/ares" \
-                LIB="$LIB;$packages/lib/debug"
+                LIB="$LIB;$packages/lib/debug" \
+                LINDEN_LIBPATH="$packages/lib/debug"
             nmake /f Makefile.vc10 CFG=release-ssl-zlib \
+                OPENSSL_PATH="$packages/include/openssl" \
+                ZLIB_PATH="$packages/include/zlib" ZLIB_NAME="zlib.lib" \
                 INCLUDE="$INCLUDE;$packages/include;$packages/include/zlib;$packages/include/openssl;$packages/include/ares" \
-                LIB="$LIB;$packages/lib/release"
+                LIB="$LIB;$packages/lib/release" \
+                LINDEN_LIBPATH="$packages/lib/release" 
             popd
 
             mkdir -p "$stage/lib"/{debug,release}
