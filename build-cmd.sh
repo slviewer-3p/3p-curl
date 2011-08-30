@@ -64,6 +64,12 @@ pushd "$CURL_SOURCE_DIR"
             cp "$stage/lib/libcurl.a" "$stage/lib/release"
         ;;
         "linux")
+            # This moves libraries like libssl.so.1.0.0 and libcrypto.so.1.0.0 into the stage/lib dir to help with the build
+            # but not realy sure why this is required.  It seems to be related to a mysterious path referenced by libtool.
+            mkdir -p "$stage/lib"
+            cp -a "$stage/packages/lib/release"/lib*.so* "$stage/lib"
+
+            # Do the actual build
             cp -a "$stage/packages/lib/release"/{*.a,*.so*} "$stage/packages/lib"
             cp -a "$stage/packages/include/"{ares,zlib}/*.h "$stage/packages/include"
             CFLAGS=-m32 CXXFLAGS=-m32 ./configure --disable-ldap --disable-ldaps --prefix="$stage" \
@@ -73,6 +79,14 @@ pushd "$CURL_SOURCE_DIR"
             make install
             mkdir -p "$stage/lib/release"
             cp "$stage/lib/libcurl.a" "$stage/lib/release"
+
+            # Since we moved some extra stuff to the stage/lib, move curl out, remove everything, then put curl back
+            # again not really sure why this whole regamarole is required but this at least cleans it up afterwards.
+            mkdir -p "$stage/tmp"
+            cp -a "$stage/lib"/libcurl*.so* "$stage/tmp"
+            rm -rf "$stage/lib"/lib*.so*
+            cp -a "$stage/tmp"/libcurl*.so* "$stage/lib"
+            rm -rf "$stage/tmp"
         ;;
     esac
     mkdir -p "$stage/LICENSES"
