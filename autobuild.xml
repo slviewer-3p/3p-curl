@@ -70,9 +70,9 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>c418c3823cb3dd6715c3800fef6db112</string>
+              <string>a2bf903acd3ad160bf62ea0096a47427</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/3p-openssl/rev/239531/arch/Darwin/installer/openssl-1.0.0d-darwin-20110825.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/3p-openssl/rev/248939/arch/Darwin/installer/openssl-1.0.0g-darwin-20120206.tar.bz2</string>
             </map>
             <key>name</key>
             <string>darwin</string>
@@ -82,9 +82,9 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>ee2b2833f8abe753f9471b1610566155</string>
+              <string>672ece040cc4357a477a678d19cc2bd3</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/3p-openssl/rev/239531/arch/Linux/installer/openssl-1.0.0d-linux-20110825.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/3p-openssl/rev/248939/arch/Linux/installer/openssl-1.0.0g-linux-20120206.tar.bz2</string>
             </map>
             <key>name</key>
             <string>linux</string>
@@ -94,9 +94,9 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>352e516b1aa5df8f4857cbdbd4f2c293</string>
+              <string>0459c8d64c0963f5f2fa947f03325fe9</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/3p-openssl/rev/239531/arch/CYGWIN/installer/openssl-1.0.0d-windows-20110825.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/3p-openssl/rev/248939/arch/CYGWIN/installer/openssl-1.0.0g-windows-20120206.tar.bz2</string>
             </map>
             <key>name</key>
             <string>windows</string>
@@ -122,9 +122,9 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>c68b839b5f5b19f3322299b97b7c0871</string>
+              <string>f63ec7d22899bf2a357657be02b76dfe</string>
               <key>url</key>
-              <string>http://s3.amazonaws.com/viewer-source-downloads/install_pkgs/zlib-1.2.5-darwin-20110314.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/3p-zlib/rev/248951/arch/Darwin/installer/zlib-1.2.6-darwin-20120206.tar.bz2</string>
             </map>
             <key>name</key>
             <string>darwin</string>
@@ -134,9 +134,9 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>7b4cf3aa2c04937d0a20761516587896</string>
+              <string>c77c0320ac78b2c794f650fc727f38ef</string>
               <key>url</key>
-              <string>http://s3.amazonaws.com/viewer-source-downloads/install_pkgs/zlib-1.2.5-linux-20110314.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/3p-zlib/rev/248951/arch/Linux/installer/zlib-1.2.6-linux-20120206.tar.bz2</string>
             </map>
             <key>name</key>
             <string>linux</string>
@@ -146,9 +146,9 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>5852192646681817fc3c3a8c95e91c1e</string>
+              <string>cbdd1819a4963ee0bee03212a4f18b7f</string>
               <key>url</key>
-              <string>http://s3.amazonaws.com/viewer-source-downloads/install_pkgs/zlib-1.2.5-windows-20110211.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/3p-zlib/rev/248951/arch/CYGWIN/installer/zlib-1.2.6-windows-20120206.tar.bz2</string>
             </map>
             <key>name</key>
             <string>windows</string>
@@ -259,11 +259,11 @@
       <key>source</key>
       <string>http://hg.lindenlab.com/brad/curl-autobuild</string>
       <key>source_directory</key>
-      <string>curl-7.21.7</string>
+      <string>curl-7.24.0</string>
       <key>source_type</key>
       <string>hg</string>
       <key>version</key>
-      <string>7.21.7</string>
+      <string>7.24.0</string>
     </map>
     <key>type</key>
     <string>autobuild</string>

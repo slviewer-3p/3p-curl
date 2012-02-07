@@ -15,7 +15,7 @@ if [ "$OSTYPE" = "cygwin" ] ; then
     export AUTOBUILD="$(cygpath -u $AUTOBUILD)"
 fi
 
-CURL_VERSION=7.21.7
+CURL_VERSION=7.24.0
 CURL_SOURCE_DIR="curl-$CURL_VERSION"
 
 # load autbuild provided shell functions and variables
@@ -55,7 +55,7 @@ pushd "$CURL_SOURCE_DIR"
         "darwin")
             cp -R "$stage/packages/include"/{ares,zlib}/*.h "$stage/packages/include/"
             opts='-arch i386 -iwithsysroot /Developer/SDKs/MacOSX10.5.sdk -mmacosx-version-min=10.5'
-            CFLAGS="$opts" CXXFLAGS="$opts" ./configure  --disable-ldap --disable-ldaps  \
+            CFLAGS="$opts" CXXFLAGS="$opts" LDFLAGS="$opts" ./configure  --disable-ldap --disable-ldaps  \
                 --prefix="$stage" --enable-ares="$stage/packages" --with-ssl="$stage/packages" \
                 --with-zlib="$stage/packages"
             make
