@@ -70,9 +70,9 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>a2bf903acd3ad160bf62ea0096a47427</string>
+              <string>47bab25613b9c2b5f2366b659f252e93</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/3p-openssl/rev/248939/arch/Darwin/installer/openssl-1.0.0g-darwin-20120206.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/3p-openssl/rev/249004/arch/Darwin/installer/openssl-1.0.0g-darwin-20120207.tar.bz2</string>
             </map>
             <key>name</key>
             <string>darwin</string>
@@ -82,9 +82,9 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>672ece040cc4357a477a678d19cc2bd3</string>
+              <string>4c688ab5ba157ebda000a3bf0ecabe96</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/3p-openssl/rev/248939/arch/Linux/installer/openssl-1.0.0g-linux-20120206.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/3p-openssl/rev/249004/arch/Linux/installer/openssl-1.0.0g-linux-20120207.tar.bz2</string>
             </map>
             <key>name</key>
             <string>linux</string>
@@ -94,9 +94,9 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>0459c8d64c0963f5f2fa947f03325fe9</string>
+              <string>1772bfb6ebd08fcd6c6b0e18e7f7b249</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/3p-openssl/rev/248939/arch/CYGWIN/installer/openssl-1.0.0g-windows-20120206.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/3p-openssl/rev/249004/arch/CYGWIN/installer/openssl-1.0.0g-windows-20120207.tar.bz2</string>
             </map>
             <key>name</key>
             <string>windows</string>
