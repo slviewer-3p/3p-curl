@@ -18,9 +18,9 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>38ea083fe1204ee106b4d44d9811af19</string>
+              <string>9c4e946a65c7960110287ff44f04540a</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/3p-openssl/rev/249044/arch/Darwin/installer/openssl-1.0.0g-darwin-20120207.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/3p-openssl/rev/280181/arch/Darwin/installer/openssl-1.0.0g-darwin-20130822.tar.bz2</string>
             </map>
             <key>name</key>
             <string>darwin</string>
