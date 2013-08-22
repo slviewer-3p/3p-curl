@@ -37,9 +37,15 @@ check_damage ()
         ;;
 
         "darwin")
+            echo "Verifying Ares is disabled"
+            egrep 'USE_THREADS_POSIX[[:space:]]+1' lib/curl_config.h
+            egrep 'USE_THREADS_POSIX[[:space:]]+1' src/curl_config.h
         ;;
 
         "linux")
+            echo "Verifying Ares is disabled"
+            egrep 'USE_THREADS_POSIX[[:space:]]+1' lib/curl_config.h
+            egrep 'USE_THREADS_POSIX[[:space:]]+1' src/curl_config.h
         ;;
     esac
 }
@@ -74,42 +80,67 @@ pushd "$CURL_SOURCE_DIR"
         ;;
 
         "darwin")
-            cp -R "$stage/packages/include"/{zlib}/*.h "$stage/packages/include/"
+            mkdir -p "$stage/lib/release"
+            mkdir -p "$stage/lib/debug"
+            cp -R "$stage"/packages/include/zlib/*.h "$stage/packages/include/"
             opts='-arch i386 -iwithsysroot /Developer/SDKs/MacOSX10.5.sdk -mmacosx-version-min=10.5'
+
+            # Release configure and build
             CFLAGS="$opts" CXXFLAGS="$opts" LDFLAGS="$opts" ./configure  --disable-ldap --disable-ldaps  \
                 --prefix="$stage" --enable-threaded-resolver --with-ssl="$stage/packages" \
                 --with-zlib="$stage/packages"
             check_damage "$AUTOBUILD_PLATFORM"
             make
             make install
-            mkdir -p "$stage/lib/release"
             cp "$stage/lib/libcurl.a" "$stage/lib/release"
+
+            # Debug configure and build
+            CFLAGS="$opts" CXXFLAGS="$opts" LDFLAGS="$opts" ./configure  --disable-ldap --disable-ldaps  \
+                --prefix="$stage" --enable-threaded-resolver --with-ssl="$stage/packages" \
+                --with-zlib="$stage/packages" --enable-debug
+            check_damage "$AUTOBUILD_PLATFORM"
+            make
+            make install
+            cp "$stage/lib/libcurl.a" "$stage/lib/debug"
         ;;
 
         "linux")
+            mkdir -p "$stage/lib/release"
+            mkdir -p "$stage/lib/debug"
+
             # This moves libraries like libssl.so.1.0.0 and libcrypto.so.1.0.0 into the stage/lib dir to help with the build
             # but not realy sure why this is required.  It seems to be related to a mysterious path referenced by libtool.
             mkdir -p "$stage/lib"
             cp -a "$stage/packages/lib/release"/lib*.so* "$stage/lib"
 
-            # Do the actual build
-            cp -a "$stage/packages/lib/release"/{*.a,*.so*} "$stage/packages/lib"
-            cp -a "$stage/packages/include/"{zlib}/*.h "$stage/packages/include"
+            # Release configure and build
+            cp -a "$stage"/packages/lib/release/{*.a,*.so*} "$stage/packages/lib"
+            cp -a "$stage"/packages/include/zlib/*.h "$stage/packages/include"
             CFLAGS=-m32 CXXFLAGS=-m32 ./configure --disable-ldap --disable-ldaps --prefix="$stage" \
                 --prefix="$stage" --enable-threaded-resolver --with-ssl="$stage/packages" \
                 --with-zlib="$stage/packages"
             check_damage "$AUTOBUILD_PLATFORM"
             make
             make install
-            mkdir -p "$stage/lib/release"
             cp "$stage/lib/libcurl.a" "$stage/lib/release"
+
+            # Debug configure and build
+            cp -a "$stage"/packages/lib/release/{*.a,*.so*} "$stage/packages/lib"
+            cp -a "$stage"/packages/include/zlib/*.h "$stage/packages/include"
+            CFLAGS=-m32 CXXFLAGS=-m32 ./configure --disable-ldap --disable-ldaps --prefix="$stage" \
+                --prefix="$stage" --enable-threaded-resolver --with-ssl="$stage/packages" \
+                --with-zlib="$stage/packages" --enable-debug
+            check_damage "$AUTOBUILD_PLATFORM"
+            make
+            make install
+            cp "$stage/lib/libcurl.a" "$stage/lib/debug"
 
             # Since we moved some extra stuff to the stage/lib, move curl out, remove everything, then put curl back
             # again not really sure why this whole regamarole is required but this at least cleans it up afterwards.
             mkdir -p "$stage/tmp"
-            cp -a "$stage/lib"/libcurl*.so* "$stage/tmp"
-            rm -rf "$stage/lib"/lib*.so*
-            cp -a "$stage/tmp"/libcurl*.so* "$stage/lib"
+            cp -a "$stage"/lib/libcurl*.so* "$stage/tmp"
+            rm -rf "$stage"/lib/lib*.so*
+            cp -a "$stage"/tmp/libcurl*.so* "$stage/lib"
             rm -rf "$stage/tmp"
         ;;
     esac
