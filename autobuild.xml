@@ -30,9 +30,9 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>7dc5191a3d95074a6ed3bd53f57420e5</string>
+              <string>cc159598ef3fcd34fd33a8a0ef846165</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/3p-openssl/rev/249044/arch/Linux/installer/openssl-1.0.0g-linux-20120207.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/3p-openssl/rev/223711/arch/Linux/installer/openssl-0.9.8q-linux-20110314.tar.bz2</string>
             </map>
             <key>name</key>
             <string>linux</string>
@@ -42,9 +42,9 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>ed6cbaf9860a03bc99ac301277f1452a</string>
+              <string>774c7f0a0312bee3054757a623e227bc</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/3p-openssl/rev/249044/arch/CYGWIN/installer/openssl-1.0.0g-windows-20120207.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/3p-openssl/rev/220986/arch/CYGWIN/installer/openssl-0.9.8q-windows-20110211.tar.bz2</string>
             </map>
             <key>name</key>
             <string>windows</string>
