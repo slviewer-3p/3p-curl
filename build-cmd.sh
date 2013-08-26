@@ -125,8 +125,6 @@ pushd "$CURL_SOURCE_DIR"
             cp "$stage/lib/libcurl.a" "$stage/lib/release"
 
             # Debug configure and build
-            cp -a "$stage"/packages/lib/release/{*.a,*.so*} "$stage/packages/lib"
-            cp -a "$stage"/packages/include/zlib/*.h "$stage/packages/include"
             CFLAGS=-m32 CXXFLAGS=-m32 ./configure --disable-ldap --disable-ldaps --prefix="$stage" \
                 --prefix="$stage" --enable-threaded-resolver --with-ssl="$stage/packages" \
                 --with-zlib="$stage/packages" --enable-debug
