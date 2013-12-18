@@ -105,7 +105,7 @@ WINDOWS_SDK_PATH = "$(PROGRAMFILES)\Microsoft SDK"
 
 CCNODBG      = cl.exe /O2 /DNDEBUG
 CCDEBUG      = cl.exe /Od /Gm /Zi /D_DEBUG /RTC1
-CFLAGSSSL    = /DUSE_SSLEAY /DUSE_OPENSSL /I "$(OPENSSL_PATH)/inc32" /I "$(OPENSSL_PATH)/inc32/openssl"
+CFLAGSSSL    = /DUSE_SSLEAY /DUSE_OPENSSL /I "$(OPENSSL_PATH)"
 CFLAGSWINSSL = /DUSE_SCHANNEL
 CFLAGSSSH2   = /DUSE_LIBSSH2 /DCURL_DISABLE_LDAP /DHAVE_LIBSSH2 /DHAVE_LIBSSH2_H /DLIBSSH2_WIN32 /DLIBSSH2_LIBRARY /I "$(LIBSSH2_PATH)/include"
 CFLAGSZLIB   = /DHAVE_ZLIB_H /DHAVE_ZLIB /DHAVE_LIBZ /I "$(LINDEN_INCPATH)"
@@ -239,6 +239,19 @@ DIROBJ   = $(CFG)
 LFLAGSZLIB = "/LIBPATH:$(LINDEN_LIBPATH)"
 LNK      = $(LNKLIB) $(WINLIBS) $(ZLIBLIBSDLL) $(LFLAGSZLIB) /out:$(DIROBJ)\$(TARGET)
 CC       = $(CCNODBG) $(RTLIB) $(CFLAGSZLIB) $(CFLAGSLIB)
+CFGSET   = TRUE
+!ENDIF
+
+######################
+# release-ssl-dll-zlib (Linden Lab target)
+
+!IF "$(CFG)" == "release-ssl-dll-zlib"
+TARGET   = $(LIBCURL_STA_LIB_REL)
+DIROBJ   = $(CFG)
+LFLAGSZLIB = "/LIBPATH:$(LINDEN_LIBPATH)"
+LFLAGSSSL = "/LIBPATH:$(LINDEN_LIBPATH)"
+LNK      = $(LNKLIB) $(WINLIBS) $(SSLLIBS) $(ZLIBLIBS) $(LFLAGSSSL) $(LFLAGSZLIB) /out:$(DIROBJ)\$(TARGET)
+CC       = $(CCNODBG) $(RTLIB) $(CFLAGSSSL) $(CFLAGSZLIB) $(CFLAGSLIB)
 CFGSET   = TRUE
 !ENDIF
 
@@ -408,6 +421,19 @@ CFGSET   = TRUE
 !ENDIF
 
 ######################
+# debug-ssl-dll-zlib (Linden Lab target)
+
+!IF "$(CFG)" == "debug-ssl-dll-zlib"
+TARGET   = $(LIBCURL_STA_LIB_DBG)
+DIROBJ   = $(CFG)
+LFLAGSZLIB = "/LIBPATH:$(LINDEN_LIBPATH)"
+LFLAGSSSL = "/LIBPATH:$(LINDEN_LIBPATH)"
+LNK      = $(LNKLIB) $(WINLIBS) $(SSLLIBS) $(ZLIBLIBS) $(LFLAGSSSL) $(LFLAGSZLIB) /out:$(DIROBJ)\$(TARGET)
+CC       = $(CCDEBUG) $(RTLIBD) $(CFLAGSSSL) $(CFLAGSZLIB) $(CFLAGSLIB)
+CFGSET   = TRUE
+!ENDIF
+
+######################
 # debug-dll
 
 !IF "$(CFG)" == "debug-dll"
@@ -472,6 +498,7 @@ RESOURCE = $(DIROBJ)\libcurl.res
 !MESSAGE   release-ssl-ssh2-zlib        - release static library with ssl, ssh2 and zlib
 !MESSAGE   release-ssl-dll              - release static library with dynamic ssl
 !MESSAGE   release-zlib-dll             - release static library with dynamic zlib
+!MESSAGE   release-ssl-dll-zlib         - release static library with dynamic ssl and static zlib
 !MESSAGE   release-ssl-dll-zlib-dll     - release static library with dynamic ssl and dynamic zlib
 !MESSAGE   release-dll                  - release dynamic library
 !MESSAGE   release-dll-ssl-dll          - release dynamic library with dynamic ssl
@@ -484,6 +511,7 @@ RESOURCE = $(DIROBJ)\libcurl.res
 !MESSAGE   debug-ssl-ssh2-zlib          - debug static library with ssl, ssh2 and zlib
 !MESSAGE   debug-ssl-dll                - debug static library with dynamic ssl
 !MESSAGE   debug-zlib-dll               - debug static library with dynamic zlib
+!MESSAGE   debug-ssl-dll-zlib           - debug static library with dynamic ssl and static zlib
 !MESSAGE   debug-ssl-dll-zlib-dll       - debug static library with dynamic ssl and dynamic zlib
 !MESSAGE   debug-dll                    - debug dynamic library
 !MESSAGE   debug-dll-ssl-dll            - debug dynamic library with dynamic ssl
