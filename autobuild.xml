@@ -18,9 +18,9 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>64544512ed2e9fc48e1fda0b490daa74</string>
+              <string>9270a590c43d8588c289e85e87ffe4fe</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/3p-openssl/rev/223711/arch/Darwin/installer/openssl-0.9.8q-darwin-20110314.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/3p-openssl-update/rev/284926/arch/Darwin/installer/openssl-1.0.1e-darwin-20131216.tar.bz2</string>
             </map>
             <key>name</key>
             <string>darwin</string>
@@ -30,9 +30,9 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>cc159598ef3fcd34fd33a8a0ef846165</string>
+              <string>481c986a5ded29706553ed5750c4d51e</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/3p-openssl/rev/223711/arch/Linux/installer/openssl-0.9.8q-linux-20110314.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/3p-openssl-update/rev/284926/arch/Linux/installer/openssl-1.0.1e-linux-20131216.tar.bz2</string>
             </map>
             <key>name</key>
             <string>linux</string>
@@ -42,9 +42,9 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>774c7f0a0312bee3054757a623e227bc</string>
+              <string>e1c17ed0de7da07f276acb186081179a</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/3p-openssl/rev/220986/arch/CYGWIN/installer/openssl-0.9.8q-windows-20110211.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/3p-openssl-update/rev/284926/arch/CYGWIN/installer/openssl-1.0.1e-windows-20131216.tar.bz2</string>
             </map>
             <key>name</key>
             <string>windows</string>
@@ -70,9 +70,9 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>c68b839b5f5b19f3322299b97b7c0871</string>
+              <string>5f7b9a5136114a535de922bbc4e6e56c</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/3p-zlib/rev/223739/arch/Darwin/installer/zlib-1.2.5-darwin-20110314.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/3p-zlib-update/rev/284895/arch/Darwin/installer/zlib-1.2.8-darwin-20131213.tar.bz2</string>
             </map>
             <key>name</key>
             <string>darwin</string>
@@ -82,9 +82,9 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>7b4cf3aa2c04937d0a20761516587896</string>
+              <string>db22e43c0adb1febaf284be24fc54c2b</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/3p-zlib/rev/223739/arch/Linux/installer/zlib-1.2.5-linux-20110314.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/3p-zlib-update/rev/284895/arch/Linux/installer/zlib-1.2.8-linux-20131213.tar.bz2</string>
             </map>
             <key>name</key>
             <string>linux</string>
@@ -94,9 +94,9 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>5852192646681817fc3c3a8c95e91c1e</string>
+              <string>a18db6844e19a2df32404cba2c7a25af</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/3p-zlib/rev/220983/arch/CYGWIN/installer/zlib-1.2.5-windows-20110211.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/3p-zlib-update/rev/284895/arch/CYGWIN/installer/zlib-1.2.8-windows-20131213.tar.bz2</string>
             </map>
             <key>name</key>
             <string>windows</string>
@@ -207,11 +207,11 @@
       <key>source</key>
       <string>http://hg.lindenlab.com/brad/curl-autobuild</string>
       <key>source_directory</key>
-      <string>curl-7.24.0</string>
+      <string>curl</string>
       <key>source_type</key>
       <string>hg</string>
       <key>version</key>
-      <string>7.24.0</string>
+      <string>7.34.0</string>
     </map>
     <key>type</key>
     <string>autobuild</string>
