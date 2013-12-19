@@ -282,7 +282,7 @@ pushd "$CURL_SOURCE_DIR"
                     # in TeamCity.  (Expect problems with the unit tests, they're
                     # very sensitive to environment.)
                     saved_path="$LD_LIBRARY_PATH"
-                    export LD_LIBRARY_PATH="${stage}"/lib/debug:"$LD_LIBRARY_PATH" 
+                    export LD_LIBRARY_PATH="${stage}"/packages/lib/debug:"$LD_LIBRARY_PATH" 
                     make quiet-test TEST_Q='-n !906 !530 !564 !584'
                     export LD_LIBRARY_PATH="$saved_path"
                 popd
@@ -308,7 +308,7 @@ pushd "$CURL_SOURCE_DIR"
                     # in TeamCity.  (Expect problems with the unit tests, they're
                     # very sensitive to environment.)
                     saved_path="$LD_LIBRARY_PATH"
-                    export LD_LIBRARY_PATH="${stage}"/lib/release:"$LD_LIBRARY_PATH" 
+                    export LD_LIBRARY_PATH="${stage}"/packages/lib/release:"$LD_LIBRARY_PATH" 
                     make quiet-test TEST_Q='-n !906 !530 !564 !584'
                     export LD_LIBRARY_PATH="$saved_path"
                 popd

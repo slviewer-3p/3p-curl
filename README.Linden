@@ -369,7 +369,7 @@ A.  Appendix A - Notes on 'vendor' branch maintenance
     * ZLIBLIB to $(LINDEN_LIBPATH)/$(ZLIB_NAME)
     * Didn't keep the 'advapi32.lib' in WINLIBS which came from
       the 7.34.0 distribution.  May be needed later, seems to link
-      and run curl.exe find without.
+      and run curl.exe fine without.
     * LFLAGSZLIB in all/most configurations to
      '/LIBPATH:$(LINDEN_LIBPATH)'.
     * LFLAGSSSL to '/LIBPATH:$(OPENSSL_PATH)\out32dll' in the
