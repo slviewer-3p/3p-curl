@@ -165,7 +165,7 @@ pushd "$CURL_SOURCE_DIR"
                 CPPFLAGS="-I\"$stage\"/packages/include/zlib" \
                 ./configure  --disable-ldap --disable-ldaps --enable-shared=no \
                 --prefix="$stage" --libdir="${stage}"/lib/debug --enable-threaded-resolver \
-                --with-ssl="${stage}/packages" --with-zlib="${stage}/packages"
+                --with-ssl="${stage}/packages" --with-zlib="${stage}/packages" --without-libssh2
             check_damage "$AUTOBUILD_PLATFORM"
             make
             make install
@@ -203,7 +203,7 @@ pushd "$CURL_SOURCE_DIR"
                 CPPFLAGS="-I\"$stage\"/packages/include/zlib" \
                 ./configure  --disable-ldap --disable-ldaps --enable-shared=no \
                 --prefix="$stage" --libdir="${stage}"/lib/release --enable-threaded-resolver \
-                --with-ssl="${stage}/packages" --with-zlib="${stage}/packages"
+                --with-ssl="${stage}/packages" --with-zlib="${stage}/packages" --without-libssh2
             check_damage "$AUTOBUILD_PLATFORM"
             make
             make install
@@ -268,7 +268,7 @@ pushd "$CURL_SOURCE_DIR"
             CFLAGS="$opts -g -O0" CXXFLAGS="$opts -g -O0" LDFLAGS="-L\"$stage\"/packages/lib/debug" \
                 ./configure --disable-ldap --disable-ldaps --prefix="$stage" --enable-shared=no \
                 --prefix="$stage" --libdir="$stage"/lib/debug --enable-threaded-resolver \
-                --with-ssl="$stage/packages/" --with-zlib="$stage/packages/"
+                --with-ssl="$stage/packages/" --with-zlib="$stage/packages/" --without-libssh2
             check_damage "$AUTOBUILD_PLATFORM"
             make
             make install
@@ -294,7 +294,7 @@ pushd "$CURL_SOURCE_DIR"
             CFLAGS="$opts" CXXFLAGS="$opts" LDFLAGS="-L\"$stage\"/packages/lib/release" \
                 ./configure --disable-ldap --disable-ldaps --prefix="$stage" --enable-shared=no \
                 --prefix="$stage" --libdir="$stage"/lib/release --enable-threaded-resolver \
-                --with-ssl="$stage/packages" --with-zlib="$stage/packages"
+                --with-ssl="$stage/packages" --with-zlib="$stage/packages" --without-libssh2
             check_damage "$AUTOBUILD_PLATFORM"
             make
             make install

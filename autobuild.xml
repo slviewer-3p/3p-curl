@@ -54,7 +54,7 @@
       <key>zlib</key>
       <map>
         <key>copyright</key>
-        <string>Copyright (C) 1995-2003 Jean-loup Gailly and Mark Adler</string>
+        <string>Copyright (C) 1995-2013 Jean-loup Gailly and Mark Adler</string>
         <key>description</key>
         <string>A Massively Spiffy Yet Delicately Unobtrusive Compression Library (Also Free - Not to Mention Unencumbered by Patents)</string>
         <key>license</key>
@@ -160,6 +160,7 @@
           <key>manifest</key>
           <array>
             <string>lib/release/libcurl.a</string>
+            <string>lib/debug/libcurl.a</string>
           </array>
           <key>name</key>
           <string>darwin</string>
@@ -179,6 +180,7 @@
           <key>manifest</key>
           <array>
             <string>lib/release/libcurl.a</string>
+            <string>lib/debug/libcurl.a</string>
           </array>
           <key>name</key>
           <string>linux</string>
