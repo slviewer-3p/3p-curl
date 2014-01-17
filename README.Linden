@@ -34,6 +34,28 @@
          checking for OpenSSL library version... 1.0.1
          checking for OpenSSL headers and library versions matching... yes
 
+         Example from Linux of zlib detection:
+
+         checking zlib.h usability... yes
+         checking zlib.h presence... yes
+         checking for zlib.h... yes
+         checking for gzread in -lz... yes
+         configure: found both libz and libz.h header
+
+         During development, you might find it useful to rename any
+         system version of the zlib.h header so that it isn't picked
+         up accidentally.
+
+         In addition to the 'curl --version' command, you can look
+         for version strings in the 'curl' program itself:
+
+         $ strings curl | grep 1\\.2\\.
+         1.2.8
+         1.2.0.4
+
+         With the '1.2.8' indicating the targeted libz (1.2.3.4
+         typically means a platform libz).
+
     [ ]  Examine build logs or run the built 'curl' executable to
          verify function.  The '--version' option will give useful
          library information:
@@ -129,6 +151,43 @@
     release-ssl-dll-zlib configuration added but it can be used to
     build either a 'release' or 'debug' target curl.exe.
 
+  2.5  Imperfect Mercurial repository work
+
+    The path I took to canonicalize the branch and source code
+    directory structure, at changesets 1b274a267882 and 4a82c402b11f,
+    was not the optimal way.  What I did was basically:
+
+    * hg update vendor
+    * hg mv curl-version curl
+    * hg ci
+    * tar xzf
+    * hg addremove
+    * hg ci
+    * hg update default
+    * hg mv curl-version curl
+    * hg ci
+    * hg merge vendor
+    * hg ci
+
+    What should have happened (and what is happening for other
+    libraries) involves a single 'hg mv' operation:
+
+    * hg update vendor
+    * hg mv curl-version curl
+    * hg ci
+    * hg update default
+    * hg merge vendor (will do the rename)
+    * hg ci
+    * hg update vendor
+    * tar xzf
+    * hg addremove
+    * hg ci
+    * hg update default
+    * hg merge vendor
+    * hg ci
+
+    At some point, we might go back and repair/replace the repo.
+
 
 3.  Source Origin
 
@@ -138,17 +197,28 @@
 
 4.  Package Contents
 
+    Common:
+    * include/curl/curl.h
+    * include/curl/curlbuild.h
+    * include/curl/curlrules.h
+    * include/curl/curlver.h
+    * include/curl/easy.h
+    * include/curl/mprintf.h
+    * include/curl/multi.h
+    * include/curl/stdcheaders.h
+    * include/curl/typecheck-gcc.h
+
     Windows:
-    * release/libcurl.lib
-    * debug/libcurld.lib
+    * lib/release/libcurl.lib
+    * lib/debug/libcurld.lib
 
     Mac OS X (debug and release):
-    * release/libcurl.a
-    * debug/libcurl.a
+    * lib/release/libcurl.a
+    * lib/debug/libcurl.a
 
     Linux:
-    * release/libcurl.a
-    * debug/libcurl.a
+    * lib/release/libcurl.a
+    * lib/debug/libcurl.a
 
 
 A.  Appendix A - Notes on 'vendor' branch maintenance

@@ -24,6 +24,27 @@ eval "$("$AUTOBUILD" source_environment)"
 top="$(pwd)"
 stage="$(pwd)/stage"
 
+# Restore all .sos
+restore_sos ()
+{
+    for solib in "${stage}"/packages/lib/debug/libz.so*.disable "${stage}"/packages/lib/release/libz.so*.disable; do
+        if [ -f "$solib" ]; then
+            mv -f "$solib" "${solib%.disable}"
+        fi
+    done
+}
+
+
+# Restore all .dylibs
+restore_dylibs ()
+{
+    for dylib in "$stage/packages/lib"/{debug,release}/*.dylib.disable; do
+        if [ -f "$dylib" ]; then
+            mv "$dylib" "${dylib%.disable}"
+        fi
+    done
+}
+
 # See if there's anything wrong with the checked out or
 # generated files.  Main test is to confirm that c-ares
 # is defeated and we're using a threaded resolver.
@@ -142,6 +163,7 @@ pushd "$CURL_SOURCE_DIR"
             rm -rf Resources/ ../Resources tests/Resources/
 
             # Force libz static linkage by moving .dylibs out of the way
+			trap restore_dylibs EXIT
             for dylib in "$stage"/packages/lib/{debug,release}/libz*.dylib; do
                 if [ -f "$dylib" ]; then
                     mv "$dylib" "$dylib".disable
@@ -222,13 +244,6 @@ pushd "$CURL_SOURCE_DIR"
 
             make distclean 
             rm -rf Resources/ ../Resources tests/Resources/
-
-            # Restore zlib .dylibs
-            for dylib in "$stage/packages/lib"/{debug,release}/*.dylib.disable; do
-                if [ -f "$dylib" ]; then
-                    mv "$dylib" "${dylib%.disable}"
-                fi
-            done
         ;;
 
         "linux")
@@ -247,28 +262,38 @@ pushd "$CURL_SOURCE_DIR"
                 unset CPPFLAGS
             else
                 # Incorporate special pre-processing flags
-                export CPPFLAGS="$TARGET_CPPFLAGS"
+                export CPPFLAGS="$TARGET_CPPFLAGS" 
             fi
-            
+
             # Force static linkage to libz by moving .sos out of the way
-            for solibdir in "${stage}"/packages/lib/{debug,release}; do
-                pushd "$solibdir"
-                    for solib in libz*.so*; do
-                        if [ -f "$solib" ]; then
-                            mv -f "$solib" disable."$solib"
-                        fi
-                    done
-                popd
+            trap restore_sos EXIT
+            for solib in "${stage}"/packages/lib/debug/libz.so* "${stage}"/packages/lib/release/libz.so*; do
+                if [ -f "$solib" ]; then
+                    mv -f "$solib" "$solib".disable
+                fi
             done
             
             mkdir -p "$stage/lib/release"
             mkdir -p "$stage/lib/debug"
 
+            # Autoconf's configure will do some odd things to flags.  '-I' options
+            # will get transferred to '-isystem' and there's a problem with quoting.
+            # Linking and running also require LD_LIBRARY_PATH to locate the OpenSSL
+            # .so's.  The '--with-ssl' option could do this if we had a more normal
+            # package layout.
+            #
+            # configure-time compilation looks like:
+            # ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'
+            # ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
+            saved_path="$LD_LIBRARY_PATH"
+
             # Debug configure and build
-            CFLAGS="$opts -g -O0" CXXFLAGS="$opts -g -O0" LDFLAGS="-L\"$stage\"/packages/lib/debug" \
-                ./configure --disable-ldap --disable-ldaps --prefix="$stage" --enable-shared=no \
-                --prefix="$stage" --libdir="$stage"/lib/debug --enable-threaded-resolver \
-                --with-ssl="$stage/packages/" --with-zlib="$stage/packages/" --without-libssh2
+            export LD_LIBRARY_PATH="${stage}"/packages/lib/debug:"$saved_path"
+            CFLAGS="$opts -g -O0" CXXFLAGS="$opts -g -O0" LDFLAGS="-L$stage/packages/lib/debug" \
+                CPPFLAGS="${CPPFLAGS} -I$stage/packages/include/zlib" \
+                ./configure --disable-ldap --disable-ldaps --enable-shared=no --enable-threaded-resolver \
+                --prefix="$stage" --libdir="$stage"/lib/debug \
+                --with-ssl="$stage"/packages/ --with-zlib="$stage"/packages/ --without-libssh2
             check_damage "$AUTOBUILD_PLATFORM"
             make
             make install
@@ -281,19 +306,19 @@ pushd "$CURL_SOURCE_DIR"
                     # 7.33 distribution with our configuration options.  530 fails
                     # in TeamCity.  (Expect problems with the unit tests, they're
                     # very sensitive to environment.)
-                    saved_path="$LD_LIBRARY_PATH"
-                    export LD_LIBRARY_PATH="${stage}"/packages/lib/debug:"$LD_LIBRARY_PATH" 
                     make quiet-test TEST_Q='-n !906 !530 !564 !584'
-                    export LD_LIBRARY_PATH="$saved_path"
                 popd
             fi
 
             make distclean 
 
             # Release configure and build
-            CFLAGS="$opts" CXXFLAGS="$opts" LDFLAGS="-L\"$stage\"/packages/lib/release" \
-                ./configure --disable-ldap --disable-ldaps --prefix="$stage" --enable-shared=no \
-                --prefix="$stage" --libdir="$stage"/lib/release --enable-threaded-resolver \
+            export LD_LIBRARY_PATH="${stage}"/packages/lib/release:"$saved_path"
+
+            CFLAGS="$opts" CXXFLAGS="$opts" LDFLAGS="-L$stage/packages/lib/release" \
+                CPPFLAGS="${CPPFLAGS} -I$stage/packages/include/zlib" \
+                ./configure --disable-ldap --disable-ldaps --enable-shared=no --enable-threaded-resolver \
+                --prefix="$stage" --libdir="$stage"/lib/release \
                 --with-ssl="$stage/packages" --with-zlib="$stage/packages" --without-libssh2
             check_damage "$AUTOBUILD_PLATFORM"
             make
@@ -307,25 +332,13 @@ pushd "$CURL_SOURCE_DIR"
                     # 7.33 distribution with our configuration options.  530 fails
                     # in TeamCity.  (Expect problems with the unit tests, they're
                     # very sensitive to environment.)
-                    saved_path="$LD_LIBRARY_PATH"
-                    export LD_LIBRARY_PATH="${stage}"/packages/lib/release:"$LD_LIBRARY_PATH" 
                     make quiet-test TEST_Q='-n !906 !530 !564 !584'
-                    export LD_LIBRARY_PATH="$saved_path"
                 popd
             fi
 
             make distclean 
 
-            # Restore libz .sos
-            for solibdir in "${stage}"/packages/lib/{debug,release}; do
-                pushd "$solibdir"
-                    for solib in disable.*.so*; do
-                        if [ -f "$solib" ]; then
-                            mv -f "$solib" "${solib#disable.}"
-                        fi
-                    done
-                popd
-            done
+            export LD_LIBRARY_PATH="$saved_path"
         ;;
     esac
     mkdir -p "$stage/LICENSES"
