@@ -27,7 +27,7 @@ stage="$(pwd)/stage"
 # Restore all .sos
 restore_sos ()
 {
-    for solib in "${stage}"/packages/lib/debug/libz.so*.disable "${stage}"/packages/lib/release/libz.so*.disable; do
+    for solib in "${stage}"/packages/lib/{debug,release}/libz.so*.disable; do
         if [ -f "$solib" ]; then
             mv -f "$solib" "${solib%.disable}"
         fi
@@ -163,7 +163,7 @@ pushd "$CURL_SOURCE_DIR"
             rm -rf Resources/ ../Resources tests/Resources/
 
             # Force libz static linkage by moving .dylibs out of the way
-			trap restore_dylibs EXIT
+            trap restore_dylibs EXIT
             for dylib in "$stage"/packages/lib/{debug,release}/libz*.dylib; do
                 if [ -f "$dylib" ]; then
                     mv "$dylib" "$dylib".disable
@@ -247,6 +247,21 @@ pushd "$CURL_SOURCE_DIR"
         ;;
 
         "linux")
+            # Linux build environment at Linden comes pre-polluted with stuff that can
+            # seriously damage 3rd-party builds.  Environmental garbage you can expect
+            # includes:
+            #
+            #    DISTCC_POTENTIAL_HOSTS     arch           root        CXXFLAGS
+            #    DISTCC_LOCATION            top            branch      CC
+            #    DISTCC_HOSTS               build_name     suffix      CXX
+            #    LSDISTCC_ARGS              repo           prefix      CFLAGS
+            #    cxx_version                AUTOBUILD      SIGN        CPPFLAGS
+            #
+            # So, clear out bits that shouldn't affect our configure-directed build
+            # but which do nonetheless.
+            #
+            # unset DISTCC_HOSTS CC CXX CFLAGS CPPFLAGS CXXFLAGS
+
             # Prefer gcc-4.6 if available.
             if [[ -x /usr/bin/gcc-4.6 && -x /usr/bin/g++-4.6 ]]; then
                 export CC=/usr/bin/gcc-4.6
@@ -267,7 +282,7 @@ pushd "$CURL_SOURCE_DIR"
 
             # Force static linkage to libz by moving .sos out of the way
             trap restore_sos EXIT
-            for solib in "${stage}"/packages/lib/debug/libz.so* "${stage}"/packages/lib/release/libz.so*; do
+            for solib in "${stage}"/packages/lib/{debug,release}/libz.so*; do
                 if [ -f "$solib" ]; then
                     mv -f "$solib" "$solib".disable
                 fi

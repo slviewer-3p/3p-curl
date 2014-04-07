@@ -188,6 +188,13 @@
 
     At some point, we might go back and repair/replace the repo.
 
+  2.6  Unit Test Changes
+
+    Bumped timestamp in tests/data/test172 so test runs.  Not
+    certain how this ever worked, it's stale by several years.
+    Watch for fixes from upstream and restore the file when 
+    possible.
+
 
 3.  Source Origin
 
