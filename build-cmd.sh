@@ -181,18 +181,20 @@ pushd "$CURL_SOURCE_DIR"
             # Debug configure and build
 
             # Make .dylib's usable during configure as well as unit tests
-            mkdir -p Resources/
-            ln -sf "${stage}"/packages/lib/debug/*.dylib Resources/
-            mkdir -p ../Resources/
-            ln -sf "${stage}"/packages/lib/debug/*.dylib ../Resources/
-            mkdir -p tests/Resources/
-            ln -sf "${stage}"/packages/lib/debug/*.dylib tests/Resources/
+            # (Used when building with dylib libz or OpenSSL.)
+            # mkdir -p Resources/
+            # ln -sf "${stage}"/packages/lib/debug/*.dylib Resources/
+            # mkdir -p ../Resources/
+            # ln -sf "${stage}"/packages/lib/debug/*.dylib ../Resources/
+            # mkdir -p tests/Resources/
+            # ln -sf "${stage}"/packages/lib/debug/*.dylib tests/Resources/
+            # LDFLAGS="-L../Resources/ -L\"$stage\"/packages/lib/debug" \
 
             # Curl configure has trouble finding zlib 'framework' that
             # it doesn't have with openssl.  We help it with CPPFLAGS.
             CFLAGS="$opts -gdwarf-2 -O0" CXXFLAGS="$opts -gdwarf-2 -O0" \
-                LDFLAGS="-L../Resources/ -L\"$stage\"/packages/lib/debug" \
-                CPPFLAGS="-I\"$stage\"/packages/include/zlib" \
+                LDFLAGS=-L"$stage"/packages/lib/debug \
+                CPPFLAGS=-I"$stage"/packages/include/zlib \
                 ./configure  --disable-ldap --disable-ldaps --enable-shared=no \
                 --prefix="$stage" --libdir="${stage}"/lib/debug --enable-threaded-resolver \
                 --with-ssl="${stage}/packages" --with-zlib="${stage}/packages" --without-libssh2
@@ -218,19 +220,19 @@ pushd "$CURL_SOURCE_DIR"
             fi
 
             make distclean 
-            rm -rf Resources/ ../Resources tests/Resources/
+            # rm -rf Resources/ ../Resources tests/Resources/
 
             # Release configure and build
-            mkdir -p Resources/
-            ln -sf "${stage}"/packages/lib/release/*.dylib Resources/
-            mkdir -p ../Resources/
-            ln -sf "${stage}"/packages/lib/release/*.dylib ../Resources/
-            mkdir -p tests/Resources/
-            ln -sf "${stage}"/packages/lib/release/*.dylib tests/Resources/
+            # mkdir -p Resources/
+            # ln -sf "${stage}"/packages/lib/release/*.dylib Resources/
+            # mkdir -p ../Resources/
+            # ln -sf "${stage}"/packages/lib/release/*.dylib ../Resources/
+            # mkdir -p tests/Resources/
+            # ln -sf "${stage}"/packages/lib/release/*.dylib tests/Resources/
 
             CFLAGS="$opts -gdwarf-2" CXXFLAGS="$opts -gdwarf-2" \
-                LDFLAGS="-L../Resources/ -L\"$stage\"/packages/lib/release" \
-                CPPFLAGS="-I\"$stage\"/packages/include/zlib" \
+                LDFLAGS=-L"$stage"/packages/lib/release \
+                CPPFLAGS=-I"$stage"/packages/include/zlib \
                 ./configure  --disable-ldap --disable-ldaps --enable-shared=no \
                 --prefix="$stage" --libdir="${stage}"/lib/release --enable-threaded-resolver \
                 --with-ssl="${stage}/packages" --with-zlib="${stage}/packages" --without-libssh2
@@ -251,7 +253,8 @@ pushd "$CURL_SOURCE_DIR"
             fi
 
             make distclean 
-            rm -rf Resources/ ../Resources tests/Resources/
+            # Again, for dylib dependencies
+            # rm -rf Resources/ ../Resources tests/Resources/
         ;;
 
         "linux")
