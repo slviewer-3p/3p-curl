@@ -28,9 +28,9 @@
     [ ]  The curl configuration procedure has trouble locating custom
          versions of support libraries (zlib, ssl, ssh2, etc.).  So
          examing the build log and verify that the right libraries are
-         being picked up.  Example from Mac:
+         being picked up.  Example from Linux:
 
-         checking for OpenSSL headers version... 1.0.1 - 0x1000105fL
+         checking for OpenSSL headers version... 1.0.1 - 0x1000107fL
          checking for OpenSSL library version... 1.0.1
          checking for OpenSSL headers and library versions matching... yes
 
@@ -49,20 +49,34 @@
          In addition to the 'curl --version' command, you can look
          for version strings in the 'curl' program itself:
 
-         $ strings curl | grep 1\\.2\\.
+         $ strings stage/bin/curl | grep 1\\.[0-9]\\.
+              --dns-servers    DNS server addrs to use: 1.1.1.1;2.2.2.2
          1.2.8
          1.2.0.4
+         SSLv2 part of OpenSSL 1.0.1g 7 Apr 2014
+         SSLv3 part of OpenSSL 1.0.1g 7 Apr 2014
+         ...
+         \CAST part of OpenSSL 1.0.1g 7 Apr 2014
+          deflate 1.2.8 Copyright 1995-2013 Jean-loup Gailly and Mark Adler 
+          inflate 1.2.8 Copyright 1995-2013 Mark Adler 
 
          With the '1.2.8' indicating the targeted libz (1.2.3.4
          typically means a platform libz).
+
+         Static archives will show even less version information:
+
+         $ strings stage/lib/release/libcurl.a | grep 1\\.[0-9]\\.
+         1.2.8
+         1.2.0.4
 
     [ ]  Examine build logs or run the built 'curl' executable to
          verify function.  The '--version' option will give useful
          library information:
 
-         curl 7.34.0 (i386-pc-win32) libcurl/7.34.0 OpenSSL/1.0.1e zlib/1.2.8
-         Protocols: dict file ftp ftps gopher http https imap imaps ldap pop3 pop3s rtsp smtp smtps telnet tftp 
-         Features: AsynchDNS Largefile NTLM SSL libz 
+         $ stage/bin/curl --version 
+         curl 7.34.0 (x86_64-unknown-linux-gnu) libcurl/7.34.0 OpenSSL/1.0.1g zlib/1.2.8
+         Protocols: dict file ftp ftps gopher http https imap imaps pop3 pop3s rtsp smtp smtps telnet tftp 
+         Features: AsynchDNS IPv6 Largefile NTLM NTLM_WB SSL libz TLS-SRP 
 
          Run a few curl commands to a website.  You may need to copy
          DLLs, create a Resources peer directory with symlinks to
@@ -226,6 +240,15 @@
     Linux:
     * lib/release/libcurl.a
     * lib/debug/libcurl.a
+
+
+5.  Known Dependencies
+
+    This is not authoritative, it's just a reminder to followup
+    with dependent packages.
+
+    * openjpeg (*should* be a dependency when building certain tools)
+    * viewer
 
 
 A.  Appendix A - Notes on 'vendor' branch maintenance

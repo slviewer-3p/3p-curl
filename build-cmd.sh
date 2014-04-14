@@ -27,7 +27,7 @@ stage="$(pwd)/stage"
 # Restore all .sos
 restore_sos ()
 {
-    for solib in "${stage}"/packages/lib/{debug,release}/libz.so*.disable; do
+    for solib in "${stage}"/packages/lib/{debug,release}/lib*.so*.disable; do
         if [ -f "$solib" ]; then
             mv -f "$solib" "${solib%.disable}"
         fi
@@ -156,15 +156,23 @@ pushd "$CURL_SOURCE_DIR"
         ;;
 
         "darwin")
-            opts="${TARGET_OPTS:--arch i386 -iwithsysroot /Developer/SDKs/MacOSX10.7.sdk -mmacosx-version-min=10.6}"
+            # Select SDK with full path.  This shouldn't have much effect on this
+            # build but adding to establish a consistent pattern.
+            #
+            # sdk=/Developer/SDKs/MacOSX10.6.sdk/
+            # sdk=/Developer/SDKs/MacOSX10.7.sdk/
+            # sdk=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.6.sdk/
+            sdk=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.7.sdk/
+
+            opts="${TARGET_OPTS:--arch i386 -iwithsysroot $sdk -mmacosx-version-min=10.6}"
 
             mkdir -p "$stage/lib/release"
             mkdir -p "$stage/lib/debug"
             rm -rf Resources/ ../Resources tests/Resources/
 
-            # Force libz static linkage by moving .dylibs out of the way
+            # Force libz and openssl static linkage by moving .dylibs out of the way
             trap restore_dylibs EXIT
-            for dylib in "$stage"/packages/lib/{debug,release}/libz*.dylib; do
+            for dylib in "$stage"/packages/lib/{debug,release}/lib{z,crypto,ssl}*.dylib; do
                 if [ -f "$dylib" ]; then
                     mv "$dylib" "$dylib".disable
                 fi
@@ -280,9 +288,9 @@ pushd "$CURL_SOURCE_DIR"
                 export CPPFLAGS="$TARGET_CPPFLAGS" 
             fi
 
-            # Force static linkage to libz by moving .sos out of the way
+            # Force static linkage to libz and openssl by moving .sos out of the way
             trap restore_sos EXIT
-            for solib in "${stage}"/packages/lib/{debug,release}/libz.so*; do
+            for solib in "${stage}"/packages/lib/{debug,release}/lib{z,ssl,crypto}.so*; do
                 if [ -f "$solib" ]; then
                     mv -f "$solib" "$solib".disable
                 fi
@@ -304,8 +312,12 @@ pushd "$CURL_SOURCE_DIR"
 
             # Debug configure and build
             export LD_LIBRARY_PATH="${stage}"/packages/lib/debug:"$saved_path"
-            CFLAGS="$opts -g -O0" CXXFLAGS="$opts -g -O0" LDFLAGS="-L$stage/packages/lib/debug" \
+
+            CFLAGS="$opts -g -O0" \
+                CXXFLAGS="$opts -g -O0" \
                 CPPFLAGS="${CPPFLAGS} -I$stage/packages/include/zlib" \
+                LIBS="-ldl" \
+                LDFLAGS="-L$stage/packages/lib/debug/" \
                 ./configure --disable-ldap --disable-ldaps --enable-shared=no --enable-threaded-resolver \
                 --prefix="$stage" --libdir="$stage"/lib/debug \
                 --with-ssl="$stage"/packages/ --with-zlib="$stage"/packages/ --without-libssh2
@@ -330,11 +342,14 @@ pushd "$CURL_SOURCE_DIR"
             # Release configure and build
             export LD_LIBRARY_PATH="${stage}"/packages/lib/release:"$saved_path"
 
-            CFLAGS="$opts" CXXFLAGS="$opts" LDFLAGS="-L$stage/packages/lib/release" \
+            CFLAGS="$opts" \
+                CXXFLAGS="$opts"  \
                 CPPFLAGS="${CPPFLAGS} -I$stage/packages/include/zlib" \
+                LIBS="-ldl" \
+                LDFLAGS="-L$stage/packages/lib/release" \
                 ./configure --disable-ldap --disable-ldaps --enable-shared=no --enable-threaded-resolver \
                 --prefix="$stage" --libdir="$stage"/lib/release \
-                --with-ssl="$stage/packages" --with-zlib="$stage/packages" --without-libssh2
+                --with-ssl="$stage"/packages --with-zlib="$stage"/packages --without-libssh2
             check_damage "$AUTOBUILD_PLATFORM"
             make
             make install
