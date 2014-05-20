@@ -1,71 +1,86 @@
-Curl and libcurl 7.34.0
+Curl and libcurl 7.36.0
 
- Public curl releases:         136
+ Public curl releases:         138
  Command line options:         161
  curl_easy_setopt() options:   206
  Public functions in libcurl:  58
  Known libcurl bindings:       42
- Contributors:                 1104
+ Contributors:                 1123
 
-This release includes the following security fix:
- o gtls: respect *VERIFYHOST independently of *VERIFYPEER [26]
+This release includes the following SECURITY ADVISORIES:
+
+ o wrong re-use of connections [16]
+ o IP address wildcard certificate validation [17]
+ o not verifying certs for TLS to IP address / Darwinssl [18]
+ o not verifying certs for TLS to IP address / Winssl [19]
 
 This release includes the following changes:
 
- o SSL: protocol version can be specified more precisely [1]
- o imap/pop3/smtp: Added graceful cancellation of SASL authentication
- o Add "Happy Eyeballs" for IPv4/IPv6 dual connect attempts
- o base64: Added validation of base64 input strings when decoding [8]
- o curl_easy_setopt: Added the ability to set the login options separately
- o smtp: Added support for additional SMTP commands
- o curl_easy_getinfo: Added CURLINFO_TLS_SESSION for accessing TLS internals
- o nss: allow to use TLS > 1.0 if built against recent NSS [18]
- o SECURITY: added this document to describe our security processes [22]
- o parseconfig: warn if unquoted white spaces are detected
+ o ntlm: Added support for NTLMv2 [2]
+ o tool: Added support for URL specific options [3]
+ o openssl: add ALPN support
+ o gtls: add ALPN support
+ o nss: add ALPN and NPN support
+ o added CURLOPT_EXPECT_100_TIMEOUT_MS [7]
+ o tool: add --no-alpn and --no-npn
+ o added CURLOPT_SSL_ENABLE_NPN and CURLOPT_SSL_ENABLE_ALPN
+ o winssl: enable TLSv1.1 and TLSv1.2 by default
+ o winssl: TLSv1.2 disables certificate signatures using MD5 hash
+ o winssl: enable hostname verification of IP address using SAN or CN [11]
+ o darwinssl: Don't omit CN verification when an IP address is used [12]
+ o http2: build with current nghttp2 version
+ o polarssl: dropped support for PolarSSL < 1.3.0
+ o openssl: info message with SSL version used
 
 This release includes the following bugfixes:
 
- o darwinssl: un-break iOS build after PKCS#12 feature added
- o tool: use XFERFUNCTION to save some casts [2]
- o usercertinmem: fix memory leaks
- o ssh: Handle successful SSH_USERAUTH_NONE [3]
- o NSS: acknowledge the --no-sessionid/CURLOPT_SSL_SESSIONID_CACHE option [4]
- o test906: Fixed failing test on some platforms [5]
- o sasl: initialize NSS before using NTLM crypto
- o sasl: Fixed memory leak in OAUTH2 message creation
- o imap/pop3/smtp: Fixed QUIT / LOGOUT being sent when SSL connect fails
- o cmake: unbreak for non-Windows platforms [6]
- o ssh: initialize per-handle data in ssh_connect()
- o glob: fix broken URLs
- o configure: check for long long when building with cyassl
- o CURLOPT_RESOLVE: mention they don't time-out [7]
- o docs/examples/httpput.c: fix build for MSVC
- o FTP: make the data connection work when going through proxy
- o NSS: support for CERTINFO feature
- o curl_multi_wait: accept 0 from multi_timeout() as valid timeout
- o glob_range: pass the closing bracket for a-z ranges
- o tool_help: Updated --list-only description to include POP3
- o Curl_ssl_push_certinfo_len: don't %.*s non-zero-terminated string [9]
- o cmake: fix Windows build with IPv6 support [10]
- o ares: Fixed compilation under Visual Studio 2012 [11]
- o curl_easy_setopt.3: clarify CURLOPT_SSL_VERIFYHOST documentation [12]
- o curl.1: mention that -O does no URL decoding [13]
- o darwinssl: PKCS#12 import feature now requires Lion or later [14]
- o darwinssl: check for SSLSetSessionOption() presence when toggling BEAST
- o configure: Fix test with -Werror=implicit-function-declaration [15]
- o sigpipe: factor out sigpipe_reset from easy.c
- o curl_multi_cleanup: ignore SIGPIPE
- o globbing: curl glob counter mismatch with {} list use [16]
- o parseconfig: dash options can't specified with colon or equals [17]
- o digest: fix CURLAUTH_DIGEST_IE [19]
- o curl.h: <sys/select.h> for OpenBSD [20]
- o darwinssl: Fix #if 10.6.0 for SecKeychainSearch
- o TFTP: fix return codes for connect timeout [21]
- o login options: remove the ;[options] support from CURLOPT_USERPWD [23]
- o imap: Fixed incorrect fallback to clear text authentication
- o parsedate: avoid integer overflow
- o curl.1: document -J doesn't %-decode [25]
- o multi: add timer inaccuracy margin to timeout/connecttimeout [24]
+ o nss: allow to use ECC ciphers if NSS implements them [1]
+ o netrc: Fixed a memory leak in an OOM condition
+ o ftp: fixed a memory leak on wildcard error path
+ o pipeline: Fixed a NULL pointer dereference on OOM
+ o nss: prefer highest available TLS version
+ o 100-continue: fix timeout condition [4]
+ o ssh: Fixed a NULL pointer dereference on OOM condition
+ o formpost: use semicolon in multipart/mixed [5]
+ o --help: add missing --tlsv1.x options
+ o formdata: Fixed memory leak on OOM condition
+ o ConnectionExists: reusing possible HTTP+NTLM connections better [6]
+ o mingw32: fix compilation
+ o chunked decoder: track overflows correctly [8]
+ o curl_easy_setopt.3: add CURL_HTTP_VERSION_2_0
+ o dict: fix memory leak in OOM exit path
+ o valgrind: added suppression on optimized code
+ o curl: output protocol headers using binary mode
+ o tool: Added URL index to password prompt for multiple operations
+ o ConnectionExists: re-use non-NTLM connections better [9]
+ o axtls: call ssl_read repeatedly
+ o multi: make MAXCONNECTS default 4 x number of easy handles function
+ o configure: Fix the --disable-crypto-auth option
+ o multi: ignore SIGPIPE internally
+ o curl.1: update the description of --tlsv1
+ o SFTP: skip reading the dir when NOBODY=1 [10]
+ o easy: Fixed a memory leak on OOM condition
+ o tool: Fixed incorrect return code when setting HTTP request fails
+ o configure: Tiny fix to honor POSIX
+ o tool: Do not output libcurl source for the information only parameters
+ o Rework Open Watcom make files to use standard Wmake features
+ o x509asn: moved out Curl_verifyhost from NSS builds
+ o configure: call it GSS-API
+ o hostcheck: Curl_cert_hostcheck is not used by NSS builds
+ o multi_runsingle: move timestamp into INIT [13]
+ o remote_port: allow connect to port 0
+ o parse_remote_port: error out on illegal port numbers better
+ o ssh: Pass errors from libssh2_sftp_read up the stack
+ o docs: remove documentation on setting up krb4 support
+ o polarssl: build fixes to work with PolarSSL 1.3.x
+ o polarssl: fix possible handshake timeout issue in multi
+ o nss: allow to enable/disable cipher-suites better
+ o ssh: prevent a logic error that could result in an infinite loop
+ o http2: free resources on disconnect
+ o polarssl: avoid extra newlines in debug messages
+ o rtsp: parse "Session:" header properly [14]
+ o trynextip: don't store 'ai' on failed connects
+ o Curl_cert_hostcheck: strip trailing dots in host name and wildcard
 
 This release includes the following known bugs:
 
@@ -74,42 +89,33 @@ This release includes the following known bugs:
 This release would not have looked like this without help, code, reports and
 advice from friends like these:
 
- Alessandro Ghedini, Andreas Rieke, Björn Stenberg, Chris Conlon,
- Christian Grothoff, Christian Weisgerber, Dave Reisner, David Walser,
- Dima Tisnek, Fabian Keil, Felix Yan, Gergely Nagy, Gisle Vanem,
- Ishan SinghLevett, James Dury, Javier Barroso, Jeff King, Kamil Dudka,
- Kim Vandry, Marcin Gryszkalis, Melissa Mears, Michael Osipov, Nick Zitzmann,
- Oliver Kuckertz, Patrick Monnerat, Paul Donohue, Paul Marks, Romulo A. Ceccon,
- Rémy Léone, Sergey Tatarincev, Steve Holme, Tomas Hoger, Tyler Hall,
- Yaakov Selkowitz, Eric Lubin, Petr Bahula, He Qin, Marc Deslauriers
+  Adam Sampson, Arvid Norberg, Brad Spencer, Colin Hogben, Dan Fandrich,
+  Daniel Stenberg, David Ryskalczyk, Fabian Frank, Gaël PORTAY, Gisle Vanem,
+  Hubert Kario, Jeff King, Jiri Malak, Kamil Dudka, Maks Naumov, Marc Hoersken,
+  Michael Osipov, Mike Hasselberg, Nick Zitzmann, Patrick Monnerat, Prash Dush,
+  Remi Gacogne, Rob Davies, Romulo A. Ceccon, Shao Shuchao, Steve Holme,
+  Tatsuhiro Tsujikawa, Thomas Braun, Tiit Pikma, Yehezkel Horowitz,
 
         Thanks! (and sorry if I forgot to mention someone)
 
 References to bug reports and discussions on issues:
 
- [1] = https://github.com/bagder/curl/pull/79
- [2] = http://curl.haxx.se/mail/lib-2013-10/0089.html
- [3] = http://curl.haxx.se/mail/lib-2013-10/0096.html
- [4] = http://curl.haxx.se/mail/lib-2013-10/0113.html
- [5] = http://sourceforge.net/p/curl/bugs/1291
- [6] = http://sourceforge.net/p/curl/bugs/1292
- [7] = http://curl.haxx.se/mail/lib-2013-10/0062.html
- [8] = http://curl.haxx.se/mail/lib-2013-10/0242.html
- [9] = http://curl.haxx.se/bug/view.cgi?id=1295
- [10] = http://sourceforge.net/p/curl/bugs/1064
- [11] = http://curl.haxx.se/mail/lib-2013-11/0057.html
- [12] = https://github.com/bagder/curl/pull/83
- [13] = http://sourceforge.net/p/curl/bugs/1299
- [14] = http://curl.haxx.se/mail/lib-2013-11/0076.html
- [15] = http://curl.haxx.se/bug/view.cgi?id=1304
- [16] = http://curl.haxx.se/bug/view.cgi?id=1305
- [17] = http://curl.haxx.se/bug/view.cgi?id=1297
- [18] = http://curl.haxx.se/mail/lib-2013-11/0162.html
- [19] = http://curl.haxx.se/bug/view.cgi?id=1308
- [20] = http://curl.haxx.se/mail/lib-2013-12/0017.html
- [21] = http://curl.haxx.se/bug/view.cgi?id=1310
- [22] = http://curl.haxx.se/dev/security.html
- [23] = http://curl.haxx.se/bug/view.cgi?id=1311
- [24] = http://curl.haxx.se/bug/view.cgi?id=1298
- [25] = http://curl.haxx.se/bug/view.cgi?id=1294
- [26] = http://curl.haxx.se/docs/adv_20131217.html
+ [1] = https://bugzilla.redhat.com/1058776
+ [2] = http://curl.haxx.se/mail/lib-2014-01/0183.html
+ [3] = http://curl.haxx.se/mail/archive-2013-11/0006.html
+ [4] = http://curl.haxx.se/bug/view.cgi?id=1334
+ [5] = http://curl.haxx.se/bug/view.cgi?id=1333
+ [6] = http://curl.haxx.se/mail/lib-2014-02/0100.html
+ [7] = http://curl.haxx.se/libcurl/c/curl_easy_setopt.html#CURLOPTEXPECT100TIMEOUTMS
+ [8] = http://curl.haxx.se/mail/lib-2014-02/0097.html
+ [9] = http://thread.gmane.org/gmane.comp.version-control.git/242213
+ [10] = http://curl.haxx.se/mail/lib-2014-02/0155.html
+ [11] = http://curl.haxx.se/mail/lib-2014-02/0243.html
+ [12] = https://github.com/bagder/curl/pull/93
+ [13] = http://curl.haxx.se/mail/lib-2014-02/0036.html
+ [14] = http://curl.haxx.se/mail/lib-2014-03/0134.html
+ [15] = http://curl.haxx.se/bug/view.cgi?id=1337
+ [16] = http://curl.haxx.se/docs/adv_20140326A.html
+ [17] = http://curl.haxx.se/docs/adv_20140326B.html
+ [18] = http://curl.haxx.se/docs/adv_20140326C.html
+ [19] = http://curl.haxx.se/docs/adv_20140326D.html
