@@ -18,9 +18,9 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>c29ab6c1c3fa125a53d3da28ed549c03</string>
+              <string>2658b5d362eb78f4acd79c8fc67f936c</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/3pl_3p-openssl-update/rev/288991/arch/Darwin/installer/openssl-1.0.1g-darwin-20140411.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/3pl_3p-openssl-update/rev/290083/arch/Darwin/installer/openssl-1.0.1g-darwin-20140515.tar.bz2</string>
             </map>
             <key>name</key>
             <string>darwin</string>
@@ -30,9 +30,9 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>cfbe3efd2e274edba8f3ee39e6925994</string>
+              <string>5a260d60cd3c91fe21f969f2eb478e53</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/3pl_3p-openssl-update/rev/288991/arch/Linux/installer/openssl-1.0.1g-linux-20140412.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/3pl_3p-openssl-update/rev/290083/arch/Linux/installer/openssl-1.0.1g-linux-20140516.tar.bz2</string>
             </map>
             <key>name</key>
             <string>linux</string>
@@ -42,9 +42,9 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>035716f4a1120585b4340db23d92be1f</string>
+              <string>6a816d0af5481d717a681e3fb25c0a94</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/3pl_3p-openssl-update/rev/288991/arch/CYGWIN/installer/openssl-1.0.1g-windows-20140411.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/3pl_3p-openssl-update/rev/290083/arch/CYGWIN/installer/openssl-1.0.1g-windows-20140515.tar.bz2</string>
             </map>
             <key>name</key>
             <string>windows</string>
@@ -70,9 +70,9 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>c6666f9231da49dac7388a306beca450</string>
+              <string>44f898ad513cc40ace8609073a594fa5</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/3pl_3p-zlib-update/rev/288987/arch/Darwin/installer/zlib-1.2.8-darwin-20140411.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/3pl_3p-zlib-update/rev/290080/arch/Darwin/installer/zlib-1.2.8-darwin-20140515.tar.bz2</string>
             </map>
             <key>name</key>
             <string>darwin</string>
@@ -82,9 +82,9 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>585880fa78da054739e3c60d3bd29bd2</string>
+              <string>8db178c604df50682d85bb8a78065903</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/3pl_3p-zlib-update/rev/288987/arch/Linux/installer/zlib-1.2.8-linux-20140412.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/3pl_3p-zlib-update/rev/290080/arch/Linux/installer/zlib-1.2.8-linux-20140515.tar.bz2</string>
             </map>
             <key>name</key>
             <string>linux</string>
@@ -94,9 +94,9 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>5f23fb919a365b19a3d5e1ba2f57436a</string>
+              <string>99157bfc04655ca870d4c5ddd4358f34</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/3pl_3p-zlib-update/rev/288987/arch/CYGWIN/installer/zlib-1.2.8-windows-20140411.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/3pl_3p-zlib-update/rev/290080/arch/CYGWIN/installer/zlib-1.2.8-windows-20140515.tar.bz2</string>
             </map>
             <key>name</key>
             <string>windows</string>
@@ -106,6 +106,10 @@
     </map>
     <key>package_description</key>
     <map>
+      <key>description</key>
+      <string>Library for transferring data specified with URL syntax</string>
+      <key>copyright</key>
+      <string>Copyright (c) 1996 - 2013, Daniel Stenberg, (daniel@haxx.se).</string>
       <key>license</key>
       <string>curl</string>
       <key>license_file</key>
@@ -141,6 +145,7 @@
           <array>
             <string>LICENSES/curl.txt</string>
             <string>include/curl/*.h</string>
+            <string>docs/curl/README.Linden</string>
           </array>
           <key>name</key>
           <string>common</string>
@@ -206,14 +211,12 @@
           <string>windows</string>
         </map>
       </map>
-      <key>source</key>
-      <string>http://hg.lindenlab.com/brad/curl-autobuild</string>
       <key>source_directory</key>
       <string>curl</string>
       <key>source_type</key>
       <string>hg</string>
       <key>version</key>
-      <string>7.34.0</string>
+      <string>7.36.0</string>
     </map>
     <key>type</key>
     <string>autobuild</string>

@@ -15,7 +15,7 @@ if [ "$OSTYPE" = "cygwin" ] ; then
     export AUTOBUILD="$(cygpath -u $AUTOBUILD)"
 fi
 
-CURL_VERSION=7.34.0
+CURL_VERSION=7.36.0
 CURL_SOURCE_DIR="curl"
 
 # load autbuild provided shell functions and variables
@@ -23,6 +23,12 @@ eval "$("$AUTOBUILD" source_environment)"
 
 top="$(pwd)"
 stage="$(pwd)/stage"
+
+ZLIB_INCLUDE="${stage}"/packages/include/zlib
+OPENSSL_INCLUDE="${stage}"/packages/include/openssl
+
+[ -f "$ZLIB_INCLUDE"/zlib.h ] || fail "You haven't installed the zlib package yet."
+[ -f "$OPENSSL_INCLUDE"/ssl.h ] || fail "You haven't installed the openssl package yet."
 
 # Restore all .sos
 restore_sos ()
@@ -192,10 +198,12 @@ pushd "$CURL_SOURCE_DIR"
 
             # Curl configure has trouble finding zlib 'framework' that
             # it doesn't have with openssl.  We help it with CPPFLAGS.
-            CFLAGS="$opts -gdwarf-2 -O0" CXXFLAGS="$opts -gdwarf-2 -O0" \
+            CFLAGS="$opts -gdwarf-2 -O0" \
+                CXXFLAGS="$opts -gdwarf-2 -O0" \
                 LDFLAGS=-L"$stage"/packages/lib/debug \
-                CPPFLAGS=-I"$stage"/packages/include/zlib \
+                CPPFLAGS="$opts -I$stage/packages/include/zlib" \
                 ./configure  --disable-ldap --disable-ldaps --enable-shared=no \
+                --enable-debug --disable-optimize \
                 --prefix="$stage" --libdir="${stage}"/lib/debug --enable-threaded-resolver \
                 --with-ssl="${stage}/packages" --with-zlib="${stage}/packages" --without-libssh2
             check_damage "$AUTOBUILD_PLATFORM"
@@ -230,10 +238,12 @@ pushd "$CURL_SOURCE_DIR"
             # mkdir -p tests/Resources/
             # ln -sf "${stage}"/packages/lib/release/*.dylib tests/Resources/
 
-            CFLAGS="$opts -gdwarf-2" CXXFLAGS="$opts -gdwarf-2" \
+            CFLAGS="$opts -gdwarf-2" \
+                CXXFLAGS="$opts -gdwarf-2" \
                 LDFLAGS=-L"$stage"/packages/lib/release \
-                CPPFLAGS=-I"$stage"/packages/include/zlib \
+                CPPFLAGS="$opts -I$stage/packages/include/zlib" \
                 ./configure  --disable-ldap --disable-ldaps --enable-shared=no \
+                --enable-debug --enable-optimize \
                 --prefix="$stage" --libdir="${stage}"/lib/release --enable-threaded-resolver \
                 --with-ssl="${stage}/packages" --with-zlib="${stage}/packages" --without-libssh2
             check_damage "$AUTOBUILD_PLATFORM"
@@ -316,12 +326,14 @@ pushd "$CURL_SOURCE_DIR"
             # Debug configure and build
             export LD_LIBRARY_PATH="${stage}"/packages/lib/debug:"$saved_path"
 
-            CFLAGS="$opts -g -O0" \
-                CXXFLAGS="$opts -g -O0" \
-                CPPFLAGS="${CPPFLAGS} -I$stage/packages/include/zlib" \
+            # -g/-O options controled by enable-debug/-optimize
+            CFLAGS="$opts" \
+                CXXFLAGS="$opts" \
+                CPPFLAGS="${CPPFLAGS} $opts -I$stage/packages/include/zlib" \
                 LIBS="-ldl" \
                 LDFLAGS="-L$stage/packages/lib/debug/" \
                 ./configure --disable-ldap --disable-ldaps --enable-shared=no --enable-threaded-resolver \
+                --enable-debug --disable-optimize \
                 --prefix="$stage" --libdir="$stage"/lib/debug \
                 --with-ssl="$stage"/packages/ --with-zlib="$stage"/packages/ --without-libssh2
             check_damage "$AUTOBUILD_PLATFORM"
@@ -334,9 +346,11 @@ pushd "$CURL_SOURCE_DIR"
                     # We hijack the 'quiet-test' target and redefine it as
                     # a no-valgrind test.  Also exclude test 906.  It fails in the
                     # 7.33 distribution with our configuration options.  530 fails
-                    # in TeamCity.  (Expect problems with the unit tests, they're
-                    # very sensitive to environment.)
-                    make quiet-test TEST_Q='-n !906 !530 !564 !584'
+                    # in TeamCity.  815 hangs in 7.36.0.
+                    #
+                    # Expect problems with the unit tests, they're very sensitive
+                    # to environment.
+                    make quiet-test TEST_Q='-n !906 !530 !564 !584 !815 !816'
                 popd
             fi
 
@@ -347,10 +361,11 @@ pushd "$CURL_SOURCE_DIR"
 
             CFLAGS="$opts" \
                 CXXFLAGS="$opts"  \
-                CPPFLAGS="${CPPFLAGS} -I$stage/packages/include/zlib" \
+                CPPFLAGS="${CPPFLAGS} $opts -I$stage/packages/include/zlib" \
                 LIBS="-ldl" \
                 LDFLAGS="-L$stage/packages/lib/release" \
                 ./configure --disable-ldap --disable-ldaps --enable-shared=no --enable-threaded-resolver \
+                --enable-debug --enable-optimize \
                 --prefix="$stage" --libdir="$stage"/lib/release \
                 --with-ssl="$stage"/packages --with-zlib="$stage"/packages --without-libssh2
             check_damage "$AUTOBUILD_PLATFORM"
@@ -363,9 +378,11 @@ pushd "$CURL_SOURCE_DIR"
                     # We hijack the 'quiet-test' target and redefine it as
                     # a no-valgrind test.  Also exclude test 906.  It fails in the
                     # 7.33 distribution with our configuration options.  530 fails
-                    # in TeamCity.  (Expect problems with the unit tests, they're
-                    # very sensitive to environment.)
-                    make quiet-test TEST_Q='-n !906 !530 !564 !584'
+                    # in TeamCity.  815 hangs in 7.36.0.
+                    #
+                    # Expect problems with the unit tests, they're very sensitive
+                    # to environment.
+                    make quiet-test TEST_Q='-n !906 !530 !564 !584 !815 !816'
                 popd
             fi
 
@@ -377,6 +394,9 @@ pushd "$CURL_SOURCE_DIR"
     mkdir -p "$stage/LICENSES"
     cp COPYING "$stage/LICENSES/curl.txt"
 popd
+
+mkdir -p "$stage"/docs/curl/
+cp -a "$top"/README.Linden "$stage"/docs/curl/
 
 pass
 

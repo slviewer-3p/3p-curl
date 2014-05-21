@@ -25,6 +25,20 @@
 
          hg diff -rcurrent curl/Makefile
 
+    [ ]  Examine the build logs to make certain that the data type
+         primitives and their formats are in agreement.  Good 
+         example from a 32-bit Linux build:
+
+         checking size of long... 4
+         checking size of void*... 4
+         checking for 64-bit curl_off_t data type... int64_t
+         checking size of curl_off_t... 8
+         checking formatting string directive for curl_off_t... "lld"
+         checking formatting string directive for unsigned curl_off_t... "llu"
+         checking constant suffix string for curl_off_t... LL
+         checking constant suffix string for unsigned curl_off_t... ULL
+
+
     [ ]  The curl configuration procedure has trouble locating custom
          versions of support libraries (zlib, ssl, ssh2, etc.).  So
          examing the build log and verify that the right libraries are
@@ -83,6 +97,13 @@
          .dylibs or set LD_LIBRARY_PATH to locate OpenSSL shared
          libraries at runtime.  (build-cmd.sh does this for its own
          operations.)
+
+         Confirm a fetch and the progress display works as expected:
+
+         $ stage/bin/curl -o /dev/null http://example.com/
+           % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                          Dload  Upload   Total   Spent    Left  Speed
+         100  1270  100  1270    0     0  55548      0 --:--:-- --:--:-- --:--:-- 57727
 
     [ ]  On Mac, unit tests are disabled by default because they invoke
          a lot of network activity that triggers the OS X firewall.
@@ -207,7 +228,7 @@
     Bumped timestamp in tests/data/test172 so test runs.  Not
     certain how this ever worked, it's stale by several years.
     Watch for fixes from upstream and restore the file when 
-    possible.
+    possible.  (Fixed in 7.36.0)
 
 
 3.  Source Origin
@@ -253,11 +274,23 @@
 
 A.  Appendix A - Notes on 'vendor' branch maintenance
 
-    Updating to 7.34.0 from 7.24.0 while keeping file continuity in
-    the 'vendor' branch was challenging.  The library had been
-    reorganized (for the better) and that confused 'hg addremove' more
-    than usual.  This describes what was found during the process and
-    hopefully forewarns the next developer.
+    7.36.0 from 7.34.0.
+
+    This wasquite a bit easier than the effort below.  With the
+    following three commands, only one deleted file ended up being
+    split into two new files.  Good enough for this effort.
+
+    * hg addremove -X curl/docs/examples/pop3slist.c -X curl/docs/examples/imap.c  -s 60
+    * hg rm curl/docs/examples/imap.c
+    * hg rm curl/docs/examples/pop3slist.c
+
+    7.34.0 from 7.24.0.
+
+    Keeping file continuity in the 'vendor' branch was challenging.
+    The library had been reorganized (for the better) and that
+    confused 'hg addremove' more than usual.  This describes what was
+    found during the process and hopefully forewarns the next
+    developer.
 
     After laying down the 7.34.0 source, a simple 'addremove' run
     in dry-run mode produces a long list of add and remove operations
