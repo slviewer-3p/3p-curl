@@ -15,7 +15,7 @@ if [ "$OSTYPE" = "cygwin" ] ; then
     export AUTOBUILD="$(cygpath -u $AUTOBUILD)"
 fi
 
-CURL_VERSION=7.36.0
+CURL_VERSION=7.37.0
 CURL_SOURCE_DIR="curl"
 
 # load autbuild provided shell functions and variables
@@ -198,12 +198,15 @@ pushd "$CURL_SOURCE_DIR"
 
             # Curl configure has trouble finding zlib 'framework' that
             # it doesn't have with openssl.  We help it with CPPFLAGS.
+
+            # -g/-O options controled by --enable-debug/-optimize.  Unfortunately,
+            # --enable-debug also defines DEBUGBUILD which changes behaviors.
             CFLAGS="$opts -gdwarf-2 -O0" \
                 CXXFLAGS="$opts -gdwarf-2 -O0" \
                 LDFLAGS=-L"$stage"/packages/lib/debug \
                 CPPFLAGS="$opts -I$stage/packages/include/zlib" \
                 ./configure  --disable-ldap --disable-ldaps --enable-shared=no \
-                --enable-debug --disable-optimize \
+                --disable-debug --disable-curldebug --disable-optimize \
                 --prefix="$stage" --libdir="${stage}"/lib/debug --enable-threaded-resolver \
                 --with-ssl="${stage}/packages" --with-zlib="${stage}/packages" --without-libssh2
             check_damage "$AUTOBUILD_PLATFORM"
@@ -243,7 +246,7 @@ pushd "$CURL_SOURCE_DIR"
                 LDFLAGS=-L"$stage"/packages/lib/release \
                 CPPFLAGS="$opts -I$stage/packages/include/zlib" \
                 ./configure  --disable-ldap --disable-ldaps --enable-shared=no \
-                --enable-debug --enable-optimize \
+                --disable-debug --disable-curldebug --enable-optimize \
                 --prefix="$stage" --libdir="${stage}"/lib/release --enable-threaded-resolver \
                 --with-ssl="${stage}/packages" --with-zlib="${stage}/packages" --without-libssh2
             check_damage "$AUTOBUILD_PLATFORM"
@@ -326,14 +329,15 @@ pushd "$CURL_SOURCE_DIR"
             # Debug configure and build
             export LD_LIBRARY_PATH="${stage}"/packages/lib/debug:"$saved_path"
 
-            # -g/-O options controled by enable-debug/-optimize
+            # -g/-O options controled by --enable-debug/-optimize.  Unfortunately,
+            # --enable-debug also defines DEBUGBUILD which changes behaviors.
             CFLAGS="$opts" \
                 CXXFLAGS="$opts" \
                 CPPFLAGS="${CPPFLAGS} $opts -I$stage/packages/include/zlib" \
                 LIBS="-ldl" \
                 LDFLAGS="-L$stage/packages/lib/debug/" \
                 ./configure --disable-ldap --disable-ldaps --enable-shared=no --enable-threaded-resolver \
-                --enable-debug --disable-optimize \
+                --disable-debug --disable-curldebug --disable-optimize \
                 --prefix="$stage" --libdir="$stage"/lib/debug \
                 --with-ssl="$stage"/packages/ --with-zlib="$stage"/packages/ --without-libssh2
             check_damage "$AUTOBUILD_PLATFORM"
@@ -346,11 +350,11 @@ pushd "$CURL_SOURCE_DIR"
                     # We hijack the 'quiet-test' target and redefine it as
                     # a no-valgrind test.  Also exclude test 906.  It fails in the
                     # 7.33 distribution with our configuration options.  530 fails
-                    # in TeamCity.  815 hangs in 7.36.0.
+                    # in TeamCity.  815 hangs in 7.36.0 fixed in 7.37.0.
                     #
                     # Expect problems with the unit tests, they're very sensitive
                     # to environment.
-                    make quiet-test TEST_Q='-n !906 !530 !564 !584 !815 !816'
+                    make quiet-test TEST_Q='-n !906 !530 !564 !584'
                 popd
             fi
 
@@ -365,7 +369,7 @@ pushd "$CURL_SOURCE_DIR"
                 LIBS="-ldl" \
                 LDFLAGS="-L$stage/packages/lib/release" \
                 ./configure --disable-ldap --disable-ldaps --enable-shared=no --enable-threaded-resolver \
-                --enable-debug --enable-optimize \
+                --disable-debug --disable-curldebug --enable-optimize \
                 --prefix="$stage" --libdir="$stage"/lib/release \
                 --with-ssl="$stage"/packages --with-zlib="$stage"/packages --without-libssh2
             check_damage "$AUTOBUILD_PLATFORM"
@@ -378,11 +382,11 @@ pushd "$CURL_SOURCE_DIR"
                     # We hijack the 'quiet-test' target and redefine it as
                     # a no-valgrind test.  Also exclude test 906.  It fails in the
                     # 7.33 distribution with our configuration options.  530 fails
-                    # in TeamCity.  815 hangs in 7.36.0.
+                    # in TeamCity.  815 hangs in 7.36.0 fixed in 7.37.0.
                     #
                     # Expect problems with the unit tests, they're very sensitive
                     # to environment.
-                    make quiet-test TEST_Q='-n !906 !530 !564 !584 !815 !816'
+                    make quiet-test TEST_Q='-n !906 !530 !564 !584'
                 popd
             fi
 

@@ -87,8 +87,8 @@
          verify function.  The '--version' option will give useful
          library information:
 
-         $ stage/bin/curl --version 
-         curl 7.34.0 (x86_64-unknown-linux-gnu) libcurl/7.34.0 OpenSSL/1.0.1g zlib/1.2.8
+         $ stage/bin/curl --version
+         curl 7.37.0 (x86_64-unknown-linux-gnu) libcurl/7.37.0 OpenSSL/1.0.1g zlib/1.2.8
          Protocols: dict file ftp ftps gopher http https imap imaps pop3 pop3s rtsp smtp smtps telnet tftp 
          Features: AsynchDNS IPv6 Largefile NTLM NTLM_WB SSL libz TLS-SRP 
 
@@ -232,6 +232,12 @@
 
 
 3.  Source Origin
+
+    7.37.0:
+      http://curl.haxx.se/download/curl-7.37.0.tar.gz
+
+    7.36.0:
+      http://curl.haxx.se/download/curl-7.36.0.tar.gz
 
     7.34.0:
       http://curl.haxx.se/download/curl-7.34.0.tar.gz
