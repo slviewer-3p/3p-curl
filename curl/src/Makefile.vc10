@@ -113,12 +113,12 @@ RTLIBD = /MTd
 !ENDIF
 
 ## Release
-CCR   = cl.exe $(RTLIB) /O2 /DNDEBUG
+CCR   = cl.exe $(RTLIB) /O2 /Z7 /DNDEBUG
 LINKR = link.exe /incremental:no /libpath:"../lib"
 RCR   = rc.exe /dDEBUGBUILD=0
 
 ## Debug
-CCD   = cl.exe $(RTLIBD) /Gm /ZI /Od /D_DEBUG /RTC1
+CCD   = cl.exe $(RTLIBD) /Z7 /Od /D_DEBUG /RTC1
 LINKD = link.exe /incremental:yes /debug /libpath:"../lib"
 RCD   = rc.exe /dDEBUGBUILD=1
 

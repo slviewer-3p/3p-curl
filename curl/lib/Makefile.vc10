@@ -103,8 +103,8 @@ WINDOWS_SDK_PATH = "$(PROGRAMFILES)\Microsoft SDK"
 #############################################################
 ## Nothing more to do below this line!
 
-CCNODBG      = cl.exe /O2 /DNDEBUG
-CCDEBUG      = cl.exe /Od /Gm /Zi /D_DEBUG /RTC1
+CCNODBG      = cl.exe /O2 /Z7 /DNDEBUG
+CCDEBUG      = cl.exe /Od /Z7 /D_DEBUG /RTC1
 CFLAGSSSL    = /DUSE_SSLEAY /DUSE_OPENSSL /I "$(OPENSSL_PATH)"
 CFLAGSWINSSL = /DUSE_SCHANNEL
 CFLAGSSSH2   = /DUSE_LIBSSH2 /DCURL_DISABLE_LDAP /DHAVE_LIBSSH2 /DHAVE_LIBSSH2_H /DLIBSSH2_WIN32 /DLIBSSH2_LIBRARY /I "$(LIBSSH2_PATH)/include"

@@ -180,6 +180,9 @@
     files. If you upgrade curl, be sure to carry those modifications
     forward, or find another way to link in the autobuild libraries.
 
+    Debug and Release builds for all targets use /Z7 flag (and lost
+    any /Gm flag) anticipating static library builds.
+
   2.4  src/Makefile.vc10 Modified
 
     Similar changes to build curl.exe on Windows.  Only a
@@ -715,7 +718,7 @@ tagged the version 1.0 vendor drop), and then merge the differences
 between the version 1.0 and version 1.1 into our default branch.
 
  $ hg tag -f -r tip current
- $ Optional:  hg tag -r current 1.1
+ $ hg tag -r current 1.1
  $ hg update default
  $ hg merge vendor
  # resolve all the conflicts between their changes and our changes
@@ -738,7 +741,7 @@ like to establish are:
    the 'vendor' branch.  Will almost always be at or close to branch
    head.
 
- * '<version>' Ttag on the 'vendor' branch pointing to a verbatim
+ * '<version>' Tag on the 'vendor' branch pointing to a verbatim
    checkin of a 3rd-party's <version> release.  Example:  '7.21.1' for
    a particular version of libcurl we have used.
 
