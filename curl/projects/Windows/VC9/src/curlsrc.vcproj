@@ -53,11 +53,6 @@
 				StringPooling="true"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
-				PrecompiledHeaderFile="$(IntDir)$(TargetName).pch"
-				AssemblerListingLocation="$(IntDir)"
-				ObjectFile="$(IntDir)\"
-				ProgramDataBaseFileName="$(TargetDir)$(TargetName).pdb"
-				XMLDocumentationFileName="$(IntDir)"
 				WarningLevel="3"
 				SuppressStartupBanner="true"
 			/>
@@ -145,11 +140,6 @@
 				StringPooling="true"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
-				PrecompiledHeaderFile="$(IntDir)$(TargetName).pch"
-				AssemblerListingLocation="$(IntDir)"
-				ObjectFile="$(IntDir)\"
-				ProgramDataBaseFileName="$(TargetDir)$(TargetName).pdb"
-				XMLDocumentationFileName="$(IntDir)"
 				WarningLevel="3"
 				SuppressStartupBanner="true"
 			/>
@@ -236,11 +226,6 @@
 				StringPooling="true"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
-				PrecompiledHeaderFile="$(IntDir)$(TargetName).pch"
-				AssemblerListingLocation="$(IntDir)"
-				ObjectFile="$(IntDir)\"
-				ProgramDataBaseFileName="$(TargetDir)$(TargetName).pdb"
-				XMLDocumentationFileName="$(IntDir)"
 				WarningLevel="3"
 				SuppressStartupBanner="true"
 			/>
@@ -328,11 +313,6 @@
 				StringPooling="true"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
-				PrecompiledHeaderFile="$(IntDir)$(TargetName).pch"
-				AssemblerListingLocation="$(IntDir)"
-				ObjectFile="$(IntDir)\"
-				ProgramDataBaseFileName="$(TargetDir)$(TargetName).pdb"
-				XMLDocumentationFileName="$(IntDir)"
 				WarningLevel="3"
 				SuppressStartupBanner="true"
 			/>
@@ -418,11 +398,6 @@
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
-				PrecompiledHeaderFile="$(IntDir)$(TargetName).pch"
-				AssemblerListingLocation="$(IntDir)"
-				ObjectFile="$(IntDir)\"
-				ProgramDataBaseFileName="$(TargetDir)$(TargetName).pdb"
-				XMLDocumentationFileName="$(IntDir)"
 				WarningLevel="3"
 				SuppressStartupBanner="true"
 				DebugInformationFormat="3"
@@ -512,11 +487,6 @@
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
-				PrecompiledHeaderFile="$(IntDir)$(TargetName).pch"
-				AssemblerListingLocation="$(IntDir)"
-				ObjectFile="$(IntDir)\"
-				ProgramDataBaseFileName="$(TargetDir)$(TargetName).pdb"
-				XMLDocumentationFileName="$(IntDir)"
 				WarningLevel="3"
 				SuppressStartupBanner="true"
 				DebugInformationFormat="3"
@@ -605,11 +575,6 @@
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
-				PrecompiledHeaderFile="$(IntDir)$(TargetName).pch"
-				AssemblerListingLocation="$(IntDir)"
-				ObjectFile="$(IntDir)\"
-				ProgramDataBaseFileName="$(TargetDir)$(TargetName).pdb"
-				XMLDocumentationFileName="$(IntDir)"
 				WarningLevel="3"
 				SuppressStartupBanner="true"
 				DebugInformationFormat="3"
@@ -699,11 +664,6 @@
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
-				PrecompiledHeaderFile="$(IntDir)$(TargetName).pch"
-				AssemblerListingLocation="$(IntDir)"
-				ObjectFile="$(IntDir)\"
-				ProgramDataBaseFileName="$(TargetDir)$(TargetName).pdb"
-				XMLDocumentationFileName="$(IntDir)"
 				WarningLevel="3"
 				SuppressStartupBanner="true"
 				DebugInformationFormat="3"
@@ -792,11 +752,6 @@
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
-				PrecompiledHeaderFile="$(IntDir)$(TargetName).pch"
-				AssemblerListingLocation="$(IntDir)"
-				ObjectFile="$(IntDir)\"
-				ProgramDataBaseFileName="$(TargetDir)$(TargetName).pdb"
-				XMLDocumentationFileName="$(IntDir)"
 				WarningLevel="3"
 				SuppressStartupBanner="true"
 				DebugInformationFormat="3"
@@ -886,11 +841,6 @@
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
-				PrecompiledHeaderFile="$(IntDir)$(TargetName).pch"
-				AssemblerListingLocation="$(IntDir)"
-				ObjectFile="$(IntDir)\"
-				ProgramDataBaseFileName="$(TargetDir)$(TargetName).pdb"
-				XMLDocumentationFileName="$(IntDir)"
 				WarningLevel="3"
 				SuppressStartupBanner="true"
 				DebugInformationFormat="3"
@@ -979,11 +929,6 @@
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
-				PrecompiledHeaderFile="$(IntDir)$(TargetName).pch"
-				AssemblerListingLocation="$(IntDir)"
-				ObjectFile="$(IntDir)\"
-				ProgramDataBaseFileName="$(TargetDir)$(TargetName).pdb"
-				XMLDocumentationFileName="$(IntDir)"
 				WarningLevel="3"
 				SuppressStartupBanner="true"
 				DebugInformationFormat="3"
@@ -1073,11 +1018,6 @@
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
-				PrecompiledHeaderFile="$(IntDir)$(TargetName).pch"
-				AssemblerListingLocation="$(IntDir)"
-				ObjectFile="$(IntDir)\"
-				ProgramDataBaseFileName="$(TargetDir)$(TargetName).pdb"
-				XMLDocumentationFileName="$(IntDir)"
 				WarningLevel="3"
 				SuppressStartupBanner="true"
 				DebugInformationFormat="3"
@@ -1167,11 +1107,6 @@
 				StringPooling="true"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
-				PrecompiledHeaderFile="$(IntDir)$(TargetName).pch"
-				AssemblerListingLocation="$(IntDir)"
-				ObjectFile="$(IntDir)\"
-				ProgramDataBaseFileName="$(TargetDir)$(TargetName).pdb"
-				XMLDocumentationFileName="$(IntDir)"
 				WarningLevel="3"
 				SuppressStartupBanner="true"
 			/>
@@ -1259,11 +1194,6 @@
 				StringPooling="true"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
-				PrecompiledHeaderFile="$(IntDir)$(TargetName).pch"
-				AssemblerListingLocation="$(IntDir)"
-				ObjectFile="$(IntDir)\"
-				ProgramDataBaseFileName="$(TargetDir)$(TargetName).pdb"
-				XMLDocumentationFileName="$(IntDir)"
 				WarningLevel="3"
 				SuppressStartupBanner="true"
 			/>
@@ -1350,11 +1280,6 @@
 				StringPooling="true"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
-				PrecompiledHeaderFile="$(IntDir)$(TargetName).pch"
-				AssemblerListingLocation="$(IntDir)"
-				ObjectFile="$(IntDir)\"
-				ProgramDataBaseFileName="$(TargetDir)$(TargetName).pdb"
-				XMLDocumentationFileName="$(IntDir)"
 				WarningLevel="3"
 				SuppressStartupBanner="true"
 			/>
@@ -1442,11 +1367,6 @@
 				StringPooling="true"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
-				PrecompiledHeaderFile="$(IntDir)$(TargetName).pch"
-				AssemblerListingLocation="$(IntDir)"
-				ObjectFile="$(IntDir)\"
-				ProgramDataBaseFileName="$(TargetDir)$(TargetName).pdb"
-				XMLDocumentationFileName="$(IntDir)"
 				WarningLevel="3"
 				SuppressStartupBanner="true"
 			/>
@@ -1532,11 +1452,6 @@
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
-				PrecompiledHeaderFile="$(IntDir)$(TargetName).pch"
-				AssemblerListingLocation="$(IntDir)"
-				ObjectFile="$(IntDir)\"
-				ProgramDataBaseFileName="$(TargetDir)$(TargetName).pdb"
-				XMLDocumentationFileName="$(IntDir)"
 				WarningLevel="3"
 				SuppressStartupBanner="true"
 				DebugInformationFormat="3"
@@ -1626,11 +1541,6 @@
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
-				PrecompiledHeaderFile="$(IntDir)$(TargetName).pch"
-				AssemblerListingLocation="$(IntDir)"
-				ObjectFile="$(IntDir)\"
-				ProgramDataBaseFileName="$(TargetDir)$(TargetName).pdb"
-				XMLDocumentationFileName="$(IntDir)"
 				WarningLevel="3"
 				SuppressStartupBanner="true"
 				DebugInformationFormat="3"
@@ -1720,11 +1630,6 @@
 				StringPooling="true"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
-				PrecompiledHeaderFile="$(IntDir)$(TargetName).pch"
-				AssemblerListingLocation="$(IntDir)"
-				ObjectFile="$(IntDir)\"
-				ProgramDataBaseFileName="$(TargetDir)$(TargetName).pdb"
-				XMLDocumentationFileName="$(IntDir)"
 				WarningLevel="3"
 				SuppressStartupBanner="true"
 			/>
@@ -1812,11 +1717,6 @@
 				StringPooling="true"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
-				PrecompiledHeaderFile="$(IntDir)$(TargetName).pch"
-				AssemblerListingLocation="$(IntDir)"
-				ObjectFile="$(IntDir)\"
-				ProgramDataBaseFileName="$(TargetDir)$(TargetName).pdb"
-				XMLDocumentationFileName="$(IntDir)"
 				WarningLevel="3"
 				SuppressStartupBanner="true"
 			/>
@@ -1902,11 +1802,6 @@
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
-				PrecompiledHeaderFile="$(IntDir)$(TargetName).pch"
-				AssemblerListingLocation="$(IntDir)"
-				ObjectFile="$(IntDir)\"
-				ProgramDataBaseFileName="$(TargetDir)$(TargetName).pdb"
-				XMLDocumentationFileName="$(IntDir)"
 				WarningLevel="3"
 				SuppressStartupBanner="true"
 				DebugInformationFormat="3"
@@ -1925,7 +1820,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="ws2_32.lib wldap32.lib libcurld.lib libeay32.lib ssleay32.lib"
+				AdditionalDependencies="crypt32.lib ws2_32.lib wldap32.lib libcurld.lib libeay32.lib ssleay32.lib"
 				OutputFile="$(OutDir)\curld.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
@@ -1996,11 +1891,6 @@
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
-				PrecompiledHeaderFile="$(IntDir)$(TargetName).pch"
-				AssemblerListingLocation="$(IntDir)"
-				ObjectFile="$(IntDir)\"
-				ProgramDataBaseFileName="$(TargetDir)$(TargetName).pdb"
-				XMLDocumentationFileName="$(IntDir)"
 				WarningLevel="3"
 				SuppressStartupBanner="true"
 				DebugInformationFormat="3"
@@ -2019,7 +1909,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="ws2_32.lib wldap32.lib libcurld.lib libeay32.lib ssleay32.lib"
+				AdditionalDependencies="crypt32.lib ws2_32.lib wldap32.lib libcurld.lib libeay32.lib ssleay32.lib"
 				OutputFile="$(OutDir)\curld.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
@@ -2090,11 +1980,6 @@
 				StringPooling="true"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
-				PrecompiledHeaderFile="$(IntDir)$(TargetName).pch"
-				AssemblerListingLocation="$(IntDir)"
-				ObjectFile="$(IntDir)\"
-				ProgramDataBaseFileName="$(TargetDir)$(TargetName).pdb"
-				XMLDocumentationFileName="$(IntDir)"
 				WarningLevel="3"
 				SuppressStartupBanner="true"
 			/>
@@ -2112,7 +1997,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="ws2_32.lib wldap32.lib libcurl.lib libeay32.lib ssleay32.lib"
+				AdditionalDependencies="crypt32.lib ws2_32.lib wldap32.lib libcurl.lib libeay32.lib ssleay32.lib"
 				OutputFile="$(OutDir)\curl.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
@@ -2182,11 +2067,6 @@
 				StringPooling="true"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
-				PrecompiledHeaderFile="$(IntDir)$(TargetName).pch"
-				AssemblerListingLocation="$(IntDir)"
-				ObjectFile="$(IntDir)\"
-				ProgramDataBaseFileName="$(TargetDir)$(TargetName).pdb"
-				XMLDocumentationFileName="$(IntDir)"
 				WarningLevel="3"
 				SuppressStartupBanner="true"
 			/>
@@ -2204,7 +2084,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="ws2_32.lib wldap32.lib libcurl.lib libeay32.lib ssleay32.lib"
+				AdditionalDependencies="crypt32.lib ws2_32.lib wldap32.lib libcurl.lib libeay32.lib ssleay32.lib"
 				OutputFile="$(OutDir)\curl.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
@@ -2272,11 +2152,6 @@
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
-				PrecompiledHeaderFile="$(IntDir)$(TargetName).pch"
-				AssemblerListingLocation="$(IntDir)"
-				ObjectFile="$(IntDir)\"
-				ProgramDataBaseFileName="$(TargetDir)$(TargetName).pdb"
-				XMLDocumentationFileName="$(IntDir)"
 				WarningLevel="3"
 				SuppressStartupBanner="true"
 				DebugInformationFormat="3"
@@ -2295,7 +2170,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="ws2_32.lib wldap32.lib libcurld.lib libeay32.lib ssleay32.lib libssh2d.lib"
+				AdditionalDependencies="crypt32.lib ws2_32.lib wldap32.lib libcurld.lib libeay32.lib ssleay32.lib libssh2d.lib"
 				OutputFile="$(OutDir)\curld.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
@@ -2366,11 +2241,6 @@
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
-				PrecompiledHeaderFile="$(IntDir)$(TargetName).pch"
-				AssemblerListingLocation="$(IntDir)"
-				ObjectFile="$(IntDir)\"
-				ProgramDataBaseFileName="$(TargetDir)$(TargetName).pdb"
-				XMLDocumentationFileName="$(IntDir)"
 				WarningLevel="3"
 				SuppressStartupBanner="true"
 				DebugInformationFormat="3"
@@ -2389,7 +2259,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="ws2_32.lib wldap32.lib libcurld.lib libeay32.lib ssleay32.lib libssh2d.lib"
+				AdditionalDependencies="crypt32.lib ws2_32.lib wldap32.lib libcurld.lib libeay32.lib ssleay32.lib libssh2d.lib"
 				OutputFile="$(OutDir)\curld.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
@@ -2460,11 +2330,6 @@
 				StringPooling="true"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
-				PrecompiledHeaderFile="$(IntDir)$(TargetName).pch"
-				AssemblerListingLocation="$(IntDir)"
-				ObjectFile="$(IntDir)\"
-				ProgramDataBaseFileName="$(TargetDir)$(TargetName).pdb"
-				XMLDocumentationFileName="$(IntDir)"
 				WarningLevel="3"
 				SuppressStartupBanner="true"
 			/>
@@ -2482,7 +2347,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="ws2_32.lib wldap32.lib libcurl.lib libeay32.lib ssleay32.lib libssh2.lib"
+				AdditionalDependencies="crypt32.lib ws2_32.lib wldap32.lib libcurl.lib libeay32.lib ssleay32.lib libssh2.lib"
 				OutputFile="$(OutDir)\curl.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
@@ -2552,11 +2417,6 @@
 				StringPooling="true"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
-				PrecompiledHeaderFile="$(IntDir)$(TargetName).pch"
-				AssemblerListingLocation="$(IntDir)"
-				ObjectFile="$(IntDir)\"
-				ProgramDataBaseFileName="$(TargetDir)$(TargetName).pdb"
-				XMLDocumentationFileName="$(IntDir)"
 				WarningLevel="3"
 				SuppressStartupBanner="true"
 			/>
@@ -2574,7 +2434,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="ws2_32.lib wldap32.lib libcurl.lib libeay32.lib ssleay32.lib libssh2.lib"
+				AdditionalDependencies="crypt32.lib ws2_32.lib wldap32.lib libcurl.lib libeay32.lib ssleay32.lib libssh2.lib"
 				OutputFile="$(OutDir)\curl.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
@@ -2642,11 +2502,6 @@
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
-				PrecompiledHeaderFile="$(IntDir)$(TargetName).pch"
-				AssemblerListingLocation="$(IntDir)"
-				ObjectFile="$(IntDir)\"
-				ProgramDataBaseFileName="$(TargetDir)$(TargetName).pdb"
-				XMLDocumentationFileName="$(IntDir)"
 				WarningLevel="3"
 				SuppressStartupBanner="true"
 				DebugInformationFormat="3"
@@ -2736,11 +2591,6 @@
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
-				PrecompiledHeaderFile="$(IntDir)$(TargetName).pch"
-				AssemblerListingLocation="$(IntDir)"
-				ObjectFile="$(IntDir)\"
-				ProgramDataBaseFileName="$(TargetDir)$(TargetName).pdb"
-				XMLDocumentationFileName="$(IntDir)"
 				WarningLevel="3"
 				SuppressStartupBanner="true"
 				DebugInformationFormat="3"
@@ -2830,11 +2680,6 @@
 				StringPooling="true"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
-				PrecompiledHeaderFile="$(IntDir)$(TargetName).pch"
-				AssemblerListingLocation="$(IntDir)"
-				ObjectFile="$(IntDir)\"
-				ProgramDataBaseFileName="$(TargetDir)$(TargetName).pdb"
-				XMLDocumentationFileName="$(IntDir)"
 				WarningLevel="3"
 				SuppressStartupBanner="true"
 			/>
@@ -2922,11 +2767,6 @@
 				StringPooling="true"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
-				PrecompiledHeaderFile="$(IntDir)$(TargetName).pch"
-				AssemblerListingLocation="$(IntDir)"
-				ObjectFile="$(IntDir)\"
-				ProgramDataBaseFileName="$(TargetDir)$(TargetName).pdb"
-				XMLDocumentationFileName="$(IntDir)"
 				WarningLevel="3"
 				SuppressStartupBanner="true"
 			/>
@@ -3012,11 +2852,6 @@
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
-				PrecompiledHeaderFile="$(IntDir)$(TargetName).pch"
-				AssemblerListingLocation="$(IntDir)"
-				ObjectFile="$(IntDir)\"
-				ProgramDataBaseFileName="$(TargetDir)$(TargetName).pdb"
-				XMLDocumentationFileName="$(IntDir)"
 				WarningLevel="3"
 				SuppressStartupBanner="true"
 				DebugInformationFormat="3"
@@ -3106,11 +2941,6 @@
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
-				PrecompiledHeaderFile="$(IntDir)$(TargetName).pch"
-				AssemblerListingLocation="$(IntDir)"
-				ObjectFile="$(IntDir)\"
-				ProgramDataBaseFileName="$(TargetDir)$(TargetName).pdb"
-				XMLDocumentationFileName="$(IntDir)"
 				WarningLevel="3"
 				SuppressStartupBanner="true"
 				DebugInformationFormat="3"
@@ -3200,11 +3030,6 @@
 				StringPooling="true"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
-				PrecompiledHeaderFile="$(IntDir)$(TargetName).pch"
-				AssemblerListingLocation="$(IntDir)"
-				ObjectFile="$(IntDir)\"
-				ProgramDataBaseFileName="$(TargetDir)$(TargetName).pdb"
-				XMLDocumentationFileName="$(IntDir)"
 				WarningLevel="3"
 				SuppressStartupBanner="true"
 			/>
@@ -3292,11 +3117,6 @@
 				StringPooling="true"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
-				PrecompiledHeaderFile="$(IntDir)$(TargetName).pch"
-				AssemblerListingLocation="$(IntDir)"
-				ObjectFile="$(IntDir)\"
-				ProgramDataBaseFileName="$(TargetDir)$(TargetName).pdb"
-				XMLDocumentationFileName="$(IntDir)"
 				WarningLevel="3"
 				SuppressStartupBanner="true"
 			/>
@@ -3382,11 +3202,6 @@
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
-				PrecompiledHeaderFile="$(IntDir)$(TargetName).pch"
-				AssemblerListingLocation="$(IntDir)"
-				ObjectFile="$(IntDir)\"
-				ProgramDataBaseFileName="$(TargetDir)$(TargetName).pdb"
-				XMLDocumentationFileName="$(IntDir)"
 				WarningLevel="3"
 				SuppressStartupBanner="true"
 				DebugInformationFormat="3"
@@ -3476,11 +3291,6 @@
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
-				PrecompiledHeaderFile="$(IntDir)$(TargetName).pch"
-				AssemblerListingLocation="$(IntDir)"
-				ObjectFile="$(IntDir)\"
-				ProgramDataBaseFileName="$(TargetDir)$(TargetName).pdb"
-				XMLDocumentationFileName="$(IntDir)"
 				WarningLevel="3"
 				SuppressStartupBanner="true"
 				DebugInformationFormat="3"
@@ -3570,11 +3380,6 @@
 				StringPooling="true"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
-				PrecompiledHeaderFile="$(IntDir)$(TargetName).pch"
-				AssemblerListingLocation="$(IntDir)"
-				ObjectFile="$(IntDir)\"
-				ProgramDataBaseFileName="$(TargetDir)$(TargetName).pdb"
-				XMLDocumentationFileName="$(IntDir)"
 				WarningLevel="3"
 				SuppressStartupBanner="true"
 			/>
@@ -3662,11 +3467,6 @@
 				StringPooling="true"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
-				PrecompiledHeaderFile="$(IntDir)$(TargetName).pch"
-				AssemblerListingLocation="$(IntDir)"
-				ObjectFile="$(IntDir)\"
-				ProgramDataBaseFileName="$(TargetDir)$(TargetName).pdb"
-				XMLDocumentationFileName="$(IntDir)"
 				WarningLevel="3"
 				SuppressStartupBanner="true"
 			/>
@@ -3727,19 +3527,23 @@
 			>
 			<File
 				RelativePath="..\..\..\..\lib\nonblock.c"
-				>
+			>
 			</File>
 			<File
 				RelativePath="..\..\..\..\lib\rawstr.c"
-				>
+			>
+			</File>
+			<File
+				RelativePath="..\..\..\..\lib\strdup.c"
+			>
 			</File>
 			<File
 				RelativePath="..\..\..\..\lib\strtoofft.c"
-				>
+			>
 			</File>
 			<File
 				RelativePath="..\..\..\..\lib\warnless.c"
-				>
+			>
 			</File>
 			<File
 				RelativePath="..\..\..\..\src\tool_binmode.c"
@@ -3899,27 +3703,31 @@
 			>
 			<File
 				RelativePath="..\..\..\..\lib\config-win32.h"
-				>
+			>
+			</File>
+			<File
+				RelativePath="..\..\..\..\lib\curl_setup.h"
+			>
 			</File>
 			<File
 				RelativePath="..\..\..\..\lib\nonblock.h"
-				>
+			>
 			</File>
 			<File
 				RelativePath="..\..\..\..\lib\rawstr.h"
-				>
+			>
 			</File>
 			<File
-				RelativePath="..\..\..\..\lib\setup.h"
-				>
+				RelativePath="..\..\..\..\lib\strdup.h"
+			>
 			</File>
 			<File
 				RelativePath="..\..\..\..\lib\strtoofft.h"
-				>
+			>
 			</File>
 			<File
 				RelativePath="..\..\..\..\lib\warnless.h"
-				>
+			>
 			</File>
 			<File
 				RelativePath="..\..\..\..\src\tool_binmode.h"

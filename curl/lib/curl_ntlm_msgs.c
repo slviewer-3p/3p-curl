@@ -353,6 +353,9 @@ void Curl_ntlm_sspi_cleanup(struct ntlmdata *ntlm)
     ntlm->has_handles = 0;
   }
 
+  ntlm->max_token_length = 0;
+  Curl_safefree(ntlm->output_token);
+
   Curl_sspi_free_identity(ntlm->p_identity);
   ntlm->p_identity = NULL;
 }
@@ -409,11 +412,11 @@ CURLcode Curl_ntlm_create_type1_message(const char *userp,
                                      (*) -> Optional
   */
 
-  unsigned char ntlmbuf[NTLM_BUFSIZE];
   size_t size;
 
 #ifdef USE_WINDOWS_SSPI
 
+  PSecPkgInfo SecurityPackage;
   SecBuffer type_1_buf;
   SecBufferDesc type_1_desc;
   SECURITY_STATUS status;
@@ -421,6 +424,22 @@ CURLcode Curl_ntlm_create_type1_message(const char *userp,
   TimeStamp tsDummy; /* For Windows 9x compatibility of SSPI calls */
 
   Curl_ntlm_sspi_cleanup(ntlm);
+
+  /* Query the security package for NTLM */
+  status = s_pSecFn->QuerySecurityPackageInfo((TCHAR *) TEXT("NTLM"),
+                                              &SecurityPackage);
+  if(status != SEC_E_OK)
+    return CURLE_NOT_BUILT_IN;
+
+  ntlm->max_token_length = SecurityPackage->cbMaxToken;
+
+  /* Release the package buffer as it is not required anymore */
+  s_pSecFn->FreeContextBuffer(SecurityPackage);
+
+  /* Allocate our output buffer */
+  ntlm->output_token = malloc(ntlm->max_token_length);
+  if(!ntlm->output_token)
+    return CURLE_OUT_OF_MEMORY;
 
   if(userp && *userp) {
     CURLcode result;
@@ -450,9 +469,9 @@ CURLcode Curl_ntlm_create_type1_message(const char *userp,
   type_1_desc.ulVersion = SECBUFFER_VERSION;
   type_1_desc.cBuffers  = 1;
   type_1_desc.pBuffers  = &type_1_buf;
-  type_1_buf.cbBuffer   = NTLM_BUFSIZE;
   type_1_buf.BufferType = SECBUFFER_TOKEN;
-  type_1_buf.pvBuffer   = ntlmbuf;
+  type_1_buf.pvBuffer   = ntlm->output_token;
+  type_1_buf.cbBuffer   = curlx_uztoul(ntlm->max_token_length);
 
   /* Generate our type-1 message */
   status = s_pSecFn->InitializeSecurityContext(&ntlm->handle, NULL,
@@ -478,6 +497,7 @@ CURLcode Curl_ntlm_create_type1_message(const char *userp,
 
 #else
 
+  unsigned char ntlmbuf[NTLM_BUFSIZE];
   const char *host = "";              /* empty */
   const char *domain = "";            /* empty */
   size_t hostlen = 0;
@@ -555,7 +575,12 @@ CURLcode Curl_ntlm_create_type1_message(const char *userp,
   });
 
   /* Return with binary blob encoded into base64 */
+#ifdef USE_WINDOWS_SSPI
+  return Curl_base64_encode(NULL, (char *)ntlm->output_token, size,
+                            outptr, outlen);
+#else
   return Curl_base64_encode(NULL, (char *)ntlmbuf, size, outptr, outlen);
+#endif
 }
 
 /*
@@ -602,10 +627,10 @@ CURLcode Curl_ntlm_create_type3_message(struct SessionHandle *data,
                                           (*) -> Optional
   */
 
-  unsigned char ntlmbuf[NTLM_BUFSIZE];
   size_t size;
 
 #ifdef USE_WINDOWS_SSPI
+  CURLcode result = CURLE_OK;
   SecBuffer type_2_buf;
   SecBuffer type_3_buf;
   SecBufferDesc type_2_desc;
@@ -631,8 +656,8 @@ CURLcode Curl_ntlm_create_type3_message(struct SessionHandle *data,
   type_3_desc.cBuffers  = 1;
   type_3_desc.pBuffers  = &type_3_buf;
   type_3_buf.BufferType = SECBUFFER_TOKEN;
-  type_3_buf.pvBuffer   = ntlmbuf;
-  type_3_buf.cbBuffer   = NTLM_BUFSIZE;
+  type_3_buf.pvBuffer   = ntlm->output_token;
+  type_3_buf.cbBuffer   = curlx_uztoul(ntlm->max_token_length);
 
   /* Generate our type-3 message */
   status = s_pSecFn->InitializeSecurityContext(&ntlm->handle,
@@ -651,9 +676,17 @@ CURLcode Curl_ntlm_create_type3_message(struct SessionHandle *data,
 
   size = type_3_buf.cbBuffer;
 
+  /* Return with binary blob encoded into base64 */
+  result = Curl_base64_encode(NULL, (char *)ntlm->output_token, size,
+                              outptr, outlen);
+
   Curl_ntlm_sspi_cleanup(ntlm);
 
+  return result;
+
 #else
+
+  unsigned char ntlmbuf[NTLM_BUFSIZE];
   int lmrespoff;
   unsigned char lmresp[24]; /* fixed-size */
 #if USE_NTRESPONSES
@@ -703,16 +736,11 @@ CURLcode Curl_ntlm_create_type3_message(struct SessionHandle *data,
 #if USE_NTRESPONSES
   if(ntlm->target_info_len) {
     unsigned char ntbuffer[0x18];
-    unsigned char entropy[8];
+    unsigned int entropy[2];
     unsigned char ntlmv2hash[0x18];
 
-#if defined(DEBUGBUILD)
-    /* Use static client nonce in debug (Test Suite) builds */
-    memcpy(entropy, "12345678", sizeof(entropy));
-#else
-    /* Create an 8 byte random client nonce */
-    Curl_ssl_random(data, entropy, sizeof(entropy));
-#endif
+    entropy[0] = Curl_rand(data);
+    entropy[1] = Curl_rand(data);
 
     res = Curl_ntlm_core_mk_nt_hash(data, passwdp, ntbuffer);
     if(res)
@@ -724,14 +752,16 @@ CURLcode Curl_ntlm_create_type3_message(struct SessionHandle *data,
       return res;
 
     /* LMv2 response */
-    res = Curl_ntlm_core_mk_lmv2_resp(ntlmv2hash, entropy, &ntlm->nonce[0],
-                                      lmresp);
+    res = Curl_ntlm_core_mk_lmv2_resp(ntlmv2hash,
+                                      (unsigned char *)&entropy[0],
+                                      &ntlm->nonce[0], lmresp);
     if(res)
       return res;
 
     /* NTLMv2 response */
-    res = Curl_ntlm_core_mk_ntlmv2_resp(ntlmv2hash, entropy, ntlm, &ntlmv2resp,
-                                        &ntresplen);
+    res = Curl_ntlm_core_mk_ntlmv2_resp(ntlmv2hash,
+                                        (unsigned char *)&entropy[0],
+                                        ntlm, &ntlmv2resp, &ntresplen);
     if(res)
       return res;
 
@@ -746,10 +776,11 @@ CURLcode Curl_ntlm_create_type3_message(struct SessionHandle *data,
     unsigned char ntbuffer[0x18];
     unsigned char tmp[0x18];
     unsigned char md5sum[MD5_DIGEST_LENGTH];
-    unsigned char entropy[8];
+    unsigned int entropy[2];
 
     /* Need to create 8 bytes random data */
-    Curl_ssl_random(data, entropy, sizeof(entropy));
+    entropy[0] = Curl_rand(data);
+    entropy[1] = Curl_rand(data);
 
     /* 8 bytes random data as challenge in lmresp */
     memcpy(lmresp, entropy, 8);
@@ -971,10 +1002,9 @@ CURLcode Curl_ntlm_create_type3_message(struct SessionHandle *data,
   if(res)
     return CURLE_CONV_FAILED;
 
-#endif
-
   /* Return with binary blob encoded into base64 */
   return Curl_base64_encode(NULL, (char *)ntlmbuf, size, outptr, outlen);
+#endif
 }
 
 #endif /* USE_NTLM */

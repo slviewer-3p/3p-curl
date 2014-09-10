@@ -26,10 +26,6 @@
 				StringPooling="TRUE"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="TRUE"
-				PrecompiledHeaderFile="$(IntDir)$(TargetName).pch"
-				AssemblerListingLocation="$(IntDir)"
-				ObjectFile="$(IntDir)\"
-				ProgramDataBaseFileName="$(TargetDir)$(TargetName).pdb"
 				WarningLevel="3"
 				SuppressStartupBanner="TRUE"
 				CompileAs="0"/>
@@ -38,7 +34,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions="/MACHINE:I386 /FIXED:NO"
-				AdditionalDependencies="wldap32.lib ws2_32.lib libcurl.lib libeay32.lib ssleay32.lib"
+				AdditionalDependencies="crypt32.lib wldap32.lib ws2_32.lib libcurl.lib libeay32.lib ssleay32.lib"
 				OutputFile="$(OutDir)\curl.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
@@ -85,10 +81,6 @@
 				StringPooling="TRUE"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="TRUE"
-				PrecompiledHeaderFile="$(IntDir)$(TargetName).pch"
-				AssemblerListingLocation="$(IntDir)"
-				ObjectFile="$(IntDir)\"
-				ProgramDataBaseFileName="$(TargetDir)$(TargetName).pdb"
 				WarningLevel="3"
 				SuppressStartupBanner="TRUE"
 				CompileAs="0"/>
@@ -144,10 +136,6 @@
 				StringPooling="TRUE"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="TRUE"
-				PrecompiledHeaderFile="$(IntDir)$(TargetName).pch"
-				AssemblerListingLocation="$(IntDir)"
-				ObjectFile="$(IntDir)\"
-				ProgramDataBaseFileName="$(TargetDir)$(TargetName).pdb"
 				WarningLevel="3"
 				SuppressStartupBanner="TRUE"
 				CompileAs="0"/>
@@ -202,10 +190,6 @@
 				PreprocessorDefinitions="WIN32,_DEBUG,_CONSOLE,CURL_STATICLIB"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
-				PrecompiledHeaderFile="$(IntDir)$(TargetName).pch"
-				AssemblerListingLocation="$(IntDir)"
-				ObjectFile="$(IntDir)\"
-				ProgramDataBaseFileName="$(TargetDir)$(TargetName).pdb"
 				WarningLevel="3"
 				SuppressStartupBanner="TRUE"
 				DebugInformationFormat="3"
@@ -263,10 +247,6 @@
 				PreprocessorDefinitions="WIN32,_DEBUG,_CONSOLE,CURL_STATICLIB"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
-				PrecompiledHeaderFile="$(IntDir)$(TargetName).pch"
-				AssemblerListingLocation="$(IntDir)"
-				ObjectFile="$(IntDir)\"
-				ProgramDataBaseFileName="$(TargetDir)$(TargetName).pdb"
 				WarningLevel="3"
 				SuppressStartupBanner="TRUE"
 				DebugInformationFormat="3"
@@ -276,7 +256,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions="/MACHINE:I386 /FIXED:NO"
-				AdditionalDependencies="wldap32.lib ws2_32.lib libcurld.lib libeay32.lib ssleay32.lib"
+				AdditionalDependencies="crypt32.lib wldap32.lib ws2_32.lib libcurld.lib libeay32.lib ssleay32.lib"
 				OutputFile="$(OutDir)\curld.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
@@ -324,10 +304,6 @@
 				PreprocessorDefinitions="WIN32,_DEBUG,_CONSOLE"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
-				PrecompiledHeaderFile="$(IntDir)$(TargetName).pch"
-				AssemblerListingLocation="$(IntDir)"
-				ObjectFile="$(IntDir)\"
-				ProgramDataBaseFileName="$(TargetDir)$(TargetName).pdb"
 				WarningLevel="3"
 				SuppressStartupBanner="TRUE"
 				DebugInformationFormat="3"
@@ -385,10 +361,6 @@
 				PreprocessorDefinitions="WIN32,_DEBUG,_CONSOLE,CURL_STATICLIB"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
-				PrecompiledHeaderFile="$(IntDir)$(TargetName).pch"
-				AssemblerListingLocation="$(IntDir)"
-				ObjectFile="$(IntDir)\"
-				ProgramDataBaseFileName="$(TargetDir)$(TargetName).pdb"
 				WarningLevel="3"
 				SuppressStartupBanner="TRUE"
 				DebugInformationFormat="3"
@@ -398,7 +370,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions="/MACHINE:I386 /FIXED:NO"
-				AdditionalDependencies="wldap32.lib ws2_32.lib libcurld.lib libeay32.lib ssleay32.lib libssh2d.lib"
+				AdditionalDependencies="crypt32.lib wldap32.lib ws2_32.lib libcurld.lib libeay32.lib ssleay32.lib libssh2d.lib"
 				OutputFile="$(OutDir)\curld.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
@@ -447,10 +419,6 @@
 				StringPooling="TRUE"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="TRUE"
-				PrecompiledHeaderFile="$(IntDir)$(TargetName).pch"
-				AssemblerListingLocation="$(IntDir)"
-				ObjectFile="$(IntDir)\"
-				ProgramDataBaseFileName="$(TargetDir)$(TargetName).pdb"
 				WarningLevel="3"
 				SuppressStartupBanner="TRUE"
 				CompileAs="0"/>
@@ -506,10 +474,6 @@
 				StringPooling="TRUE"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="TRUE"
-				PrecompiledHeaderFile="$(IntDir)$(TargetName).pch"
-				AssemblerListingLocation="$(IntDir)"
-				ObjectFile="$(IntDir)\"
-				ProgramDataBaseFileName="$(TargetDir)$(TargetName).pdb"
 				WarningLevel="3"
 				SuppressStartupBanner="TRUE"
 				CompileAs="0"/>
@@ -565,10 +529,6 @@
 				StringPooling="TRUE"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="TRUE"
-				PrecompiledHeaderFile="$(IntDir)$(TargetName).pch"
-				AssemblerListingLocation="$(IntDir)"
-				ObjectFile="$(IntDir)\"
-				ProgramDataBaseFileName="$(TargetDir)$(TargetName).pdb"
 				WarningLevel="3"
 				SuppressStartupBanner="TRUE"
 				CompileAs="0"/>
@@ -624,10 +584,6 @@
 				StringPooling="TRUE"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="TRUE"
-				PrecompiledHeaderFile="$(IntDir)$(TargetName).pch"
-				AssemblerListingLocation="$(IntDir)"
-				ObjectFile="$(IntDir)\"
-				ProgramDataBaseFileName="$(TargetDir)$(TargetName).pdb"
 				WarningLevel="3"
 				SuppressStartupBanner="TRUE"
 				CompileAs="0"/>
@@ -636,7 +592,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions="/MACHINE:I386 /FIXED:NO"
-				AdditionalDependencies="wldap32.lib ws2_32.lib libcurl.lib libeay32.lib ssleay32.lib libssh2.lib"
+				AdditionalDependencies="crypt32.lib wldap32.lib ws2_32.lib libcurl.lib libeay32.lib ssleay32.lib libssh2.lib"
 				OutputFile="$(OutDir)\curl.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
@@ -682,10 +638,6 @@
 				PreprocessorDefinitions="WIN32,_DEBUG,_CONSOLE,CURL_STATICLIB"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
-				PrecompiledHeaderFile="$(IntDir)$(TargetName).pch"
-				AssemblerListingLocation="$(IntDir)"
-				ObjectFile="$(IntDir)\"
-				ProgramDataBaseFileName="$(TargetDir)$(TargetName).pdb"
 				WarningLevel="3"
 				SuppressStartupBanner="TRUE"
 				DebugInformationFormat="3"
@@ -743,10 +695,6 @@
 				PreprocessorDefinitions="WIN32,_DEBUG,_CONSOLE,CURL_STATICLIB"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
-				PrecompiledHeaderFile="$(IntDir)$(TargetName).pch"
-				AssemblerListingLocation="$(IntDir)"
-				ObjectFile="$(IntDir)\"
-				ProgramDataBaseFileName="$(TargetDir)$(TargetName).pdb"
 				WarningLevel="3"
 				SuppressStartupBanner="TRUE"
 				DebugInformationFormat="3"
@@ -804,10 +752,6 @@
 				PreprocessorDefinitions="WIN32,_DEBUG,_CONSOLE"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
-				PrecompiledHeaderFile="$(IntDir)$(TargetName).pch"
-				AssemblerListingLocation="$(IntDir)"
-				ObjectFile="$(IntDir)\"
-				ProgramDataBaseFileName="$(TargetDir)$(TargetName).pdb"
 				WarningLevel="3"
 				SuppressStartupBanner="TRUE"
 				DebugInformationFormat="3"
@@ -866,10 +810,6 @@
 				StringPooling="TRUE"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="TRUE"
-				PrecompiledHeaderFile="$(IntDir)$(TargetName).pch"
-				AssemblerListingLocation="$(IntDir)"
-				ObjectFile="$(IntDir)\"
-				ProgramDataBaseFileName="$(TargetDir)$(TargetName).pdb"
 				WarningLevel="3"
 				SuppressStartupBanner="TRUE"
 				CompileAs="0"/>
@@ -925,10 +865,6 @@
 				StringPooling="TRUE"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="TRUE"
-				PrecompiledHeaderFile="$(IntDir)$(TargetName).pch"
-				AssemblerListingLocation="$(IntDir)"
-				ObjectFile="$(IntDir)\"
-				ProgramDataBaseFileName="$(TargetDir)$(TargetName).pdb"
 				WarningLevel="3"
 				SuppressStartupBanner="TRUE"
 				CompileAs="0"/>
@@ -983,10 +919,6 @@
 				PreprocessorDefinitions="WIN32,_DEBUG,_CONSOLE"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
-				PrecompiledHeaderFile="$(IntDir)$(TargetName).pch"
-				AssemblerListingLocation="$(IntDir)"
-				ObjectFile="$(IntDir)\"
-				ProgramDataBaseFileName="$(TargetDir)$(TargetName).pdb"
 				WarningLevel="3"
 				SuppressStartupBanner="TRUE"
 				DebugInformationFormat="3"
@@ -1044,10 +976,6 @@
 				PreprocessorDefinitions="WIN32,_DEBUG,_CONSOLE,CURL_STATICLIB"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
-				PrecompiledHeaderFile="$(IntDir)$(TargetName).pch"
-				AssemblerListingLocation="$(IntDir)"
-				ObjectFile="$(IntDir)\"
-				ProgramDataBaseFileName="$(TargetDir)$(TargetName).pdb"
 				WarningLevel="3"
 				SuppressStartupBanner="TRUE"
 				DebugInformationFormat="3"
@@ -1106,10 +1034,6 @@
 				StringPooling="TRUE"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="TRUE"
-				PrecompiledHeaderFile="$(IntDir)$(TargetName).pch"
-				AssemblerListingLocation="$(IntDir)"
-				ObjectFile="$(IntDir)\"
-				ProgramDataBaseFileName="$(TargetDir)$(TargetName).pdb"
 				WarningLevel="3"
 				SuppressStartupBanner="TRUE"
 				CompileAs="0"/>
@@ -1164,10 +1088,6 @@
 				PreprocessorDefinitions="WIN32,_DEBUG,_CONSOLE"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
-				PrecompiledHeaderFile="$(IntDir)$(TargetName).pch"
-				AssemblerListingLocation="$(IntDir)"
-				ObjectFile="$(IntDir)\"
-				ProgramDataBaseFileName="$(TargetDir)$(TargetName).pdb"
 				WarningLevel="3"
 				SuppressStartupBanner="TRUE"
 				DebugInformationFormat="3"
@@ -1222,6 +1142,9 @@
 			</File>
 			<File
 				RelativePath="..\..\..\..\lib\rawstr.c">
+			</File>
+			<File
+				RelativePath="..\..\..\..\lib\strdup.c">
 			</File>
 			<File
 				RelativePath="..\..\..\..\lib\strtoofft.c">
@@ -1351,13 +1274,16 @@
 				RelativePath="..\..\..\..\lib\config-win32.h">
 			</File>
 			<File
+				RelativePath="..\..\..\..\lib\curl_setup.h">
+			</File>
+			<File
 				RelativePath="..\..\..\..\lib\nonblock.h">
 			</File>
 			<File
 				RelativePath="..\..\..\..\lib\rawstr.h">
 			</File>
 			<File
-				RelativePath="..\..\..\..\lib\setup.h">
+				RelativePath="..\..\..\..\lib\strdup.h">
 			</File>
 			<File
 				RelativePath="..\..\..\..\lib\strtoofft.h">
