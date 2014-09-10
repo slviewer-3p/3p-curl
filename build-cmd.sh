@@ -15,7 +15,7 @@ if [ "$OSTYPE" = "cygwin" ] ; then
     export AUTOBUILD="$(cygpath -u $AUTOBUILD)"
 fi
 
-CURL_VERSION=7.37.0
+CURL_VERSION=7.38.0
 CURL_SOURCE_DIR="curl"
 
 # load autbuild provided shell functions and variables

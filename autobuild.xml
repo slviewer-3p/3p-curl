@@ -216,7 +216,7 @@
       <key>source_type</key>
       <string>hg</string>
       <key>version</key>
-      <string>7.37.0</string>
+      <string>7.38.0</string>
     </map>
     <key>type</key>
     <string>autobuild</string>
