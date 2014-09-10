@@ -24,10 +24,9 @@ AUTOMAKE_OPTIONS = foreign
 
 ACLOCAL_AMFLAGS = -I m4
 
-CMAKE_DIST = CMakeLists.txt CMake/CMakeConfigurableFile.in		\
-CMake/CurlCheckCSourceCompiles.cmake CMake/CurlCheckCSourceRuns.cmake	\
-CMake/CurlTests.c CMake/FindOpenSSL.cmake CMake/FindZLIB.cmake		\
-CMake/OtherTests.cmake CMake/Platforms/WindowsCache.cmake		\
+CMAKE_DIST = CMakeLists.txt CMake/CMakeConfigurableFile.in		    \
+CMake/CurlCheckCSourceCompiles.cmake CMake/CurlCheckCSourceRuns.cmake	    \
+CMake/CurlTests.c CMake/OtherTests.cmake CMake/Platforms/WindowsCache.cmake \
 CMake/Utilities.cmake include/curl/curlbuild.h.cmake
 
 VC6_LIBTMPL = projects/Windows/VC6/lib/libcurl.tmpl
@@ -275,6 +274,8 @@ vc-ide: $(VC6_LIBDSP_DEPS) $(VC6_SRCDSP_DEPS) $(VC7_LIBVCPROJ_DEPS)	\
 	win32_src_srcs='$(CURL_CFILES)'; \
 	win32_src_hdrs='$(CURL_HFILES)'; \
 	win32_src_rc='$(CURL_RCFILES)'; \
+	win32_src_x_srcs='$(CURLX_CFILES)'; \
+	win32_src_x_hdrs='$(CURLX_HFILES) ../lib/config-win32.h'; \
 	\
 	sorted_lib_srcs=`for file in $$win32_lib_srcs; do echo $$file; done | sort`; \
 	sorted_lib_hdrs=`for file in $$win32_lib_hdrs; do echo $$file; done | sort`; \
@@ -282,6 +283,8 @@ vc-ide: $(VC6_LIBDSP_DEPS) $(VC6_SRCDSP_DEPS) $(VC7_LIBVCPROJ_DEPS)	\
 	sorted_lib_vtls_hdrs=`for file in $$win32_lib_vtls_hdrs; do echo $$file; done | sort`; \
 	sorted_src_srcs=`for file in $$win32_src_srcs; do echo $$file; done | sort`; \
 	sorted_src_hdrs=`for file in $$win32_src_hdrs; do echo $$file; done | sort`; \
+	sorted_src_x_srcs=`for file in $$win32_src_x_srcs; do echo $$file; done | sort`; \
+	sorted_src_x_hdrs=`for file in $$win32_src_x_hdrs; do echo $$file; done | sort`; \
 	\
 	awk_code='\
 function gen_element(type, dir, file)\
@@ -363,6 +366,20 @@ function gen_element(type, dir, file)\
     split(src_rc, arr);\
     for(val in arr) gen_element(proj_type, "src", arr[val]);\
   }\
+  else if($$0 == "CURL_SRC_X_C_FILES") {\
+    split(src_x_srcs, arr);\
+    for(val in arr) {\
+      sub(/..\/lib\//, "", arr[val]);\
+      gen_element(proj_type, "lib", arr[val]);\
+    }\
+  }\
+  else if($$0 == "CURL_SRC_X_H_FILES") {\
+    split(src_x_hdrs, arr);\
+    for(val in arr) {\
+      sub(/..\/lib\//, "", arr[val]);\
+      gen_element(proj_type, "lib", arr[val]);\
+    }\
+  }\
   else\
     printf("%s\r\n", $$0);\
 }';\
@@ -381,6 +398,8 @@ function gen_element(type, dir, file)\
 		-v src_srcs="$$sorted_src_srcs" \
 		-v src_hdrs="$$sorted_src_hdrs" \
 		-v src_rc="$$win32_src_rc" \
+		-v src_x_srcs="$$sorted_src_x_srcs" \
+		-v src_x_hdrs="$$sorted_src_x_hdrs" \
 		"$$awk_code" $(srcdir)/$(VC6_SRCTMPL) > $(VC6_SRCDSP) || { exit 1; }; \
 	\
 	echo "generating '$(VC7_LIBVCPROJ)'"; \
@@ -397,6 +416,8 @@ function gen_element(type, dir, file)\
 		-v src_srcs="$$sorted_src_srcs" \
 		-v src_hdrs="$$sorted_src_hdrs" \
 		-v src_rc="$$win32_src_rc" \
+		-v src_x_srcs="$$sorted_src_x_srcs" \
+		-v src_x_hdrs="$$sorted_src_x_hdrs" \
 		"$$awk_code" $(srcdir)/$(VC7_SRCTMPL) > $(VC7_SRCVCPROJ) || { exit 1; }; \
 	\
 	echo "generating '$(VC71_LIBVCPROJ)'"; \
@@ -413,6 +434,8 @@ function gen_element(type, dir, file)\
 		-v src_srcs="$$sorted_src_srcs" \
 		-v src_hdrs="$$sorted_src_hdrs" \
 		-v src_rc="$$win32_src_rc" \
+		-v src_x_srcs="$$sorted_src_x_srcs" \
+		-v src_x_hdrs="$$sorted_src_x_hdrs" \
 		"$$awk_code" $(srcdir)/$(VC71_SRCTMPL) > $(VC71_SRCVCPROJ) || { exit 1; }; \
 	\
 	echo "generating '$(VC8_LIBVCPROJ)'"; \
@@ -429,6 +452,8 @@ function gen_element(type, dir, file)\
 		-v src_srcs="$$sorted_src_srcs" \
 		-v src_hdrs="$$sorted_src_hdrs" \
 		-v src_rc="$$win32_src_rc" \
+		-v src_x_srcs="$$sorted_src_x_srcs" \
+		-v src_x_hdrs="$$sorted_src_x_hdrs" \
 		"$$awk_code" $(srcdir)/$(VC8_SRCTMPL) > $(VC8_SRCVCPROJ) || { exit 1; }; \
 	\
 	echo "generating '$(VC9_LIBVCPROJ)'"; \
@@ -445,6 +470,8 @@ function gen_element(type, dir, file)\
 		-v src_srcs="$$sorted_src_srcs" \
 		-v src_hdrs="$$sorted_src_hdrs" \
 		-v src_rc="$$win32_src_rc" \
+		-v src_x_srcs="$$sorted_src_x_srcs" \
+		-v src_x_hdrs="$$sorted_src_x_hdrs" \
 		"$$awk_code" $(srcdir)/$(VC9_SRCTMPL) > $(VC9_SRCVCPROJ) || { exit 1; }; \
 	\
 	echo "generating '$(VC10_LIBVCXPROJ)'"; \
@@ -461,6 +488,8 @@ function gen_element(type, dir, file)\
 		-v src_srcs="$$sorted_src_srcs" \
 		-v src_hdrs="$$sorted_src_hdrs" \
 		-v src_rc="$$win32_src_rc" \
+		-v src_x_srcs="$$sorted_src_x_srcs" \
+		-v src_x_hdrs="$$sorted_src_x_hdrs" \
 		"$$awk_code" $(srcdir)/$(VC10_SRCTMPL) > $(VC10_SRCVCXPROJ) || { exit 1; }; \
 	\
 	echo "generating '$(VC11_LIBVCXPROJ)'"; \
@@ -477,6 +506,8 @@ function gen_element(type, dir, file)\
 		-v src_srcs="$$sorted_src_srcs" \
 		-v src_hdrs="$$sorted_src_hdrs" \
 		-v src_rc="$$win32_src_rc" \
+		-v src_x_srcs="$$sorted_src_x_srcs" \
+		-v src_x_hdrs="$$sorted_src_x_hdrs" \
 		"$$awk_code" $(srcdir)/$(VC11_SRCTMPL) > $(VC11_SRCVCXPROJ) || { exit 1; }; \
 	\
 	echo "generating '$(VC12_LIBVCXPROJ)'"; \
@@ -493,4 +524,6 @@ function gen_element(type, dir, file)\
 		-v src_srcs="$$sorted_src_srcs" \
 		-v src_hdrs="$$sorted_src_hdrs" \
 		-v src_rc="$$win32_src_rc" \
+		-v src_x_srcs="$$sorted_src_x_srcs" \
+		-v src_x_hdrs="$$sorted_src_x_hdrs" \
 		"$$awk_code" $(srcdir)/$(VC12_SRCTMPL) > $(VC12_SRCVCXPROJ) || { exit 1; };)

@@ -151,7 +151,6 @@ dnl initialize all the info variables
     curl_ssh_msg="no      (--with-libssh2)"
    curl_zlib_msg="no      (--with-zlib)"
     curl_gss_msg="no      (--with-gssapi)"
- curl_spnego_msg="no      (--with-spnego)"
 curl_tls_srp_msg="no      (--enable-tls-srp)"
     curl_res_msg="default (--enable-ares / --enable-threaded-resolver)"
    curl_ipv6_msg="no      (--enable-ipv6)"
@@ -1135,41 +1134,6 @@ no)
 esac
 
 dnl **********************************************************************
-dnl Check for FBopenssl(SPNEGO) libraries
-dnl **********************************************************************
-
-AC_ARG_WITH(spnego,
-  AC_HELP_STRING([--with-spnego=DIR],
-                 [Specify location of SPNEGO library fbopenssl]), [
-  SPNEGO_ROOT="$withval"
-  if test x"$SPNEGO_ROOT" != xno; then
-    want_spnego="yes"
-  fi
-])
-
-AC_MSG_CHECKING([if SPNEGO support is requested])
-if test x"$want_spnego" = xyes; then
-
-  if test X"$SPNEGO_ROOT" = Xyes; then
-     AC_MSG_ERROR([FBOpenSSL libs and/or directories were not found where specified!])
-     AC_MSG_RESULT(no)
-  else
-     if test -z "$SPNEGO_LIB_DIR"; then
-        LDFLAGS="$LDFLAGS -L$SPNEGO_ROOT -lfbopenssl"
-     else
-        LDFLAGS="$LDFLAGS $SPNEGO_LIB_DIR"
-     fi
-
-     AC_MSG_RESULT(yes)
-     AC_DEFINE(HAVE_SPNEGO, 1,
-               [Define this if you have the SPNEGO library fbopenssl])
-     curl_spnego_msg="enabled"
-  fi
-else
-  AC_MSG_RESULT(no)
-fi
-
-dnl **********************************************************************
 dnl Check for GSS-API libraries
 dnl **********************************************************************
 
@@ -1209,7 +1173,9 @@ if test x"$want_gss" = xyes; then
   AC_MSG_RESULT(yes)
 
   if test -z "$GSSAPI_INCS"; then
-     if test -f "$GSSAPI_ROOT/bin/krb5-config"; then
+     if test -n "$host_alias" -a -f "$GSSAPI_ROOT/bin/$host_alias-krb5-config"; then
+        GSSAPI_INCS=`$GSSAPI_ROOT/bin/$host_alias-krb5-config --cflags gssapi`
+     elif test -f "$GSSAPI_ROOT/bin/krb5-config"; then
         GSSAPI_INCS=`$GSSAPI_ROOT/bin/krb5-config --cflags gssapi`
      elif test "$GSSAPI_ROOT" != "yes"; then
         GSSAPI_INCS="-I$GSSAPI_ROOT/include"
@@ -1282,7 +1248,7 @@ else
 fi
 if test x"$want_gss" = xyes; then
   AC_DEFINE(HAVE_GSSAPI, 1, [if you have GSS-API libraries])
-
+  HAVE_GSSAPI=1
   curl_gss_msg="enabled (MIT Kerberos/Heimdal)"
 
   if test -n "$gnu_gss"; then
@@ -1294,23 +1260,33 @@ if test x"$want_gss" = xyes; then
      *-*-darwin*)
         LIBS="-lgssapi_krb5 -lresolv $LIBS"
         ;;
-     *-hp-hpux*)
-        if test "$GSSAPI_ROOT" != "yes"; then
-           LDFLAGS="$LDFLAGS -L$GSSAPI_ROOT/lib$libsuff"
-        fi
-        LIBS="-lgss $LIBS"
-        ;;
      *)
-        if test -f "$GSSAPI_ROOT/bin/krb5-config"; then
+        if test -n "$host_alias" -a -f "$GSSAPI_ROOT/bin/$host_alias-krb5-config"; then
+           dnl krb5-config doesn't have --libs-only-L or similar, put everything
+           dnl into LIBS
+           gss_libs=`$GSSAPI_ROOT/bin/$host_alias-krb5-config --libs gssapi`
+           LIBS="$gss_libs $LIBS"
+        elif test -f "$GSSAPI_ROOT/bin/krb5-config"; then
            dnl krb5-config doesn't have --libs-only-L or similar, put everything
            dnl into LIBS
            gss_libs=`$GSSAPI_ROOT/bin/krb5-config --libs gssapi`
            LIBS="$gss_libs $LIBS"
-        elif test "$GSSAPI_ROOT" != "yes"; then
-           LDFLAGS="$LDFLAGS -L$GSSAPI_ROOT/lib$libsuff"
-           LIBS="-lgssapi $LIBS"
         else
-           LIBS="-lgssapi $LIBS"
+           case $host in
+           *-hp-hpux*)
+              gss_libname="gss"
+              ;;
+           *)
+              gss_libname="gssapi"
+              ;;
+           esac
+
+           if test "$GSSAPI_ROOT" != "yes"; then
+              LDFLAGS="$LDFLAGS -L$GSSAPI_ROOT/lib$libsuff"
+              LIBS="-l$gss_libname $LIBS"
+           else
+              LIBS="-l$gss_libname $LIBS"
+           fi
         fi
         ;;
      esac
@@ -2107,6 +2083,10 @@ if test "$curl_ssl_msg" = "$init_ssl_msg"; then
       if test "x$USE_NSS" = "xyes"; then
         AC_MSG_NOTICE([detected NSS version $version])
 
+        dnl needed when linking the curl tool without USE_EXPLICIT_LIB_DEPS
+        NSS_LIBS=$addlib
+        AC_SUBST([NSS_LIBS])
+
         dnl when shared libs were found in a path that the run-time
         dnl linker doesn't search through, we need to add it to
         dnl LD_LIBRARY_PATH to prevent further configure tests to fail
@@ -2732,8 +2712,7 @@ dnl **********************************************************************
 dnl Check for nghttp2
 dnl **********************************************************************
 
-AC_MSG_CHECKING([whether to build with nghttp2])
-OPT_H2="no"
+OPT_H2="yes"
 AC_ARG_WITH(nghttp2,
 AC_HELP_STRING([--with-nghttp2=PATH],[Enable nghttp2 usage])
 AC_HELP_STRING([--without-nghttp2],[Disable nghttp2 usage]),
@@ -2742,24 +2721,16 @@ case "$OPT_H2" in
   no)
     dnl --without-nghttp2 option used
     want_h2="no"
-    AC_MSG_RESULT([no])
-    ;;
-  default)
-    dnl configure option not specified
-    want_h2="no"
-    AC_MSG_RESULT([no])
     ;;
   yes)
     dnl --with-nghttp2 option used without path
-    want_h2="yes"
+    want_h2="default"
     want_h2_path=""
-    AC_MSG_RESULT([yes])
     ;;
   *)
     dnl --with-nghttp2 option used with path
     want_h2="yes"
     want_h2_path="$withval/lib/pkgconfig"
-    AC_MSG_RESULT([yes ($withval)])
     ;;
 esac
 
@@ -2785,30 +2756,33 @@ if test X"$want_h2" != Xno; then
       $PKGCONFIG --libs-only-L libnghttp2`
     AC_MSG_NOTICE([-L is $LD_H2])
 
+    LDFLAGS="$LDFLAGS $LD_H2"
+    CPPFLAGS="$CPPFLAGS $CPP_H2"
+    LIBS="$LIB_H2 $LIBS"
+
+    AC_CHECK_LIB(nghttp2, nghttp2_session_callbacks_set_send_callback,
+      [
+       AC_CHECK_HEADERS(nghttp2/nghttp2.h,
+          curl_h2_msg="enabled (nghttp2)"
+          NGHTTP2_ENABLED=1
+          AC_DEFINE(USE_NGHTTP2, 1, [if nghttp2 is in use])
+          AC_SUBST(USE_NGHTTP2, [1])
+       )
+      ],
+        dnl not found, revert back to clean variables
+        LDFLAGS=$CLEANLDFLAGS
+        CPPFLAGS=$CLEANCPPFLAGS
+        LIBS=$CLEANLIBS
+    )
+
   else
-    dnl To avoid link errors, we do not allow --libnghttp2 without
-    dnl a pkgconfig file
-    AC_MSG_ERROR([--with-nghttp2 was specified but could not find libnghttp2 pkg-config file.])
+    dnl no nghttp2 pkg-config found, deal with it
+    if test X"$want_h2" != Xdefault; then
+      dnl To avoid link errors, we do not allow --with-nghttp2 without
+      dnl a pkgconfig file
+      AC_MSG_ERROR([--with-nghttp2 was specified but could not find libnghttp2 pkg-config file.])
+    fi
   fi
-
-  LDFLAGS="$LDFLAGS $LD_H2"
-  CPPFLAGS="$CPPFLAGS $CPP_H2"
-  LIBS="$LIB_H2 $LIBS"
-
-  AC_CHECK_LIB(nghttp2, nghttp2_session_client_new,
-    [
-     AC_CHECK_HEADERS(nghttp2/nghttp2.h,
-        curl_h2_msg="enabled (nghttp2)"
-        NGHTTP2_ENABLED=1
-        AC_DEFINE(USE_NGHTTP2, 1, [if nghttp2 is in use])
-        AC_SUBST(USE_NGHTTP2, [1])
-     )
-    ],
-      dnl not found, revert back to clean variables
-      LDFLAGS=$CLEANLDFLAGS
-      CPPFLAGS=$CLEANCPPFLAGS
-      LIBS=$CLEANLIBS
-  )
 
 fi
 
@@ -3039,8 +3013,10 @@ AC_CHECK_FUNCS([fork \
   getppid \
   getprotobyname \
   getpwuid \
+  getpwuid_r \
   getrlimit \
   gettimeofday \
+  if_nametoindex \
   inet_addr \
   perror \
   pipe \
@@ -3385,8 +3361,18 @@ fi
 if test "x$USE_WINDOWS_SSPI" = "x1"; then
   SUPPORT_FEATURES="$SUPPORT_FEATURES SSPI"
 fi
+
+if test "x$HAVE_GSSAPI" = "x1"; then
+  SUPPORT_FEATURES="$SUPPORT_FEATURES GSS-API"
+fi
+
+if test "x$CURL_DISABLE_CRYPTO_AUTH" != "x1" -a \
+    \( "x$HAVE_GSSAPI" = "x1" -o "x$USE_WINDOWS_SSPI" = "x1" \); then
+  SUPPORT_FEATURES="$SUPPORT_FEATURES SPNEGO"
+fi
+
 if test "x$CURL_DISABLE_HTTP" != "x1" -a \
-	"x$CURL_DISABLE_CRYPTO_AUTH" != "x1"; then
+    "x$CURL_DISABLE_CRYPTO_AUTH" != "x1"; then
   if test "x$USE_SSLEAY" = "x1" -o "x$USE_WINDOWS_SSPI" = "x1" \
       -o "x$GNUTLS_ENABLED" = "x1" -o "x$NSS_ENABLED" = "x1" \
       -o "x$DARWINSSL_ENABLED" = "x1"; then
@@ -3402,12 +3388,6 @@ fi
 
 if test "x$USE_NGHTTP2" = "x1"; then
   SUPPORT_FEATURES="$SUPPORT_FEATURES HTTP2"
-fi
-if test "x$curl_spnego_msg" = "xenabled"; then
-  SUPPORT_FEATURES="$SUPPORT_FEATURES SPNEGO"
-fi
-if test "x$want_gss" = "xyes"; then
-  SUPPORT_FEATURES="$SUPPORT_FEATURES GSS-API"
 fi
 
 AC_SUBST(SUPPORT_FEATURES)
@@ -3511,6 +3491,7 @@ AC_CONFIG_FILES([Makefile \
            docs/Makefile \
            docs/examples/Makefile \
            docs/libcurl/Makefile \
+           docs/libcurl/opts/Makefile \
            include/Makefile \
            include/curl/Makefile \
            src/Makefile \
@@ -3556,7 +3537,6 @@ AC_MSG_NOTICE([Configured to build curl/libcurl:
   SSH support:      ${curl_ssh_msg}
   zlib support:     ${curl_zlib_msg}
   GSS-API support:  ${curl_gss_msg}
-  SPNEGO support:   ${curl_spnego_msg}
   TLS-SRP support:  ${curl_tls_srp_msg}
   resolver:         ${curl_res_msg}
   ipv6 support:     ${curl_ipv6_msg}
