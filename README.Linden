@@ -111,6 +111,10 @@
          builds on your machine to exercise the unit tests.  There may
          be some flakiness in the tests but they have been useful.
 
+    [ ]  Are you able to revert the special pipelining changes for curl
+         bugs 1420?  https://sourceforge.net/p/curl/bugs/1420/ This is
+         changeset a8784f6e153f.
+
 
 1.  Introduction
 
@@ -232,6 +236,16 @@
     certain how this ever worked, it's stale by several years.
     Watch for fixes from upstream and restore the file when 
     possible.  (Fixed in 7.36.0)
+
+  2.7  Pipelining Data Corruption
+
+    Timed out requests involved in pipelines may result in loss of
+    response stream synchronization when other requests follow the
+    timed out requests.  This has been reported to the curl devs as
+    bug 1420 and some defensive measures are taken in the Linden
+    'default' branch until an official fix is available.  Once it is
+    available, this change (changeset a8784f6e153f) should be
+    reverted.
 
 
 3.  Source Origin
