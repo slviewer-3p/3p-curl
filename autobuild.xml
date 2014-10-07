@@ -5,6 +5,10 @@
     <map>
       <key>openssl</key>
       <map>
+        <key>copyright</key>
+        <string>Copyright (c) 1998-2011 The OpenSSL Project.  All rights reserved; Copyright (C) 1995-1998 Eric Young (eay@cryptsoft.com)</string>
+        <key>description</key>
+        <string>Secure Sockets Layer (SSL v2/v3) and Transport Layer Security (TLS v1) Library</string>
         <key>license</key>
         <string>openssl</string>
         <key>license_file</key>
@@ -18,9 +22,9 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>04a31799a38a045baf94b8352d550454</string>
+              <string>c992a53924cf180fbd644c5fcacd3d92</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/openssl_3p-update-openssl/rev/294874/arch/Darwin/installer/openssl-1.0.1h.294874-darwin-294874.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/openssl_3p-update-openssl/rev/295244/arch/Darwin/installer/openssl-1.0.1h.295244-darwin-295244.tar.bz2</string>
             </map>
             <key>name</key>
             <string>darwin</string>
@@ -50,6 +54,8 @@
             <string>windows</string>
           </map>
         </map>
+        <key>version</key>
+        <string>1.0.1h.295244</string>
       </map>
       <key>zlib</key>
       <map>
