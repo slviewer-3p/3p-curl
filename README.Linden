@@ -112,8 +112,8 @@
          be some flakiness in the tests but they have been useful.
 
     [ ]  Are you able to revert the special pipelining changes for curl
-         bugs 1420?  https://sourceforge.net/p/curl/bugs/1420/ This is
-         changeset a8784f6e153f.
+         bugs 1420 (https://sourceforge.net/p/curl/bugs/1420/)?  This
+         is done by changesets a8784f6e153f and 46fd1a2376ab.
 
 
 1.  Introduction
@@ -244,10 +244,96 @@
     timed out requests.  This has been reported to the curl devs as
     bug 1420 and some defensive measures are taken in the Linden
     'default' branch until an official fix is available.  Once it is
-    available, this change (changeset a8784f6e153f) should be
+    available, these changes (a8784f6e153f and 46fd1a2376ab) should be
     reverted.
 
+    I recommend testing any 1420 fix or workaround.  The process isn't
+    entirely deterministic.  But some hooks are in place to make this
+    less painful.
 
+    1.  Edit llcorehttp/_httpoprequest.cpp to force a request timeout
+    of one second:
+
+diff -r 0e3365c1843d indra/llcorehttp/_httpoprequest.cpp
+--- a/indra/llcorehttp/_httpoprequest.cpp       Mon Oct 06 15:22:58 2014 -0400
++++ b/indra/llcorehttp/_httpoprequest.cpp       Fri Oct 10 14:31:16 2014 -0400
+@@ -626,8 +626,8 @@
+                // *TODO:  Find a better scheme than timeouts to guarantee liveness.
+                xfer_timeout *= cpolicy.mPipelining;
+        }
+-       // *DEBUG:  Useful for timeout handling and "[curl:bugs] #1420" tests
+-       // xfer_timeout = 1L;
++       // *DEBUG:  Enable following override for timeout handling and "[curl:bugs] #1420" tests
++       xfer_timeout = 1L;
+        code = curl_easy_setopt(mCurlHandle, CURLOPT_TIMEOUT, xfer_timeout);
+        check_curl_easy_code(code, CURLOPT_TIMEOUT);
+        code = curl_easy_setopt(mCurlHandle, CURLOPT_CONNECTTIMEOUT, timeout);
+
+
+    2.  Edit llcorehttp/httpcommon.cpp to disable request retry for
+    the Core_9 (invalid status) error:
+
+diff -r 0e3365c1843d indra/llcorehttp/httpcommon.cpp
+--- a/indra/llcorehttp/httpcommon.cpp   Mon Oct 06 15:22:58 2014 -0400
++++ b/indra/llcorehttp/httpcommon.cpp   Fri Oct 10 14:31:16 2014 -0400
+@@ -254,8 +254,9 @@
+                        *this == op_timedout ||         // Timer expired
+                        *this == post_error ||          // Transport problem
+                        *this == partial_file ||        // Data inconsistency in response
+-                       *this == inv_cont_range ||      // Short data read disagrees with content-range
+-                       *this == inv_status);           // Inv status can reflect internal state problem in libcurl
++                       // *DEBUG:  Comment out 'inv_status' test for [curl:bugs] #1420 testing.
++                       // *this == inv_status ||               // Inv status can reflect internal state problem in libcurl
++                       *this == inv_cont_range);       // Short data read disagrees with content-range
+ }
+ 
+ } // end namespace LLCore
+
+
+    3.  Edit llcorehttp/_httppolicy.cpp and add some chatty logging
+    whenever a request timeout error is generated:
+
+diff -r 0e3365c1843d indra/llcorehttp/_httppolicy.cpp
+--- a/indra/llcorehttp/_httppolicy.cpp  Mon Oct 06 15:22:58 2014 -0400
++++ b/indra/llcorehttp/_httppolicy.cpp  Fri Oct 10 15:10:12 2014 -0400
+@@ -414,6 +414,18 @@
+        // Retry or finalize
+        if (! op->mStatus)
+        {
++               // *DEBUG:  For "[curl:bugs] #1420" tests.  This will interfere
++               // with unit tests due to allocation retention by logging code.
++               // But you won't be checking this in enabled.
++#if 1
++               if (op->mStatus == HttpStatus(HttpStatus::EXT_CURL_EASY, CURLE_OPERATION_TIMEDOUT))
++               {
++                       LL_WARNS(LOG_CORE) << "HTTP request " << static_cast<HttpHandle>(op)
++                                                          << " timed out."
++                                                          << LL_ENDL;
++               }
++#endif
++
+                // If this failed, we might want to retry.
+                if (op->mPolicyRetries < op->mPolicyRetryLimit && op->mStatus.isRetryable())
+                {
+
+    4.  Build and visit mesh- and texture-rich regions.  Monitor the
+    SecondLife.log file for the 'timed out' log message and Core_9
+    errors.  The test isn't deterministic but you want *NO* Core_9
+    errors and *many* 'timed out' messages:
+
+2014-10-10T19:03:15Z WARNING: LLCore::HttpPolicy::stageAfterCompletion: HTTP request 2CC9FCB0 timed out.
+2014-10-10T19:03:15Z WARNING: LLCore::HttpPolicy::stageAfterCompletion: HTTP request 24DA9FC0 timed out.
+2014-10-10T19:03:15Z WARNING: LLCore::HttpPolicy::stageAfterCompletion: HTTP request 2CC9FD90 timed out.
+2014-10-10T19:03:15Z WARNING: LLCore::HttpPolicy::stageAfterCompletion: HTTP request 26D68718 timed out.
+2014-10-10T19:03:15Z WARNING: LLCore::HttpPolicy::stageAfterCompletion: HTTP request 26D67F38 timed out.
+2014-10-10T19:03:15Z WARNING: LLCore::HttpPolicy::stageAfterCompletion: HTTP request 26D68C58 timed out.
+2014-10-10T19:03:15Z WARNING: LLCore::HttpPolicy::stageAfterCompletion: HTTP request 252218F8 timed out.
+
+
+    5.  Follow this test with a Wireshark verification that pipelining
+    is still working.
+
+        
 3.  Source Origin
 
     7.38.0:
