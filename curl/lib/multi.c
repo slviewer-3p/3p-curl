@@ -1019,9 +1019,10 @@ static CURLMcode multi_runsingle(struct Curl_multi *multi,
            doesn't work at this point). */
         connclose(data->easy_conn, "Disconnected with pending data");
         data->result = CURLE_OPERATION_TIMEDOUT;
-        // Linden 1420
+        /* Linden 1420 */
         if(data->easy_conn) {
           infof(data, "Request timed out.  Signal all requests on connection.\n");
+          data->easy_conn->bits.poisoned_1420 = TRUE;
           Curl_posttransfer(data);
           Curl_done(&data->easy_conn, data->result, FALSE);
         }

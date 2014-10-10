@@ -2696,7 +2696,7 @@ static bool IsPipeliningPossible(const struct SessionHandle *handle,
                                  const struct connectdata *conn)
 {
   if((conn->handler->protocol & PROTO_FAMILY_HTTP) &&
-     !conn->bits.close &&                                                // Linden 1420
+     !conn->bits.poisoned_1420 &&                                 /* Linden 1420 */
      Curl_multi_pipeline_enabled(handle->multi) &&
      (handle->set.httpreq == HTTPREQ_GET ||
       handle->set.httpreq == HTTPREQ_HEAD) &&
@@ -3650,7 +3650,8 @@ static struct connectdata *allocate_conn(struct SessionHandle *data)
   conn->bits.user_passwd = (NULL != data->set.str[STRING_USERNAME])?TRUE:FALSE;
   conn->bits.ftp_use_epsv = data->set.ftp_use_epsv;
   conn->bits.ftp_use_eprt = data->set.ftp_use_eprt;
-
+  conn->bits.poisoned_1420 = FALSE;                     /* Linden 1420 */
+  
   conn->verifypeer = data->set.ssl.verifypeer;
   conn->verifyhost = data->set.ssl.verifyhost;
 

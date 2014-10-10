@@ -545,6 +545,8 @@ struct ConnectBits {
   bool bound; /* set true if bind() has already been done on this socket/
                  connection */
   bool type_set;  /* type= was used in the URL */
+  bool poisoned_1420; /* Linden 1420 - Connection became unusable and must not
+                         be considered for pipelining. */
 };
 
 struct hostname {
