@@ -7,7 +7,7 @@ set -x
 # make errors fatal
 set -e
 
-if [ -z "$AUTOBUILD" ] ; then 
+if [ -z "$AUTOBUILD" ] ; then
     fail
 fi
 
@@ -104,7 +104,7 @@ pushd "$CURL_SOURCE_DIR"
                     INCLUDE="$INCLUDE;$packages/include;$packages/include/zlib;$packages/include/openssl" \
                     LIB="$LIB;$packages/lib/release" \
                     LINDEN_INCPATH="$packages/include" \
-                    LINDEN_LIBPATH="$packages/lib/release" 
+                    LINDEN_LIBPATH="$packages/lib/release"
 
             popd
 
@@ -122,7 +122,7 @@ pushd "$CURL_SOURCE_DIR"
                     INCLUDE="$INCLUDE;$packages/include;$packages/include/zlib;$packages/include/openssl" \
                     LIB="$LIB;$packages/lib/debug" \
                     LINDEN_INCPATH="$packages/include" \
-                    LINDEN_LIBPATH="$packages/lib/debug" 
+                    LINDEN_LIBPATH="$packages/lib/debug"
             popd
 
             # conditionally run unit tests
@@ -172,7 +172,7 @@ pushd "$CURL_SOURCE_DIR"
             # sdk=/Developer/SDKs/MacOSX10.6.sdk/
             # sdk=/Developer/SDKs/MacOSX10.7.sdk/
             # sdk=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.6.sdk/
-            sdk=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.7.sdk/
+            sdk=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/
 
             opts="${TARGET_OPTS:--arch i386 -iwithsysroot $sdk -mmacosx-version-min=10.7}"
 
@@ -234,7 +234,7 @@ pushd "$CURL_SOURCE_DIR"
                 popd
             fi
 
-            make distclean 
+            make distclean
             # rm -rf Resources/ ../Resources tests/Resources/
 
             # Release configure and build
@@ -269,7 +269,7 @@ pushd "$CURL_SOURCE_DIR"
                 popd
             fi
 
-            make distclean 
+            make distclean
             # Again, for dylib dependencies
             # rm -rf Resources/ ../Resources tests/Resources/
         ;;
@@ -305,7 +305,7 @@ pushd "$CURL_SOURCE_DIR"
                 unset CPPFLAGS
             else
                 # Incorporate special pre-processing flags
-                export CPPFLAGS="$TARGET_CPPFLAGS" 
+                export CPPFLAGS="$TARGET_CPPFLAGS"
             fi
 
             # Force static linkage to libz and openssl by moving .sos out of the way
@@ -315,7 +315,7 @@ pushd "$CURL_SOURCE_DIR"
                     mv -f "$solib" "$solib".disable
                 fi
             done
-            
+
             mkdir -p "$stage/lib/release"
             mkdir -p "$stage/lib/debug"
 
@@ -362,7 +362,7 @@ pushd "$CURL_SOURCE_DIR"
                 popd
             fi
 
-            make distclean 
+            make distclean
 
             # Release configure and build
             export LD_LIBRARY_PATH="${stage}"/packages/lib/release:"$saved_path"
@@ -394,7 +394,7 @@ pushd "$CURL_SOURCE_DIR"
                 popd
             fi
 
-            make distclean 
+            make distclean
 
             export LD_LIBRARY_PATH="$saved_path"
         ;;
