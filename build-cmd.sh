@@ -7,7 +7,7 @@ set -x
 # make errors fatal
 set -e
 
-if [ -z "$AUTOBUILD" ] ; then 
+if [ -z "$AUTOBUILD" ] ; then
     fail
 fi
 
@@ -15,7 +15,6 @@ if [ "$OSTYPE" = "cygwin" ] ; then
     export AUTOBUILD="$(cygpath -u $AUTOBUILD)"
 fi
 
-CURL_VERSION=7.38.0
 CURL_SOURCE_DIR="curl"
 
 # load autbuild provided shell functions and variables
@@ -29,6 +28,11 @@ OPENSSL_INCLUDE="${stage}"/packages/include/openssl
 
 [ -f "$ZLIB_INCLUDE"/zlib.h ] || fail "You haven't installed the zlib package yet."
 [ -f "$OPENSSL_INCLUDE"/ssl.h ] || fail "You haven't installed the openssl package yet."
+
+LIBCURL_VERSION_HEADER_DIR="${CURL_SOURCE_DIR}"/include/curl
+version=$(perl -ne 's/#define LIBCURL_VERSION "([^"]+)"/$1/ && print' "${LIBCURL_VERSION_HEADER_DIR}/curlver.h")
+build=${AUTOBUILD_BUILD_ID:=0}
+echo "${version}.${build}" > "${stage}/VERSION.txt"
 
 # Restore all .sos
 restore_sos ()
@@ -100,7 +104,7 @@ pushd "$CURL_SOURCE_DIR"
                     INCLUDE="$INCLUDE;$packages/include;$packages/include/zlib;$packages/include/openssl" \
                     LIB="$LIB;$packages/lib/release" \
                     LINDEN_INCPATH="$packages/include" \
-                    LINDEN_LIBPATH="$packages/lib/release" 
+                    LINDEN_LIBPATH="$packages/lib/release"
 
             popd
 
@@ -118,7 +122,7 @@ pushd "$CURL_SOURCE_DIR"
                     INCLUDE="$INCLUDE;$packages/include;$packages/include/zlib;$packages/include/openssl" \
                     LIB="$LIB;$packages/lib/debug" \
                     LINDEN_INCPATH="$packages/include" \
-                    LINDEN_LIBPATH="$packages/lib/debug" 
+                    LINDEN_LIBPATH="$packages/lib/debug"
             popd
 
             # conditionally run unit tests
@@ -168,9 +172,9 @@ pushd "$CURL_SOURCE_DIR"
             # sdk=/Developer/SDKs/MacOSX10.6.sdk/
             # sdk=/Developer/SDKs/MacOSX10.7.sdk/
             # sdk=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.6.sdk/
-            sdk=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.7.sdk/
+            sdk=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/
 
-            opts="${TARGET_OPTS:--arch i386 -iwithsysroot $sdk -mmacosx-version-min=10.6}"
+            opts="${TARGET_OPTS:--arch i386 -iwithsysroot $sdk -mmacosx-version-min=10.7}"
 
             mkdir -p "$stage/lib/release"
             mkdir -p "$stage/lib/debug"
@@ -230,7 +234,7 @@ pushd "$CURL_SOURCE_DIR"
                 popd
             fi
 
-            make distclean 
+            make distclean
             # rm -rf Resources/ ../Resources tests/Resources/
 
             # Release configure and build
@@ -265,7 +269,7 @@ pushd "$CURL_SOURCE_DIR"
                 popd
             fi
 
-            make distclean 
+            make distclean
             # Again, for dylib dependencies
             # rm -rf Resources/ ../Resources tests/Resources/
         ;;
@@ -301,7 +305,7 @@ pushd "$CURL_SOURCE_DIR"
                 unset CPPFLAGS
             else
                 # Incorporate special pre-processing flags
-                export CPPFLAGS="$TARGET_CPPFLAGS" 
+                export CPPFLAGS="$TARGET_CPPFLAGS"
             fi
 
             # Force static linkage to libz and openssl by moving .sos out of the way
@@ -311,7 +315,7 @@ pushd "$CURL_SOURCE_DIR"
                     mv -f "$solib" "$solib".disable
                 fi
             done
-            
+
             mkdir -p "$stage/lib/release"
             mkdir -p "$stage/lib/debug"
 
@@ -358,7 +362,7 @@ pushd "$CURL_SOURCE_DIR"
                 popd
             fi
 
-            make distclean 
+            make distclean
 
             # Release configure and build
             export LD_LIBRARY_PATH="${stage}"/packages/lib/release:"$saved_path"
@@ -390,7 +394,7 @@ pushd "$CURL_SOURCE_DIR"
                 popd
             fi
 
-            make distclean 
+            make distclean
 
             export LD_LIBRARY_PATH="$saved_path"
         ;;

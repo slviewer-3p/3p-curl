@@ -5,6 +5,10 @@
     <map>
       <key>openssl</key>
       <map>
+        <key>copyright</key>
+        <string>Copyright (c) 1998-2011 The OpenSSL Project.  All rights reserved; Copyright (C) 1995-1998 Eric Young (eay@cryptsoft.com)</string>
+        <key>description</key>
+        <string>Secure Sockets Layer (SSL v2/v3) and Transport Layer Security (TLS v1) Library</string>
         <key>license</key>
         <string>openssl</string>
         <key>license_file</key>
@@ -18,9 +22,9 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>4db126327bbb125ea2490c79c73103bf</string>
+              <string>c992a53924cf180fbd644c5fcacd3d92</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/3pl_3p-openssl-update/rev/290662/arch/Darwin/installer/openssl-1.0.1h-darwin-20140605.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/openssl_3p-update-openssl/rev/295244/arch/Darwin/installer/openssl-1.0.1h.295244-darwin-295244.tar.bz2</string>
             </map>
             <key>name</key>
             <string>darwin</string>
@@ -50,6 +54,8 @@
             <string>windows</string>
           </map>
         </map>
+        <key>version</key>
+        <string>1.0.1h.295244</string>
       </map>
       <key>zlib</key>
       <map>
@@ -70,9 +76,9 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>6658071e3b54b1dd5f5279227aff402a</string>
+              <string>567f437d22d891c811aa9a70e2b63ad8</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/3pl_3p-zlib-update/rev/290556/arch/Darwin/installer/zlib-1.2.8-darwin-20140602.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/zlib_3p-update-zlib/rev/294883/arch/Darwin/installer/zlib-1.2.8.294883-darwin-294883.tar.bz2</string>
             </map>
             <key>name</key>
             <string>darwin</string>
@@ -215,12 +221,12 @@
       <string>curl</string>
       <key>source_type</key>
       <string>hg</string>
-      <key>version</key>
-      <string>7.38.0</string>
+      <key>version_file</key>
+      <string>VERSION.txt</string>
     </map>
     <key>type</key>
     <string>autobuild</string>
     <key>version</key>
-    <string>1.2</string>
+    <string>1.3</string>
   </map>
 </llsd>
