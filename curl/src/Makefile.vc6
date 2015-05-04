@@ -27,10 +27,10 @@
 
 #############################################################
 #
-## Makefile for building curl.exe with MSVC6
-## Use: nmake -f makefile.vc6 [release | debug] [CFG=release-ssl]
+## Makefile for building curl.exe with MSVC10
+## Use: nmake -f makefile.vc10 [release | debug] [CFG=release-ssl]
 ##      (default is release)
-## "nmake -f makefile.vc6 CFG=release-ssl" statically links OpenSSL
+## "nmake -f makefile.vc10 CFG=release-ssl" statically links OpenSSL
 ## into curl.exe producing a standalone SSL-enabled executable.
 ##
 #
@@ -69,7 +69,7 @@ MACHINE  = X86
 
 # USE_WINDOWS_SSPI uses windows libraries to allow NTLM authentication
 # without an openssl installation and offers the ability to authenticate
-# using the "current logged in user". Since at least with MSVC6 the sspi.h
+# using the "current logged in user". Since at least with MSVC10 the sspi.h
 # header is broken it is either required to install the Windows SDK,
 # or to fix sspi.h with adding this define at the beginning of sspi.h:
 # #define FreeCredentialHandle FreeCredentialsHandle
@@ -91,13 +91,13 @@ WINDOWS_SDK_PATH = "$(PROGRAMFILES)\Microsoft SDK"
 ## Nothing more to do below this line!
 
 ZLIB_CFLAGS    = /DHAVE_ZLIB_H /DHAVE_ZLIB /DHAVE_LIBZ /I "$(ZLIB_PATH)"
-ZLIB_LFLAGS    = "/LIBPATH:$(ZLIB_PATH)"
-ZLIB_LIBS      = zlib.lib
+ZLIB_LFLAGS   = "/LIBPATH:$(LINDEN_LIBPATH)"
+ZLIB_LIBS     = $(ZLIB_NAME)
 ZLIB_IMP_LIBS  = zdll.lib
 
-SSL_CFLAGS     = /DUSE_OPENSSL
-SSL_LFLAGS     = /LIBPATH:"$(OPENSSL_PATH)/out32"
-SSL_IMP_LFLAGS = /LIBPATH:"$(OPENSSL_PATH)/out32dll"
+SSL_CFLAGS     = /DUSE_SSLEAY /I "$(OPENSSL_PATH)"
+SSL_LFLAGS     = /LIBPATH:"$(LINDEN_LIBPATH)"
+SSL_IMP_LFLAGS = /LIBPATH:"$(LINDEN_LIBPATH)"
 SSL_LIBS       = libeay32.lib ssleay32.lib gdi32.lib user32.lib
 WINLIBS        = ws2_32.lib wldap32.lib advapi32.lib
 
@@ -118,21 +118,21 @@ RTLIBD = /MTd
 !ENDIF
 
 ## Release
-CCR   = cl.exe $(RTLIB) /O2 /DNDEBUG
+CCR   = cl.exe $(RTLIB) /O2 /Z7 /DNDEBUG
 LINKR = link.exe /incremental:no /libpath:"../lib"
 RCR   = rc.exe /dDEBUGBUILD=0
 
 ## Debug
-CCD   = cl.exe $(RTLIBD) /Gm /ZI /Od /D_DEBUG /GZ
+CCD   = cl.exe $(RTLIBD) /Z7 /Od /D_DEBUG /RTC1
 LINKD = link.exe /incremental:yes /debug /libpath:"../lib"
 RCD   = rc.exe /dDEBUGBUILD=1
 
-CFLAGS   = /I../lib /I../include /nologo /W3 /GX /DWIN32 /YX /FD /c /D_BIND_TO_CURRENT_VCLIBS_VERSION=1
+CFLAGS   = /I../lib /I../include /nologo /W3 /EHsc /DWIN32 /FD /c /D_BIND_TO_CURRENT_VCLIBS_VERSION=1
 LFLAGS   = /nologo /out:$(PROGRAM_NAME) /subsystem:console /machine:$(MACHINE)
 RESFLAGS = /i../include
 
 # This manifest thing is for VC8, enabled by the maketgz script that
-# builds the VC8 version of this makefile. Left commented out in the VC6
+# builds the VC8 version of this makefile. Left commented out in the VC10
 # version!
 #MANIFESTTOOL = mt -manifest $(PROGRAM_NAME).manifest -outputresource:$(PROGRAM_NAME);1
 
@@ -323,6 +323,16 @@ CFLAGS         = $(CFLAGS) $(ZLIB_CFLAGS)
 LINKLIBS       = $(LIBCURL_IMP_LIB_REL) $(ZLIB_IMP_LIBS)
 LINKLIBS_DEBUG = $(LIBCURL_IMP_LIB_DBG) $(ZLIB_IMP_LIBS)
 LFLAGS         = $(LFLAGS) $(ZLIB_LFLAGS)
+!ENDIF
+
+#################################################
+# release static library with dynamic ssl and static zlib (Linden Lab target)
+
+!IF "$(CFG)" == "release-ssl-dll-zlib"
+CFLAGS         = $(CFLAGS) $(SSL_CFLAGS) $(ZLIB_CFLAGS) /DCURL_STATICLIB
+LINKLIBS       = $(LIBCURL_STA_LIB_REL) $(SSL_LIBS) $(ZLIB_LIBS)
+LINKLIBS_DEBUG = $(LIBCURL_STA_LIB_DBG) $(SSL_LIBS) $(ZLIB_LIBS)
+LFLAGS         = $(LFLAGS) $(SSL_IMP_LFLAGS) $(ZLIB_LFLAGS)
 !ENDIF
 
 #################################################

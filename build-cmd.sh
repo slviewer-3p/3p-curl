@@ -88,7 +88,7 @@ pushd "$CURL_SOURCE_DIR"
 
                 # Debug target.  DLL for SSL, static archives
                 # for libcurl and zlib.  (Config created by Linden Lab)
-                nmake /f Makefile.vc10 CFG=debug-ssl-dll-zlib \
+                nmake /f Makefile.VC6 CFG=debug-ssl-dll-zlib \
                     OPENSSL_PATH="$packages/include/openssl" \
                     ZLIB_PATH="$packages/include/zlib" ZLIB_NAME="zlibd.lib" \
                     INCLUDE="$INCLUDE;$packages/include;$packages/include/zlib;$packages/include/openssl" \
@@ -98,7 +98,7 @@ pushd "$CURL_SOURCE_DIR"
 
                 # Release target.  DLL for SSL, static archives
                 # for libcurl and zlib.  (Config created by Linden Lab)
-                nmake /f Makefile.vc10 CFG=release-ssl-dll-zlib \
+                nmake /f Makefile.VC6 CFG=release-ssl-dll-zlib \
                     OPENSSL_PATH="$packages/include/openssl" \
                     ZLIB_PATH="$packages/include/zlib" ZLIB_NAME="zlib.lib" \
                     INCLUDE="$INCLUDE;$packages/include;$packages/include/zlib;$packages/include/openssl" \
@@ -116,7 +116,7 @@ pushd "$CURL_SOURCE_DIR"
                 # Target can be 'debug' or 'release' but CFG's
                 # are always 'release-*' for the executable build.
 
-                nmake /f Makefile.vc10 debug CFG=release-ssl-dll-zlib \
+                nmake /f Makefile.VC6 debug CFG=release-ssl-dll-zlib \
                     OPENSSL_PATH="$packages/include/openssl" \
                     ZLIB_PATH="$packages/include/zlib" ZLIB_NAME="zlibd.lib" \
                     INCLUDE="$INCLUDE;$packages/include;$packages/include/zlib;$packages/include/openssl" \
@@ -158,10 +158,10 @@ pushd "$CURL_SOURCE_DIR"
 
             # Clean
             pushd lib
-                nmake /f Makefile.vc10 clean
+                nmake /f Makefile.VC6 clean
             popd
             pushd src
-                nmake /f Makefile.vc10 clean
+                nmake /f Makefile.VC6 clean
             popd
         ;;
 
