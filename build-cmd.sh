@@ -292,6 +292,8 @@ pushd "$CURL_SOURCE_DIR"
             #
             # unset DISTCC_HOSTS CC CXX CFLAGS CPPFLAGS CXXFLAGS
 
+			./buildconf
+			
             # Prefer gcc-4.6 if available.
             if [[ -x /usr/bin/gcc-4.6 && -x /usr/bin/g++-4.6 ]]; then
                 export CC=/usr/bin/gcc-4.6
@@ -321,7 +323,6 @@ pushd "$CURL_SOURCE_DIR"
             mkdir -p "$stage/lib/release"
             mkdir -p "$stage/lib/debug"
 
-            ./buildconf
 
             # Autoconf's configure will do some odd things to flags.  '-I' options
             # will get transferred to '-isystem' and there's a problem with quoting.
