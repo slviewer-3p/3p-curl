@@ -78,7 +78,7 @@ check_damage ()
     esac
 }
 
-pushd "$CURL_SOURCE_DIR"
+pushd "$top/$CURL_SOURCE_DIR"
     case "$AUTOBUILD_PLATFORM" in
         "windows")
             check_damage "$AUTOBUILD_PLATFORM"
