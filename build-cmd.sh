@@ -353,18 +353,18 @@ pushd "$CURL_SOURCE_DIR"
             make install
 
             # conditionally run unit tests
-            if [ "${DISABLE_UNIT_TESTS:-0}" = "0" ]; then
-                pushd tests
-                    # We hijack the 'quiet-test' target and redefine it as
-                    # a no-valgrind test.  Also exclude test 906.  It fails in the
-                    # 7.33 distribution with our configuration options.  530 fails
-                    # in TeamCity.  815 hangs in 7.36.0 fixed in 7.37.0.
-                    #
-                    # Expect problems with the unit tests, they're very sensitive
-                    # to environment.
-                    make quiet-test TEST_Q='-n !906 !530 !564 !584 !1026'
-                popd
-            fi
+            #if [ "${DISABLE_UNIT_TESTS:-0}" = "0" ]; then
+            #    pushd tests
+            #        # We hijack the 'quiet-test' target and redefine it as
+            #        # a no-valgrind test.  Also exclude test 906.  It fails in the
+            #        # 7.33 distribution with our configuration options.  530 fails
+            #        # in TeamCity.  815 hangs in 7.36.0 fixed in 7.37.0.
+            #        #
+            #        # Expect problems with the unit tests, they're very sensitive
+            #        # to environment.
+            #        make quiet-test TEST_Q='-n !906 !530 !564 !584 !1026'
+            #    popd
+            #fi
 
             make distclean
 
@@ -385,18 +385,18 @@ pushd "$CURL_SOURCE_DIR"
             make install
 
             # conditionally run unit tests
-            if [ "${DISABLE_UNIT_TESTS:-0}" = "0" ]; then
-                pushd tests
-                    # We hijack the 'quiet-test' target and redefine it as
-                    # a no-valgrind test.  Also exclude test 906.  It fails in the
-                    # 7.33 distribution with our configuration options.  530 fails
-                    # in TeamCity.  815 hangs in 7.36.0 fixed in 7.37.0.
-                    #
-                    # Expect problems with the unit tests, they're very sensitive
-                    # to environment.
-                    make quiet-test TEST_Q='-n !906 !530 !564 !584 !1026'
-                popd
-            fi
+            #if [ "${DISABLE_UNIT_TESTS:-0}" = "0" ]; then
+            #    pushd tests
+            #        # We hijack the 'quiet-test' target and redefine it as
+            #        # a no-valgrind test.  Also exclude test 906.  It fails in the
+            #        # 7.33 distribution with our configuration options.  530 fails
+            #        # in TeamCity.  815 hangs in 7.36.0 fixed in 7.37.0.
+            #        #
+            #        # Expect problems with the unit tests, they're very sensitive
+            #        # to environment.
+            #        make quiet-test TEST_Q='-n !906 !530 !564 !584 !1026'
+            #    popd
+            #fi
 
             make distclean
 
