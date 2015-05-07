@@ -358,7 +358,7 @@ pushd "$CURL_SOURCE_DIR"
                     #
                     # Expect problems with the unit tests, they're very sensitive
                     # to environment.
-                    make quiet-test TEST_Q='-n !906 !530 !564 !584'
+                    make quiet-test TEST_Q='-n !906 !530 !564 !584 !1026'
                 popd
             fi
 
