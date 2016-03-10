@@ -17,7 +17,7 @@ fi
 
 CURL_SOURCE_DIR="curl"
 
-# load autbuild provided shell functions and variables
+# load autobuild provided shell functions and variables
 eval "$("$AUTOBUILD" source_environment)"
 
 top="$(pwd)"
@@ -80,49 +80,45 @@ check_damage ()
 
 pushd "$CURL_SOURCE_DIR"
     case "$AUTOBUILD_PLATFORM" in
-        "windows")
+        windows*)
             check_damage "$AUTOBUILD_PLATFORM"
             packages="$(cygpath -m "$stage/packages")"
             load_vsvars
             pushd lib
 
-                # Debug target.  DLL for SSL, static archives
-                # for libcurl and zlib.  (Config created by Linden Lab)
-                nmake /f Makefile.VC6 CFG=debug-ssl-dll-zlib \
-                    OPENSSL_PATH="$packages/include/openssl" \
-                    ZLIB_PATH="$packages/include/zlib" ZLIB_NAME="zlibd.lib" \
-                    INCLUDE="$INCLUDE;$packages/include;$packages/include/zlib;$packages/include/openssl" \
-                    LIB="$LIB;$packages/lib/debug" \
-                    LINDEN_INCPATH="$packages/include" \
-                    LINDEN_LIBPATH="$packages/lib/debug"
+                if [ "$AUTOBUILD_ADDRSIZE" = 32 ]
+                    then machine=X86
+                    else machine=X64
+                fi
 
                 # Release target.  DLL for SSL, static archives
                 # for libcurl and zlib.  (Config created by Linden Lab)
-                nmake /f Makefile.VC6 CFG=release-ssl-dll-zlib \
+                nmake /f Makefile.VC6 \
+                    CFG=release-ssl-dll-zlib \
                     OPENSSL_PATH="$packages/include/openssl" \
                     ZLIB_PATH="$packages/include/zlib" ZLIB_NAME="zlib.lib" \
                     INCLUDE="$INCLUDE;$packages/include;$packages/include/zlib;$packages/include/openssl" \
+                    MACHINE="$machine" \
                     LIB="$LIB;$packages/lib/release" \
                     LINDEN_INCPATH="$packages/include" \
                     LINDEN_LIBPATH="$packages/lib/release"
-
             popd
+
+            # To be removed - no unit tests - no point in building curl is there?
 
             pushd src
                 # Real unit tests aren't running on Windows yet.  But
                 # we can at least build the curl command itself and
                 # invoke and inspect it a bit.
 
-                # Target can be 'debug' or 'release' but CFG's
-                # are always 'release-*' for the executable build.
-
-                nmake /f Makefile.VC6 debug CFG=release-ssl-dll-zlib \
+                nmake /f Makefile.VC6 release CFG=release-ssl-dll-zlib \
                     OPENSSL_PATH="$packages/include/openssl" \
-                    ZLIB_PATH="$packages/include/zlib" ZLIB_NAME="zlibd.lib" \
+                    ZLIB_PATH="$packages/include/zlib" ZLIB_NAME="zlib.lib" \
                     INCLUDE="$INCLUDE;$packages/include;$packages/include/zlib;$packages/include/openssl" \
-                    LIB="$LIB;$packages/lib/debug" \
+                    MACHINE="$machine" \
+                    LIB="$LIB;$packages/lib/release" \
                     LINDEN_INCPATH="$packages/include" \
-                    LINDEN_LIBPATH="$packages/lib/debug"
+                    LINDEN_LIBPATH="$packages/lib/release"
             popd
 
             # conditionally run unit tests
@@ -134,21 +130,20 @@ pushd "$CURL_SOURCE_DIR"
             fi
 
             # Stage archives
-            mkdir -p "${stage}"/lib/{debug,release}
-            cp -a lib/debug-ssl-dll-zlib/libcurld.lib "${stage}"/lib/debug/libcurld.lib
+            mkdir -p "${stage}/lib/release"
             cp -a lib/release-ssl-dll-zlib/libcurl.lib "${stage}"/lib/release/libcurl.lib
 
             # Stage curl.exe and provide .dll's it needs
             mkdir -p "${stage}"/bin
-            cp -af "${stage}"/packages/lib/debug/*.{dll,pdb} "${stage}"/bin/
+            cp -af "${stage}"/packages/lib/release/*.dll "${stage}"/bin/
             chmod +x-w "${stage}"/bin/*.dll   # correct package permissions
-            cp -a src/curl.{exe,ilk,pdb} "${stage}"/bin/
+            cp -a src/curl.exe "${stage}"/bin/
 
             # Stage headers
             mkdir -p "${stage}"/include
             cp -a include/curl/ "${stage}"/include/
 
-            # Run 'curl' as a sanity check
+            Run 'curl' as a sanity check
             echo "======================================================="
             echo "==    Verify expected versions of libraries below    =="
             echo "======================================================="
