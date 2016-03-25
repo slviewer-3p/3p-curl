@@ -322,7 +322,7 @@ pushd "$CURL_SOURCE_DIR"
             # configure-time compilation looks like:
             # ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'
             # ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
-            saved_path="$LD_LIBRARY_PATH"
+            saved_path="${LD_LIBRARY_PATH:-}"
 
             # Release configure and build
             export LD_LIBRARY_PATH="${stage}"/packages/lib/release:"$saved_path"
