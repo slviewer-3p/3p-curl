@@ -22,7 +22,9 @@ fi
 CURL_SOURCE_DIR="curl"
 
 # load autobuild provided shell functions and variables
+set +x
 eval "$("$autobuild" source_environment)"
+set -x
 
 # set LL_BUILD and friends
 set_build_variables convenience Release
@@ -78,6 +80,38 @@ check_damage ()
             egrep 'USE_THREADS_POSIX[[:space:]]+1' lib/curl_config.h
         ;;
     esac
+}
+
+# Read the version of a particular installable package from autobuild.xml.
+# Optional $2 specifies number of version-number parts to report.
+get_installable_version ()
+{
+    set +x
+    # This command dumps the autobuild.xml data for the specified installable
+    # in Python literal syntax.
+    pydata="$("$autobuild" installables print "$1")"
+    # Now harvest the version key.
+    # It's important to use ''' syntax because of newlines in output. Specify
+    # raw literal syntax too in case of backslashes.
+    # Use ast.literal_eval(), safer than plain builtin eval.
+    # Once we have the Python dict, extract "version" key.
+    # Split version number on '.'.
+    # Keep up to $2 version-number parts.
+    # Rejoin them on '.' again and print.
+    # On Windows, change '\r\n' to plain '\n': the '\r' is NOT removed by
+    # bash, so it becomes part of the string contents, which confuses both
+    # scripted comparisons and human readers.
+    python -c "from ast import literal_eval
+print '.'.join(literal_eval(r'''$pydata''')['version'].split('.')[:${2:-}])" \
+        | tr -d '\r'
+    set -x
+}
+
+# Given an (e.g. version) string possibly containing periods, escape those
+# periods with backslashes.
+escape_dots ()
+{
+    echo "${1//./\\.}"
 }
 
 pushd "$CURL_SOURCE_DIR"
@@ -143,15 +177,19 @@ pushd "$CURL_SOURCE_DIR"
             mkdir -p "${stage}"/include
             cp -a include/curl/ "${stage}"/include/
 
-            # Run 'curl' as a sanity check
-            # TODO: grep for expected output rather than relying on human
-            # verification
-            echo "======================================================="
-            echo "==    Verify expected versions of libraries below    =="
-            echo "======================================================="
-            "${stage}"/bin/curl.exe --version
-            echo "======================================================="
-            echo "======================================================="
+            # Run 'curl' as a sanity check. Capture just the first line, which
+            # should have versions of stuff.
+            curlout="$("${stage}"/bin/curl.exe --version | tr -d '\r' | head -n 1)"
+            # With -e in effect, any nonzero rc blows up the script --
+            # so plain 'expr str : pattern' asserts that str contains pattern.
+            # curl version - should be start of line
+            expr "$curlout" : "curl $(escape_dots "$version")" > /dev/null
+            # libcurl/version
+            expr "$curlout" : ".* libcurl/$(escape_dots "$version")" > /dev/null
+            # OpenSSL/version
+            expr "$curlout" : ".* OpenSSL/$(escape_dots "$(get_installable_version openssl 3)")" > /dev/null
+            # zlib/version
+            expr "$curlout" : ".* zlib/$(escape_dots "$(get_installable_version zlib 3)")" > /dev/null
 
             # Clean
             pushd lib
