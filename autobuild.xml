@@ -245,7 +245,6 @@
           <key>manifest</key>
           <array>
             <string>lib/release/libcurl.a</string>
-            <string>lib/debug/libcurl.a</string>
           </array>
           <key>name</key>
           <string>darwin</string>
@@ -265,7 +264,6 @@
           <key>manifest</key>
           <array>
             <string>lib/release/libcurl.a</string>
-            <string>lib/debug/libcurl.a</string>
           </array>
           <key>name</key>
           <string>linux</string>
