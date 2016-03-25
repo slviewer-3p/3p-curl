@@ -12,7 +12,4 @@ curl-autobuild.build_legacy_package = false
 
 curl-autobuild.PACKAGE_NAME = curl
 
-# autobuild uses VS2010
-AUTOBUILD_VSVER=100
-
 # eof
