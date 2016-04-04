@@ -5,7 +5,7 @@
  *                            | (__| |_| |  _ <| |___
  *                             \___|\___/|_| \_\_____|
  *
- * Copyright (C) 1998 - 2011, Daniel Stenberg, <daniel@haxx.se>, et al.
+ * Copyright (C) 1998 - 2016, Daniel Stenberg, <daniel@haxx.se>, et al.
  *
  * This software is licensed as described in the file COPYING, which
  * you should have received as part of this distribution. The terms
@@ -19,6 +19,10 @@
  * KIND, either express or implied.
  *
  ***************************************************************************/
+/* <DESC>
+ * HTTP Multipart formpost with file upload and two additional parts.
+ * </DESC>
+ */
 /* Example code that uploads a file name 'foo' to a remote script that accepts
  * "HTML form based" (as described in RFC1738) uploads using HTTP POST.
  *
@@ -73,7 +77,7 @@ int main(int argc, char *argv[])
                CURLFORM_END);
 
   curl = curl_easy_init();
-  /* initalize custom header list (stating that Expect: 100-continue is not
+  /* initialize custom header list (stating that Expect: 100-continue is not
      wanted */
   headerlist = curl_slist_append(headerlist, buf);
   if(curl) {

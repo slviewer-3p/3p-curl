@@ -57,6 +57,7 @@ and that's a problem since options.h hasn't been included yet. */
 #include "connect.h" /* for the connect timeout */
 #include "select.h"
 #include "rawstr.h"
+#include "x509asn1.h"
 #include "curl_printf.h"
 
 #include <cyassl/ssl.h>
@@ -66,6 +67,7 @@ and that's a problem since options.h hasn't been included yet. */
 #include <cyassl/error.h>
 #endif
 #include <cyassl/ctaocrypt/random.h>
+#include <cyassl/ctaocrypt/sha256.h>
 
 /* The last #include files should be: */
 #include "curl_memory.h"
@@ -141,8 +143,15 @@ cyassl_connect_step1(struct connectdata *conn,
     use_sni(TRUE);
     break;
   case CURL_SSLVERSION_SSLv3:
+    /* before WolfSSL SSLv3 was enabled by default, and starting in WolfSSL
+       we check for its presence since it is built without it by default */
+#if !defined(WOLFSSL_VERSION) || defined(HAVE_WOLFSSLV3_CLIENT_METHOD)
     req_method = SSLv3_client_method();
     use_sni(FALSE);
+#else
+    failf(data, "No support for SSLv3");
+    return CURLE_NOT_BUILT_IN;
+#endif
     break;
   case CURL_SSLVERSION_SSLv2:
     failf(data, "CyaSSL does not support SSLv2");
@@ -401,6 +410,51 @@ cyassl_connect_step2(struct connectdata *conn,
           ERR_error_string(detail, error_buffer));
       return CURLE_SSL_CONNECT_ERROR;
     }
+  }
+
+  if(data->set.str[STRING_SSL_PINNEDPUBLICKEY]) {
+#if defined(HAVE_WOLFSSL_GET_PEER_CERTIFICATE) ||       \
+  defined(HAVE_CYASSL_GET_PEER_CERTIFICATE)
+    X509 *x509;
+    const char *x509_der;
+    int x509_der_len;
+    curl_X509certificate x509_parsed;
+    curl_asn1Element *pubkey;
+    CURLcode result;
+
+    x509 = SSL_get_peer_certificate(conssl->handle);
+    if(!x509) {
+      failf(data, "SSL: failed retrieving server certificate");
+      return CURLE_SSL_PINNEDPUBKEYNOTMATCH;
+    }
+
+    x509_der = (const char *)CyaSSL_X509_get_der(x509, &x509_der_len);
+    if(!x509_der) {
+      failf(data, "SSL: failed retrieving ASN.1 server certificate");
+      return CURLE_SSL_PINNEDPUBKEYNOTMATCH;
+    }
+
+    memset(&x509_parsed, 0, sizeof x509_parsed);
+    Curl_parseX509(&x509_parsed, x509_der, x509_der + x509_der_len);
+
+    pubkey = &x509_parsed.subjectPublicKeyInfo;
+    if(!pubkey->header || pubkey->end <= pubkey->header) {
+      failf(data, "SSL: failed retrieving public key from server certificate");
+      return CURLE_SSL_PINNEDPUBKEYNOTMATCH;
+    }
+
+    result = Curl_pin_peer_pubkey(data,
+                                  data->set.str[STRING_SSL_PINNEDPUBLICKEY],
+                                  (const unsigned char *)pubkey->header,
+                                  (size_t)(pubkey->end - pubkey->header));
+    if(result) {
+      failf(data, "SSL: public key does not match pinned public key!");
+      return result;
+    }
+#else
+    failf(data, "Library lacks pinning support built-in");
+    return CURLE_NOT_BUILT_IN;
+#endif
   }
 
   conssl->connecting_state = ssl_connect_3;
@@ -729,6 +783,18 @@ int Curl_cyassl_random(struct SessionHandle *data,
   if(RNG_GenerateBlock(&rng, entropy, (unsigned)length))
     return 1;
   return 0;
+}
+
+void Curl_cyassl_sha256sum(const unsigned char *tmp, /* input */
+                      size_t tmplen,
+                      unsigned char *sha256sum /* output */,
+                      size_t unused)
+{
+  Sha256 SHA256pw;
+  (void)unused;
+  InitSha256(&SHA256pw);
+  Sha256Update(&SHA256pw, tmp, (word32)tmplen);
+  Sha256Final(&SHA256pw, sha256sum);
 }
 
 #endif
