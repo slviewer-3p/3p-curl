@@ -189,8 +189,6 @@ pushd "$CURL_BUILD_DIR"
                 fi
             done
 
-            #./buildconf
-
             # Release configure and build
 
             # Make .dylib's usable during configure as well as unit tests
@@ -203,22 +201,16 @@ pushd "$CURL_BUILD_DIR"
             # ln -sf "${stage}"/packages/lib/release/*.dylib tests/Resources/
             # LDFLAGS="-L../Resources/ -L\"$stage\"/packages/lib/release" \
 
-            # Curl configure has trouble finding zlib 'framework' that
-            # it doesn't have with openssl.  We help it with CPPFLAGS.
+			cmake ../${CURL_SOURCE_DIR} -GXcode -DCMAKE_C_FLAGS:STRING="$opts" \
+				-DCMAKE_CXX_FLAGS:STRING="$opts" -D'BUILD_SHARED_LIBS:bool=off' \
+				-D'BUILD_CODEC:bool=off' -DCMAKE_INSTALL_PREFIX=$stage
 
-            # -g/-O options controled by --enable-debug/-optimize.  Unfortunately,
-            # --enable-debug also defines DEBUGBUILD which changes behaviors.
-#            CFLAGS="$opts" \
-                CXXFLAGS="$opts" \
-                LDFLAGS=-L"$stage"/packages/lib/release \
-                CPPFLAGS="$opts -I$stage/packages/include/zlib" \
-                ./configure  --disable-ldap --disable-ldaps --enable-shared=no \
-                --disable-debug --disable-curldebug --enable-optimize \
-                --prefix="$stage" --libdir="${stage}"/lib/release --enable-threaded-resolver \
-                --with-ssl="${stage}/packages" --with-zlib="${stage}/packages" --without-libssh2
-#            check_damage "$AUTOBUILD_PLATFORM"
-#            make
-#            make install
+            check_damage "$AUTOBUILD_PLATFORM"
+
+            xcodebuild -configuration Release -target libcurl -project CURL.xcodeproj
+            xcodebuild -configuration Release -target install -project CURL.xcodeproj
+            mkdir -p "$stage/lib/release"
+            mv "$stage/lib/libcurl.a" "$stage/lib/release/libcurl.a"
 
             # conditionally run unit tests
             # Disabled here and below by default on Mac because they
@@ -236,15 +228,6 @@ pushd "$CURL_BUILD_DIR"
 #                    make quiet-test TEST_Q='-n !906 !530 !564 !584 !706 !1316'
 #                popd
 #            fi
-
-			cmake ../${CURL_SOURCE_DIR} -GXcode -DCMAKE_C_FLAGS:STRING="$opts" -DCMAKE_CXX_FLAGS:STRING="$opts" -D'BUILD_SHARED_LIBS:bool=off' -D'BUILD_CODEC:bool=off' -DCMAKE_INSTALL_PREFIX=$stage
-
-            check_damage "$AUTOBUILD_PLATFORM"
-
-            xcodebuild -configuration Release -target libcurl -project CURL.xcodeproj
-            xcodebuild -configuration Release -target install -project CURL.xcodeproj
-            mkdir -p "$stage/lib/release"
-            mv "$stage/lib/libcurl.a" "$stage/lib/release/libcurl.a"
 			
 #            make distclean
             # Again, for dylib dependencies
