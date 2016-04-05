@@ -176,7 +176,7 @@ pushd "$CURL_BUILD_DIR"
         ;;
 
         darwin*)
-            opts="${TARGET_OPTS:--arch $AUTOBUILD_CONFIGURE_ARCH $LL_BUILD}"
+            #opts="${TARGET_OPTS:--arch $AUTOBUILD_CONFIGURE_ARCH $LL_BUILD}"
 
             mkdir -p "$stage/lib/release"
             rm -rf Resources/ ../Resources tests/Resources/
@@ -201,9 +201,9 @@ pushd "$CURL_BUILD_DIR"
             # ln -sf "${stage}"/packages/lib/release/*.dylib tests/Resources/
             # LDFLAGS="-L../Resources/ -L\"$stage\"/packages/lib/release" \
 
-			cmake ../${CURL_SOURCE_DIR} -GXcode -DCMAKE_C_FLAGS:STRING="$opts" \
-				-DCMAKE_CXX_FLAGS:STRING="$opts" -D'BUILD_SHARED_LIBS:bool=off' \
-				-D'BUILD_CODEC:bool=off' -DCMAKE_INSTALL_PREFIX=$stage
+            cmake ../${CURL_SOURCE_DIR} -GXcode -DCMAKE_C_FLAGS:STRING="$LL_BUILD" \
+                -DCMAKE_CXX_FLAGS:STRING="$LL_BUILD" -D'BUILD_SHARED_LIBS:bool=off' \
+                -D'BUILD_CODEC:bool=off' -DCMAKE_INSTALL_PREFIX=$stage
 
             check_damage "$AUTOBUILD_PLATFORM"
 
@@ -294,23 +294,19 @@ pushd "$CURL_BUILD_DIR"
             # Release configure and build
             export LD_LIBRARY_PATH="${stage}"/packages/lib/release:"$saved_path"
 
-            # -g/-O options controled by --enable-debug/-optimize.  Unfortunately,
-            # --enable-debug also defines DEBUGBUILD which changes behaviors.
-#            CFLAGS="$opts" \
-#                CXXFLAGS="$opts"  \
-#                CPPFLAGS="${CPPFLAGS:-} $opts -I$stage/packages/include/zlib" \
-#                LIBS="-ldl" \
-#                LDFLAGS="-L$stage/packages/lib/release" \
-#                ./configure --disable-ldap --disable-ldaps --enable-shared=no --enable-threaded-resolver \
-#                --disable-debug --disable-curldebug --enable-optimize \
-#                --prefix="$stage" --libdir="$stage"/lib/release \
-#                --with-ssl="$stage"/packages --with-zlib="$stage"/packages --without-libssh2
-#            check_damage "$AUTOBUILD_PLATFORM"
-#            make
-#            make install
+            cmake ../${CURL_SOURCE_DIR} -G"Unix Makefiles" \
+                -DCMAKE_C_FLAGS:STRING="$LL_BUILD" -DCMAKE_CXX_FLAGS:STRING="$LL_BUILD" \
+                -DBUILD_SHARED_LIBS:bool=off -DCMAKE_INSTALL_PREFIX=$stage
+			
+            check_damage "$AUTOBUILD_PLATFORM"
 
- #           # conditionally run unit tests
- #           if [ "${DISABLE_UNIT_TESTS:-0}" = "0" ]; then
+            make
+            make install
+            mkdir -p "$stage/lib/release"
+            mv "$stage/lib/libcurl.a" "$stage/lib/release/libcurl.a"
+
+#           # conditionally run unit tests
+#           if [ "${DISABLE_UNIT_TESTS:-0}" = "0" ]; then
 #                pushd tests
 #                    # We hijack the 'quiet-test' target and redefine it as
 #                    # a no-valgrind test.  Also exclude test 906.  It fails in the
@@ -322,19 +318,6 @@ pushd "$CURL_BUILD_DIR"
 #                    make quiet-test TEST_Q='-n !906 !530 !564 !584 !1026'
 #                popd
 #            fi
-
-#            make distclean
-#            mkdir -p "$stage/lib/release"
-#            mkdir -p "$stage/lib/debug"
-
-            cmake ../${CURL_SOURCE_DIR} -G"Unix Makefiles" -D'CMAKE_C_FLAGS:STRING=-m32' -D'CMAKE_CXX_FLAGS:STRING=-m32' -D'BUILD_SHARED_LIBS:bool=off' -DCMAKE_INSTALL_PREFIX=$stage
-			
-            check_damage "$AUTOBUILD_PLATFORM"
-
-            make
-            make install
-            mkdir -p "$stage/lib/release"
-            mv "$stage/lib/libcurl.a" "$stage/lib/release/libcurl.a"
 
             export LD_LIBRARY_PATH="$saved_path"
         ;;
