@@ -76,7 +76,10 @@ add_library(
   )
 
 if(MSVC AND CURL_STATICLIB)
-  set_target_properties(${LIB_NAME} PROPERTIES STATIC_LIBRARY_FLAGS ${CMAKE_EXE_LINKER_FLAGS})
+  set_target_properties(${LIB_NAME} PROPERTIES 
+     STATIC_LIBRARY_FLAGS ${CMAKE_EXE_LINKER_FLAGS}
+     COMPILE_PDB_NAME  "${LIB_NAME}d"
+  )
 endif()
 
 target_link_libraries(${LIB_NAME} ${CURL_LIBS})

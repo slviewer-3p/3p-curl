@@ -88,7 +88,7 @@
          library information:
 
          $ stage/bin/curl --version
-         curl 7.42.0 (x86_64-unknown-linux-gnu) libcurl/7.42.0 OpenSSL/1.0.1g zlib/1.2.8
+         curl 7.42.0 (x86_64-unknown-linux-gnu) libcurl/7.47.0 OpenSSL/1.0.1g zlib/1.2.8
          Protocols: dict file ftp ftps gopher http https imap imaps pop3 pop3s rtsp smtp smtps telnet tftp 
          Features: AsynchDNS IPv6 Largefile NTLM NTLM_WB SSL libz TLS-SRP 
 
@@ -145,6 +145,18 @@
 2.  Modifications
 
     Essential modifications to curl distributions.
+  2.0 CMake is now used to configure the build.
+  
+    Many of the options listed below can now be specified from curl/CMakeLists.txt.
+    These options should be set as follows:
+        BUILD_CURL_EXE = ON
+        BUILD_CURL_TESTS = ON
+        CURL_STATICLIB = ON
+        ENABLE_ARES = OFF
+        ENABLE_THREADED_RESOLVER = OFF
+    
+    Also curl/CMake/FindOpenSSL.cmake and curl/CMake/FindZLIB.cmake are customized 
+    to find only the versions installed in the packages directory.
 
   2.1  Do Not Use C-Ares for DNS Lookups
 
@@ -335,6 +347,10 @@ diff -r 0e3365c1843d indra/llcorehttp/_httppolicy.cpp
 
         
 3.  Source Origin
+    7.47.0:
+	  https://github.com/bagder/curl.git 
+	  (tag:curl-7_47_0)
+	  
     7.42.1:
 	  https://github.com/bagder/curl.git 
 	  (tag:curl-7_42_1)

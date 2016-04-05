@@ -2841,8 +2841,8 @@ static bool IsPipeliningPossible(const struct SessionHandle *handle,
                                  const struct connectdata *conn)
 {
   /* If a HTTP protocol and pipelining is enabled */
-  if(conn->handler->protocol & PROTO_FAMILY_HTTP) {
-     !conn->bits.poisoned_1420 &&                                 /* Linden 1420 */
+  if((conn->handler->protocol & PROTO_FAMILY_HTTP) &&
+     (!conn->bits.poisoned_1420)) { /* Linden 1420 */
     if(Curl_pipeline_wanted(handle->multi, CURLPIPE_HTTP1) &&
        (handle->set.httpversion != CURL_HTTP_VERSION_1_0) &&
        (handle->set.httpreq == HTTPREQ_GET ||

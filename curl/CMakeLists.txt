@@ -40,12 +40,12 @@
 # (From Daniel Stenberg) The gcc command line use neither -g nor any -O options. As a developer, I also treasure our configure scripts's --enable-debug option that sets a long range of "picky" compiler options.
 cmake_minimum_required(VERSION 2.8 FATAL_ERROR)
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/CMake;${CMAKE_MODULE_PATH}")
+set(CMAKE_DEBUG_POSTFIX "d")
+
 include(Utilities)
 include(Macros)
 
 project( CURL C )
-
-message(WARNING "the curl cmake build system is poorly maintained. Be aware")
 
 file (READ ${CURL_SOURCE_DIR}/include/curl/curlver.h CURL_VERSION_H_CONTENTS)
 string (REGEX MATCH "#define LIBCURL_VERSION \"[^\"]*"
@@ -73,9 +73,9 @@ include_directories( ${CURL_SOURCE_DIR}/include )
 
 option(BUILD_CURL_EXE "Set to ON to build cURL executable." ON)
 option(BUILD_CURL_TESTS "Set to ON to build cURL tests." ON)
-option(CURL_STATICLIB "Set to ON to build libcurl with static linking." OFF)
+option(CURL_STATICLIB "Set to ON to build libcurl with static linking." ON)
 option(ENABLE_ARES "Set to ON to enable c-ares support" OFF)
-option(ENABLE_THREADED_RESOLVER "Set to ON to enable POSIX threaded DNS lookup" OFF)
+option(ENABLE_THREADED_RESOLVER "Set to ON to enable POSIX threaded DNS lookup" ON)
 
 option(ENABLE_DEBUG "Set to ON to enable curl debug features" OFF)
 option(ENABLE_CURLDEBUG "Set to ON to build with TrackMemory feature enabled" OFF)
@@ -131,7 +131,7 @@ option(HTTP_ONLY "disables all protocols except HTTP (This overrides all CURL_DI
 mark_as_advanced(HTTP_ONLY)
 option(CURL_DISABLE_FTP "disables FTP" OFF)
 mark_as_advanced(CURL_DISABLE_FTP)
-option(CURL_DISABLE_LDAP "disables LDAP" OFF)
+option(CURL_DISABLE_LDAP "disables LDAP" ON)
 mark_as_advanced(CURL_DISABLE_LDAP)
 option(CURL_DISABLE_TELNET "disables Telnet" OFF)
 mark_as_advanced(CURL_DISABLE_TELNET)
@@ -144,7 +144,7 @@ mark_as_advanced(CURL_DISABLE_TFTP)
 option(CURL_DISABLE_HTTP "disables HTTP" OFF)
 mark_as_advanced(CURL_DISABLE_HTTP)
 
-option(CURL_DISABLE_LDAPS "to disable LDAPS" OFF)
+option(CURL_DISABLE_LDAPS "to disable LDAPS" ON)
 mark_as_advanced(CURL_DISABLE_LDAPS)
 
 option(CURL_DISABLE_RTSP "to disable RTSP" OFF)
@@ -200,7 +200,7 @@ if(ENABLE_IPV6 AND NOT WIN32)
   endif()
 endif()
 
-option(ENABLE_MANUAL "to provide the built-in manual" ON)
+option(ENABLE_MANUAL "to provide the built-in manual" OFF)
 unset(USE_MANUAL CACHE) # TODO: cache NROFF/NROFF_MANOPT/USE_MANUAL vars?
 if(ENABLE_MANUAL)
   find_program(NROFF NAMES gnroff nroff)
@@ -456,7 +456,7 @@ if(CURL_ZLIB)
 endif()
 
 #libSSH2
-option(CMAKE_USE_LIBSSH2 "Use libSSH2" ON)
+option(CMAKE_USE_LIBSSH2 "Use libSSH2" OFF)
 mark_as_advanced(CMAKE_USE_LIBSSH2)
 set(USE_LIBSSH2 OFF)
 set(HAVE_LIBSSH2 OFF)
@@ -570,7 +570,7 @@ if(NOT UNIX)
       check_include_file_concat("schannel.h" HAVE_SCHANNEL_H)
       set(USE_WINDOWS_SSPI ON)
       if(HAVE_SCHANNEL_H)
-        set(USE_SCHANNEL ON)
+        set(USE_SCHANNEL OFF)
         set(SSL_ENABLED ON)
       endif()
     endif()
@@ -1125,13 +1125,6 @@ set(CPPFLAG_CURL_STATICLIB  "")
 set(CURL_CA_BUNDLE          "")
 set(CURLVERSION             "${CURL_VERSION}")
 set(ENABLE_SHARED           "yes")
-if(CURL_STATICLIB)
-  # Broken: LIBCURL_LIBS below; .a lib is not built
-  message(WARNING "Static linking is broken!")
-  set(ENABLE_STATIC         "no")
-else()
-  set(ENABLE_STATIC         "no")
-endif()
 set(exec_prefix             "\${prefix}")
 set(includedir              "\${prefix}/include")
 set(LDFLAGS                 "${CMAKE_SHARED_LINKER_FLAGS}")
@@ -1149,6 +1142,12 @@ set(REQUIRE_LIB_DEPS        "no")
 # SUPPORT_FEATURES
 # SUPPORT_PROTOCOLS
 set(VERSIONNUM              "${CURL_VERSION_NUM}")
+
+if(MSVC)
+    SET (CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /SAFESEH:NO")
+    SET (CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} /SAFESEH:NO")
+    SET (CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS} /SAFESEH:NO")
+ENDIF()
 
 # Finally generate a "curl-config" matching this config
 configure_file("${CURL_SOURCE_DIR}/curl-config.in"

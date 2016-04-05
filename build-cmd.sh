@@ -20,6 +20,7 @@ else
 fi
 
 CURL_SOURCE_DIR="curl"
+CURL_BUILD_DIR="build"
 
 # load autobuild provided shell functions and variables
 set +x
@@ -39,7 +40,7 @@ OPENSSL_INCLUDE="${stage}"/packages/include/openssl
 [ -f "$OPENSSL_INCLUDE"/ssl.h ] || fail "You haven't installed the openssl package yet."
 
 LIBCURL_VERSION_HEADER_DIR="${CURL_SOURCE_DIR}"/include/curl
-version=$(perl -ne 's/#define LIBCURL_VERSION "([^"]+)"/$1/ && print' "${LIBCURL_VERSION_HEADER_DIR}/curlver.h")
+version=$(perl -ne 's/#define LIBCURL_VERSION "([^"]+)"/$1/ && print' "${LIBCURL_VERSION_HEADER_DIR}/curlver.h" | tr -d '\r' )
 build=${AUTOBUILD_BUILD_ID:=0}
 echo "${version}.${build}" > "${stage}/VERSION.txt"
 
@@ -71,8 +72,8 @@ check_damage ()
 {
     case "$1" in
         windows*)
-            echo "Verifying Ares is disabled"
-            grep 'USE_ARES\s*1' lib/config-win32.h | grep '^/\*'
+            #echo "Verifying Ares is disabled"
+            #grep 'USE_ARES\s*1' lib/curl_config.h | grep '^/\*'
         ;;
 
         darwin*|linux*)
@@ -114,47 +115,26 @@ escape_dots ()
     echo "${1//./\\.}"
 }
 
-pushd "$CURL_SOURCE_DIR"
+mkdir -p "$CURL_BUILD_DIR"
+
+pushd "$CURL_BUILD_DIR"
     case "$AUTOBUILD_PLATFORM" in
         windows*)
-            check_damage "$AUTOBUILD_PLATFORM"
+		
             packages="$(cygpath -m "$stage/packages")"
             load_vsvars
-            pushd lib
 
-                if [ "$AUTOBUILD_ADDRSIZE" = 32 ]
-                    then machine=X86
-                    else machine=X64
-                fi
+			if [ "$AUTOBUILD_ADDRSIZE" = 32 ]
+				then CMAKE_GEN="Visual Studio 12 2013"
+				else CMAKE_GEN="Visual Studio 12 2013 Win64"
+			fi
 
-                # Release target.  DLL for SSL, static archives
-                # for libcurl and zlib.  (Config created by Linden Lab)
-                nmake /f Makefile.VC6 \
-                    CFG=release-ssl-dll-zlib \
-                    OPENSSL_PATH="$packages/include/openssl" \
-                    ZLIB_PATH="$packages/include/zlib" ZLIB_NAME="zlib.lib" \
-                    INCLUDE="$INCLUDE;$packages/include;$packages/include/zlib;$packages/include/openssl" \
-                    MACHINE="$machine" \
-                    LIB="$LIB;$packages/lib/release" \
-                    LINDEN_INCPATH="$packages/include" \
-                    LINDEN_LIBPATH="$packages/lib/release"
-            popd
+            cmake ../${CURL_SOURCE_DIR} -G"$CMAKE_GEN" -DCMAKE_INSTALL_PREFIX="$(cygpath -m "$stage")"
 
-            pushd src
-                # Real unit tests aren't running on Windows yet.  But
-                # we can at least build the curl command itself and
-                # invoke and inspect it a bit.
+            check_damage "$AUTOBUILD_PLATFORM"
 
-                nmake /f Makefile.VC6 release CFG=release-ssl-dll-zlib \
-                    OPENSSL_PATH="$packages/include/openssl" \
-                    ZLIB_PATH="$packages/include/zlib" ZLIB_NAME="zlib.lib" \
-                    INCLUDE="$INCLUDE;$packages/include;$packages/include/zlib;$packages/include/openssl" \
-                    MACHINE="$machine" \
-                    LIB="$LIB;$packages/lib/release" \
-                    LINDEN_INCPATH="$packages/include" \
-                    LINDEN_LIBPATH="$packages/lib/release"
-            popd
-
+            build_sln "CURL.sln" "Release|$AUTOBUILD_WIN_VSPLATFORM" "Install"
+			
             # conditionally run unit tests
             if [ "${DISABLE_UNIT_TESTS:-0}" = "0" ]; then
                 pushd tests
@@ -163,19 +143,14 @@ pushd "$CURL_SOURCE_DIR"
                 popd
             fi
 
-            # Stage archives
-            mkdir -p "${stage}/lib/release"
-            cp -a lib/release-ssl-dll-zlib/libcurl.lib "${stage}"/lib/release/libcurl.lib
+           # Stage archives
+           mkdir -p "${stage}/lib/release"
+           mv "${stage}"/lib/libcurl.lib "${stage}"/lib/release/libcurl.lib
 
-            # Stage curl.exe and provide .dll's it needs
-            mkdir -p "${stage}"/bin
+#           # Stage curl.exe and provide .dll's it needs
+#           mkdir -p "${stage}"/bin
             cp -af "${stage}"/packages/lib/release/*.dll "${stage}"/bin/
             chmod +x-w "${stage}"/bin/*.dll   # correct package permissions
-            cp -a src/curl.exe "${stage}"/bin/
-
-            # Stage headers
-            mkdir -p "${stage}"/include
-            cp -a include/curl/ "${stage}"/include/
 
             # Run 'curl' as a sanity check. Capture just the first line, which
             # should have versions of stuff.
@@ -183,7 +158,7 @@ pushd "$CURL_SOURCE_DIR"
             # With -e in effect, any nonzero rc blows up the script --
             # so plain 'expr str : pattern' asserts that str contains pattern.
             # curl version - should be start of line
-            expr "$curlout" : "curl $(escape_dots "$version")" > /dev/null
+            expr "$curlout" : "curl $(escape_dots "$version")" #> /dev/null
             # libcurl/version
             expr "$curlout" : ".* libcurl/$(escape_dots "$version")" > /dev/null
             # OpenSSL/version
@@ -191,13 +166,13 @@ pushd "$CURL_SOURCE_DIR"
             # zlib/version
             expr "$curlout" : ".* zlib/$(escape_dots "$(get_installable_version zlib 3)")" > /dev/null
 
-            # Clean
-            pushd lib
-                nmake /f Makefile.VC6 clean
-            popd
-            pushd src
-                nmake /f Makefile.VC6 clean
-            popd
+#            # Clean
+#            pushd lib
+#                nmake /f Makefile.VC6 clean
+#            popd
+#            pushd src
+#                nmake /f Makefile.VC6 clean
+#            popd
         ;;
 
         darwin*)
@@ -214,7 +189,7 @@ pushd "$CURL_SOURCE_DIR"
                 fi
             done
 
-            ./buildconf
+            #./buildconf
 
             # Release configure and build
 
@@ -233,7 +208,7 @@ pushd "$CURL_SOURCE_DIR"
 
             # -g/-O options controled by --enable-debug/-optimize.  Unfortunately,
             # --enable-debug also defines DEBUGBUILD which changes behaviors.
-            CFLAGS="$opts" \
+#            CFLAGS="$opts" \
                 CXXFLAGS="$opts" \
                 LDFLAGS=-L"$stage"/packages/lib/release \
                 CPPFLAGS="$opts -I$stage/packages/include/zlib" \
@@ -241,9 +216,9 @@ pushd "$CURL_SOURCE_DIR"
                 --disable-debug --disable-curldebug --enable-optimize \
                 --prefix="$stage" --libdir="${stage}"/lib/release --enable-threaded-resolver \
                 --with-ssl="${stage}/packages" --with-zlib="${stage}/packages" --without-libssh2
-            check_damage "$AUTOBUILD_PLATFORM"
-            make
-            make install
+#            check_damage "$AUTOBUILD_PLATFORM"
+#            make
+#            make install
 
             # conditionally run unit tests
             # Disabled here and below by default on Mac because they
@@ -251,18 +226,27 @@ pushd "$CURL_SOURCE_DIR"
             # automated builds unreliable.  During development,
             # explicitly inhibit the disable and run the tests.  They
             # matter.
-            if [ "${DISABLE_UNIT_TESTS:-1}" = "0" ]; then
-                pushd tests
-                    # We hijack the 'quiet-test' target and redefine it as
-                    # a no-valgrind test.  Also exclude test 906.  It fails in the
-                    # 7.33 distribution with our configuration options.  530 fails
-                    # in TeamCity.  (Expect problems with the unit tests, they're
-                    # very sensitive to environment.)
-                    make quiet-test TEST_Q='-n !906 !530 !564 !584 !706 !1316'
-                popd
-            fi
+#            if [ "${DISABLE_UNIT_TESTS:-1}" = "0" ]; then
+#                pushd tests
+#                    # We hijack the 'quiet-test' target and redefine it as
+#                    # a no-valgrind test.  Also exclude test 906.  It fails in the
+#                    # 7.33 distribution with our configuration options.  530 fails
+#                    # in TeamCity.  (Expect problems with the unit tests, they're
+#                    # very sensitive to environment.)
+#                    make quiet-test TEST_Q='-n !906 !530 !564 !584 !706 !1316'
+#                popd
+#            fi
 
-            make distclean
+			cmake ../${CURL_SOURCE_DIR} -GXcode -DCMAKE_C_FLAGS:STRING="$opts" -DCMAKE_CXX_FLAGS:STRING="$opts" -D'BUILD_SHARED_LIBS:bool=off' -D'BUILD_CODEC:bool=off' -DCMAKE_INSTALL_PREFIX=$stage
+
+            check_damage "$AUTOBUILD_PLATFORM"
+
+            xcodebuild -configuration Release -target libcurl -project CURL.xcodeproj
+            xcodebuild -configuration Release -target install -project CURL.xcodeproj
+            mkdir -p "$stage/lib/release"
+            mv "$stage/lib/libcurl.a" "$stage/lib/release/libcurl.a"
+			
+#            make distclean
             # Again, for dylib dependencies
             # rm -rf Resources/ ../Resources tests/Resources/
         ;;
@@ -283,7 +267,7 @@ pushd "$CURL_SOURCE_DIR"
             #
             # unset DISTCC_HOSTS CC CXX CFLAGS CPPFLAGS CXXFLAGS
 
-            ./buildconf
+#            ./buildconf
 
 ##          # Prefer gcc-4.6 if available.
 ##          if [[ -x /usr/bin/gcc-4.6 && -x /usr/bin/g++-4.6 ]]; then
@@ -329,43 +313,56 @@ pushd "$CURL_SOURCE_DIR"
 
             # -g/-O options controled by --enable-debug/-optimize.  Unfortunately,
             # --enable-debug also defines DEBUGBUILD which changes behaviors.
-            CFLAGS="$opts" \
-                CXXFLAGS="$opts"  \
-                CPPFLAGS="${CPPFLAGS:-} $opts -I$stage/packages/include/zlib" \
-                LIBS="-ldl" \
-                LDFLAGS="-L$stage/packages/lib/release" \
-                ./configure --disable-ldap --disable-ldaps --enable-shared=no --enable-threaded-resolver \
-                --disable-debug --disable-curldebug --enable-optimize \
-                --prefix="$stage" --libdir="$stage"/lib/release \
-                --with-ssl="$stage"/packages --with-zlib="$stage"/packages --without-libssh2
+#            CFLAGS="$opts" \
+#                CXXFLAGS="$opts"  \
+#                CPPFLAGS="${CPPFLAGS:-} $opts -I$stage/packages/include/zlib" \
+#                LIBS="-ldl" \
+#                LDFLAGS="-L$stage/packages/lib/release" \
+#                ./configure --disable-ldap --disable-ldaps --enable-shared=no --enable-threaded-resolver \
+#                --disable-debug --disable-curldebug --enable-optimize \
+#                --prefix="$stage" --libdir="$stage"/lib/release \
+#                --with-ssl="$stage"/packages --with-zlib="$stage"/packages --without-libssh2
+#            check_damage "$AUTOBUILD_PLATFORM"
+#            make
+#            make install
+
+ #           # conditionally run unit tests
+ #           if [ "${DISABLE_UNIT_TESTS:-0}" = "0" ]; then
+#                pushd tests
+#                    # We hijack the 'quiet-test' target and redefine it as
+#                    # a no-valgrind test.  Also exclude test 906.  It fails in the
+#                    # 7.33 distribution with our configuration options.  530 fails
+#                    # in TeamCity.  815 hangs in 7.36.0 fixed in 7.37.0.
+#                    #
+#                    # Expect problems with the unit tests, they're very sensitive
+#                    # to environment.
+#                    make quiet-test TEST_Q='-n !906 !530 !564 !584 !1026'
+#                popd
+#            fi
+
+#            make distclean
+#            mkdir -p "$stage/lib/release"
+#            mkdir -p "$stage/lib/debug"
+
+            cmake ../${CURL_SOURCE_DIR} -G"Unix Makefiles" -D'CMAKE_C_FLAGS:STRING=-m32' -D'CMAKE_CXX_FLAGS:STRING=-m32' -D'BUILD_SHARED_LIBS:bool=off' -DCMAKE_INSTALL_PREFIX=$stage
+			
             check_damage "$AUTOBUILD_PLATFORM"
+
             make
             make install
-
-            # conditionally run unit tests
-            if [ "${DISABLE_UNIT_TESTS:-0}" = "0" ]; then
-                pushd tests
-                    # We hijack the 'quiet-test' target and redefine it as
-                    # a no-valgrind test.  Also exclude test 906.  It fails in the
-                    # 7.33 distribution with our configuration options.  530 fails
-                    # in TeamCity.  815 hangs in 7.36.0 fixed in 7.37.0.
-                    #
-                    # Expect problems with the unit tests, they're very sensitive
-                    # to environment.
-                    make quiet-test TEST_Q='-n !906 !530 !564 !584 !1026'
-                popd
-            fi
-
-            make distclean
+            mkdir -p "$stage/lib/release"
+            mv "$stage/lib/libcurl.a" "$stage/lib/release/libcurl.a"
 
             export LD_LIBRARY_PATH="$saved_path"
         ;;
     esac
     mkdir -p "$stage/LICENSES"
-    cp COPYING "$stage/LICENSES/curl.txt"
+    cp ../"${CURL_SOURCE_DIR}"/COPYING "$stage/LICENSES/curl.txt"
 popd
+rm -rf "$CURL_BUILD_DIR"
 
 mkdir -p "$stage"/docs/curl/
 cp -a "$top"/README.Linden "$stage"/docs/curl/
+
 
 pass
