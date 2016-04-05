@@ -129,7 +129,8 @@ pushd "$CURL_BUILD_DIR"
 				else CMAKE_GEN="Visual Studio 12 2013 Win64"
 			fi
 
-            cmake ../${CURL_SOURCE_DIR} -G"$CMAKE_GEN" -DCMAKE_INSTALL_PREFIX="$(cygpath -m "$stage")"
+            cmake ../${CURL_SOURCE_DIR} -G"$CMAKE_GEN" -DCMAKE_C_FLAGS:STRING="$LL_BUILD" \
+                -DCMAKE_CXX_FLAGS:STRING="$LL_BUILD" -DCMAKE_INSTALL_PREFIX="$(cygpath -m "$stage")"
 
             check_damage "$AUTOBUILD_PLATFORM"
 
