@@ -120,14 +120,14 @@ mkdir -p "$CURL_BUILD_DIR"
 pushd "$CURL_BUILD_DIR"
     case "$AUTOBUILD_PLATFORM" in
         windows*)
-		
+        
             packages="$(cygpath -m "$stage/packages")"
             load_vsvars
 
-			if [ "$AUTOBUILD_ADDRSIZE" = 32 ]
-				then CMAKE_GEN="Visual Studio 12 2013"
-				else CMAKE_GEN="Visual Studio 12 2013 Win64"
-			fi
+            if [ "$AUTOBUILD_ADDRSIZE" = 32 ]
+                then CMAKE_GEN="Visual Studio 12 2013"
+                else CMAKE_GEN="Visual Studio 12 2013 Win64"
+            fi
 
             cmake ../${CURL_SOURCE_DIR} -G"$CMAKE_GEN" -DCMAKE_C_FLAGS:STRING="$LL_BUILD" \
                 -DCMAKE_CXX_FLAGS:STRING="$LL_BUILD" -DCMAKE_INSTALL_PREFIX="$(cygpath -m "$stage")"
@@ -135,7 +135,7 @@ pushd "$CURL_BUILD_DIR"
             check_damage "$AUTOBUILD_PLATFORM"
 
             build_sln "CURL.sln" "Release|$AUTOBUILD_WIN_VSPLATFORM" "Install"
-			
+            
             # conditionally run unit tests
             if [ "${DISABLE_UNIT_TESTS:-0}" = "0" ]; then
                 pushd tests
@@ -177,7 +177,7 @@ pushd "$CURL_BUILD_DIR"
         ;;
 
         darwin*)
-            #opts="${TARGET_OPTS:--arch $AUTOBUILD_CONFIGURE_ARCH $LL_BUILD}"
+            opts="${TARGET_OPTS:--arch $AUTOBUILD_CONFIGURE_ARCH $LL_BUILD}"
 
             mkdir -p "$stage/lib/release"
             rm -rf Resources/ ../Resources tests/Resources/
@@ -202,8 +202,8 @@ pushd "$CURL_BUILD_DIR"
             # ln -sf "${stage}"/packages/lib/release/*.dylib tests/Resources/
             # LDFLAGS="-L../Resources/ -L\"$stage\"/packages/lib/release" \
 
-            cmake ../${CURL_SOURCE_DIR} -GXcode -DCMAKE_C_FLAGS:STRING="$LL_BUILD" \
-                -DCMAKE_CXX_FLAGS:STRING="$LL_BUILD" -D'BUILD_SHARED_LIBS:bool=off' \
+            cmake ../${CURL_SOURCE_DIR} -GXcode -DCMAKE_C_FLAGS:STRING="$opts" \
+                -DCMAKE_CXX_FLAGS:STRING="$opts" -D'BUILD_SHARED_LIBS:bool=off' \
                 -D'BUILD_CODEC:bool=off' -DCMAKE_INSTALL_PREFIX=$stage
 
             check_damage "$AUTOBUILD_PLATFORM"
@@ -229,7 +229,7 @@ pushd "$CURL_BUILD_DIR"
 #                    make quiet-test TEST_Q='-n !906 !530 !564 !584 !706 !1316'
 #                popd
 #            fi
-			
+            
 #            make distclean
             # Again, for dylib dependencies
             # rm -rf Resources/ ../Resources tests/Resources/
@@ -296,9 +296,9 @@ pushd "$CURL_BUILD_DIR"
             export LD_LIBRARY_PATH="${stage}"/packages/lib/release:"$saved_path"
 
             cmake ../${CURL_SOURCE_DIR} -G"Unix Makefiles" \
-                -DCMAKE_C_FLAGS:STRING="$LL_BUILD" -DCMAKE_CXX_FLAGS:STRING="$LL_BUILD" \
+                -DCMAKE_C_FLAGS:STRING="$opts" -DCMAKE_CXX_FLAGS:STRING="$opts" \
                 -DBUILD_SHARED_LIBS:bool=off -DCMAKE_INSTALL_PREFIX=$stage
-			
+            
             check_damage "$AUTOBUILD_PLATFORM"
 
             make
