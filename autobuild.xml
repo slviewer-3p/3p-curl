@@ -34,9 +34,9 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>c5fc8e18878f9e9697cf76086968f949</string>
+              <string>26931be0f03a046b144456782fd83c18</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/lindenlab_3p-openssl/rev/312306/arch/Darwin/installer/openssl-1.0.1h.312306-darwin64-312306.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/p64_3p-openssl/rev/314227/arch/Darwin/installer/openssl-1.0.1h.314227-darwin64-314227.tar.bz2</string>
             </map>
             <key>name</key>
             <string>darwin64</string>
@@ -46,9 +46,9 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>c74304aeed50ced65885dd3e13393e84</string>
+              <string>f46a601d60b7dbcfde32afc0cb64453e</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/lindenlab_3p-openssl/rev/312306/arch/Linux/installer/openssl-1.0.1h.312306-linux-312306.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/p64_3p-openssl/rev/314227/arch/Linux/installer/openssl-1.0.1h.314227-linux-314227.tar.bz2</string>
             </map>
             <key>name</key>
             <string>linux</string>
@@ -58,9 +58,9 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>f78769482d0f9be637536e329c24aeb4</string>
+              <string>08e992545a88d58d6e668a3dd300b3d3</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/lindenlab_3p-openssl/rev/312306/arch/Linux/installer/openssl-1.0.1h.312306-linux64-312306.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/p64_3p-openssl/rev/314227/arch/Linux/installer/openssl-1.0.1h.314227-linux64-314227.tar.bz2</string>
             </map>
             <key>name</key>
             <string>linux64</string>
@@ -70,9 +70,9 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>8391d5ebd59dacab7887415f2a0c00ab</string>
+              <string>17104447a126a3348f4a5722ec47e395</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/lindenlab_3p-openssl/rev/312306/arch/CYGWIN/installer/openssl-1.0.1h.312306-windows-312306.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/p64_3p-openssl/rev/314227/arch/CYGWIN/installer/openssl-1.0.1h.314227-windows-314227.tar.bz2</string>
             </map>
             <key>name</key>
             <string>windows</string>
@@ -82,16 +82,16 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>2830258ddff6e48f6577eb9cc2fa17c4</string>
+              <string>fe06bf8495e7d7b8c4a7f2095b7ae190</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/lindenlab_3p-openssl/rev/312306/arch/CYGWIN/installer/openssl-1.0.1h.312306-windows64-312306.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/p64_3p-openssl/rev/314227/arch/CYGWIN/installer/openssl-1.0.1h.314227-windows64-314227.tar.bz2</string>
             </map>
             <key>name</key>
             <string>windows64</string>
           </map>
         </map>
         <key>version</key>
-        <string>1.0.1h.312306</string>
+        <string>1.0.1h.314227</string>
       </map>
       <key>zlib</key>
       <map>
@@ -124,9 +124,9 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>9765e74c8d85f485b18214e0d5f50ed4</string>
+              <string>84eebbb870886716fbf7176d0b473fd7</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/canonical_3p-zlib/rev/312301/arch/Darwin/installer/zlib-1.2.8.312301-darwin64-312301.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/p64_3p-zlib/rev/314131/arch/Darwin/installer/zlib-1.2.8.314131-darwin64-314131.tar.bz2</string>
             </map>
             <key>name</key>
             <string>darwin64</string>
@@ -136,9 +136,9 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>1bcb914c438d631c2165ce28d9577883</string>
+              <string>98a8c775c581ca80bb559e8b4e8eaae7</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/canonical_3p-zlib/rev/312301/arch/Linux/installer/zlib-1.2.8.312301-linux-312301.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/p64_3p-zlib/rev/314131/arch/Linux/installer/zlib-1.2.8.314131-linux-314131.tar.bz2</string>
             </map>
             <key>name</key>
             <string>linux</string>
@@ -148,9 +148,9 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>e4ea1935da59d3c03e1c06e776b0c5e3</string>
+              <string>37750458efb8efc3deab0869c492d899</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/canonical_3p-zlib/rev/312301/arch/Linux/installer/zlib-1.2.8.312301-linux64-312301.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/p64_3p-zlib/rev/314131/arch/Linux/installer/zlib-1.2.8.314131-linux64-314131.tar.bz2</string>
             </map>
             <key>name</key>
             <string>linux64</string>
@@ -160,9 +160,9 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>d9286efe05f2bf64206dcf790f5dc966</string>
+              <string>8a53c8ffee30decb4ed2ce2bdb013ee3</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/canonical_3p-zlib/rev/312301/arch/CYGWIN/installer/zlib-1.2.8.312301-windows-312301.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/p64_3p-zlib/rev/314131/arch/CYGWIN/installer/zlib-1.2.8.314131-windows-314131.tar.bz2</string>
             </map>
             <key>name</key>
             <string>windows</string>
@@ -172,16 +172,16 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>91655a548f19041460bac8c827d5cc3c</string>
+              <string>b0a59f6c440893187ec9b5ba70f1f828</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/canonical_3p-zlib/rev/312301/arch/CYGWIN/installer/zlib-1.2.8.312301-windows64-312301.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/p64_3p-zlib/rev/314131/arch/CYGWIN/installer/zlib-1.2.8.314131-windows64-314131.tar.bz2</string>
             </map>
             <key>name</key>
             <string>windows64</string>
           </map>
         </map>
         <key>version</key>
-        <string>1.2.8.312301</string>
+        <string>1.2.8.314131</string>
       </map>
     </map>
     <key>package_description</key>
