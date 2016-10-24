@@ -34,9 +34,9 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>26931be0f03a046b144456782fd83c18</string>
+              <string>b4efd11af2a4d31bb0816fd4a8781e5c</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/p64_3p-openssl/rev/314227/arch/Darwin/installer/openssl-1.0.1h.314227-darwin64-314227.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/ct2/493/1069/openssl-1.0.1u.500406-darwin64-500406.tar.bz2</string>
             </map>
             <key>name</key>
             <string>darwin64</string>
@@ -58,9 +58,9 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>08e992545a88d58d6e668a3dd300b3d3</string>
+              <string>729ec3e465305deaa6f751a0c05992f2</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/p64_3p-openssl/rev/314227/arch/Linux/installer/openssl-1.0.1h.314227-linux64-314227.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/ct2/580/1244/openssl-1.0.1u.500406-linux64-500406.tar.bz2</string>
             </map>
             <key>name</key>
             <string>linux64</string>
@@ -70,9 +70,9 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>17104447a126a3348f4a5722ec47e395</string>
+              <string>4bdc06843d19861c0f52d0113ab4cff6</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/p64_3p-openssl/rev/314227/arch/CYGWIN/installer/openssl-1.0.1h.314227-windows-314227.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/ct2/514/1126/openssl-1.0.1u.500406-windows-500406.tar.bz2</string>
             </map>
             <key>name</key>
             <string>windows</string>
@@ -82,16 +82,16 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>fe06bf8495e7d7b8c4a7f2095b7ae190</string>
+              <string>5c68c4cfb002ea691a951d6ddf9ed5db</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/p64_3p-openssl/rev/314227/arch/CYGWIN/installer/openssl-1.0.1h.314227-windows64-314227.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/ct2/513/1120/openssl-1.0.1u.500406-windows64-500406.tar.bz2</string>
             </map>
             <key>name</key>
             <string>windows64</string>
           </map>
         </map>
         <key>version</key>
-        <string>1.0.1h.314227</string>
+        <string>1.0.1u.500406</string>
       </map>
       <key>zlib</key>
       <map>
