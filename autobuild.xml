@@ -34,9 +34,9 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>e63e33c00f63dad71a2bd505a618b5f3</string>
+              <string>00371bd29aabfe0437931065b646929b</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/ct2/879/1930/openssl-1.0.1u.500869-darwin64-500869.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/ct2/923/2064/openssl-1.0.1u.500912-darwin64-500912.tar.bz2</string>
             </map>
             <key>name</key>
             <string>darwin64</string>
@@ -58,9 +58,9 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>bf78c966293035582bc4519faecd469d</string>
+              <string>3bc7e8cff19042f7232341e18c86c951</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/ct2/878/1938/openssl-1.0.1u.500869-linux64-500869.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/ct2/922/2075/openssl-1.0.1u.500912-linux64-500912.tar.bz2</string>
             </map>
             <key>name</key>
             <string>linux64</string>
@@ -70,9 +70,9 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>a8784a6b8ad54322d880109d887948d0</string>
+              <string>a40ae73000018d90b7083fdc7764d006</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/ct2/881/1941/openssl-1.0.1u.500869-windows-500869.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/ct2/924/2067/openssl-1.0.1u.500912-windows-500912.tar.bz2</string>
             </map>
             <key>name</key>
             <string>windows</string>
@@ -82,16 +82,16 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>3646729df2627bae2141ca38b6a29a9f</string>
+              <string>da6e114b8cb875d20bc0f441579cf251</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/ct2/880/1933/openssl-1.0.1u.500869-windows64-500869.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/ct2/925/2070/openssl-1.0.1u.500912-windows64-500912.tar.bz2</string>
             </map>
             <key>name</key>
             <string>windows64</string>
           </map>
         </map>
         <key>version</key>
-        <string>1.0.1u.500869</string>
+        <string>1.0.1u.500912</string>
       </map>
       <key>zlib</key>
       <map>
