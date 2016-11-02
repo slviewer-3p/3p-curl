@@ -1,16 +1,16 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 cd "$(dirname "$0")"
 
 # turn on verbose debugging output for parabuild logs.
-set -x
+exec 4>&1; export BASH_XTRACEFD=4; set -x
 # make errors fatal
 set -e
 # complain about unset env variables
 set -u
 
 if [ -z "$AUTOBUILD" ] ; then
-    fail
+    exit 1
 fi
 
 if [ "$OSTYPE" = "cygwin" ] ; then
@@ -22,16 +22,13 @@ fi
 CURL_SOURCE_DIR="curl"
 CURL_BUILD_DIR="build"
 
-# load autobuild provided shell functions and variables
-set +x
-eval "$("$autobuild" source_environment)"
-set -x
-
-# set LL_BUILD and friends
-set_build_variables convenience Release
-
 top="$(pwd)"
 stage="$(pwd)/stage"
+
+# load autobuild provided shell functions and variables
+source_environment_tempfile="$stage/source_environment.sh"
+"$autobuild" source_environment > "$source_environment_tempfile"
+. "$source_environment_tempfile"
 
 ZLIB_INCLUDE="${stage}"/packages/include/zlib
 OPENSSL_INCLUDE="${stage}"/packages/include/openssl
@@ -129,8 +126,8 @@ pushd "$CURL_BUILD_DIR"
                 else CMAKE_GEN="Visual Studio 12 2013 Win64"
             fi
 
-            cmake ../${CURL_SOURCE_DIR} -G"$CMAKE_GEN" -DCMAKE_C_FLAGS:STRING="$LL_BUILD" \
-                -DCMAKE_CXX_FLAGS:STRING="$LL_BUILD" -DCMAKE_INSTALL_PREFIX="$(cygpath -m "$stage")"
+            cmake ../${CURL_SOURCE_DIR} -G"$CMAKE_GEN" -DCMAKE_C_FLAGS:STRING="$LL_BUILD_RELEASE" \
+                -DCMAKE_CXX_FLAGS:STRING="$LL_BUILD_RELEASE" -DCMAKE_INSTALL_PREFIX="$(cygpath -m "$stage")"
 
             check_damage "$AUTOBUILD_PLATFORM"
 
@@ -177,7 +174,7 @@ pushd "$CURL_BUILD_DIR"
         ;;
 
         darwin*)
-            opts="${TARGET_OPTS:--arch $AUTOBUILD_CONFIGURE_ARCH $LL_BUILD}"
+            opts="${TARGET_OPTS:--arch $AUTOBUILD_CONFIGURE_ARCH $LL_BUILD_RELEASE}"
 
             mkdir -p "$stage/lib/release"
             rm -rf Resources/ ../Resources tests/Resources/
@@ -260,7 +257,7 @@ pushd "$CURL_BUILD_DIR"
 ##          fi
 
             # Default target per --address-size
-            opts="${TARGET_OPTS:--m$AUTOBUILD_ADDRSIZE $LL_BUILD}"
+            opts="${TARGET_OPTS:--m$AUTOBUILD_ADDRSIZE $LL_BUILD_RELEASE}"
 
             # Handle any deliberate platform targeting
             if [ -z "${TARGET_CPPFLAGS:-}" ]; then
@@ -330,6 +327,3 @@ rm -rf "$CURL_BUILD_DIR"
 
 mkdir -p "$stage"/docs/curl/
 cp -a "$top"/README.Linden "$stage"/docs/curl/
-
-
-pass
