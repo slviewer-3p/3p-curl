@@ -5,11 +5,11 @@
  *                            | (__| |_| |  _ <| |___
  *                             \___|\___/|_| \_\_____|
  *
- * Copyright (C) 1998 - 2015, Daniel Stenberg, <daniel@haxx.se>, et al.
+ * Copyright (C) 1998 - 2017, Daniel Stenberg, <daniel@haxx.se>, et al.
  *
  * This software is licensed as described in the file COPYING, which
  * you should have received as part of this distribution. The terms
- * are also available at http://curl.haxx.se/docs/copyright.html.
+ * are also available at https://curl.haxx.se/docs/copyright.html.
  *
  * You may opt to use, copy, modify, merge, publish, distribute and/or sell
  * copies of the Software, and permit persons to whom the Software is
@@ -45,8 +45,8 @@
 
 #define NUM_HANDLES 1000
 
-void *curl_hnd[NUM_HANDLES];
-int num_transfers;
+static void *curl_hnd[NUM_HANDLES];
+static int num_transfers;
 
 /* a handle to number lookup, highly ineffective when we do many
    transfers... */
@@ -90,14 +90,14 @@ void dump(const char *text, int num, unsigned char *ptr, size_t size,
 
     for(c = 0; (c < width) && (i+c < size); c++) {
       /* check for 0D0A; if found, skip past and start a new line of output */
-      if (nohex && (i+c+1 < size) && ptr[i+c]==0x0D && ptr[i+c+1]==0x0A) {
+      if(nohex && (i+c+1 < size) && ptr[i+c]==0x0D && ptr[i+c+1]==0x0A) {
         i+=(c+2-width);
         break;
       }
       fprintf(stderr, "%c",
               (ptr[i+c]>=0x20) && (ptr[i+c]<0x80)?ptr[i+c]:'.');
       /* check again for 0D0A, to avoid an extra \n if it's at width */
-      if (nohex && (i+c+2 < size) && ptr[i+c+1]==0x0D && ptr[i+c+2]==0x0A) {
+      if(nohex && (i+c+2 < size) && ptr[i+c+1]==0x0D && ptr[i+c+2]==0x0A) {
         i+=(c+3-width);
         break;
       }
@@ -133,9 +133,10 @@ int my_trace(CURL *handle, curl_infotype type,
   snprintf(timebuf, sizeof(timebuf), "%02d:%02d:%02d.%06ld",
            now->tm_hour, now->tm_min, now->tm_sec, (long)tv.tv_usec);
 
-  switch (type) {
+  switch(type) {
   case CURLINFO_TEXT:
     fprintf(stderr, "%s [%d] Info: %s", timebuf, num, data);
+    /* FALLTHROUGH */
   default: /* in case a new one is introduced to shock us */
     return 0;
 
@@ -177,7 +178,7 @@ static size_t read_callback(void *ptr, size_t size, size_t nmemb, void *userp)
   return retcode;
 }
 
-struct input indata[NUM_HANDLES];
+static struct input indata[NUM_HANDLES];
 
 static void setup(CURL *hnd, int num, const char *upload)
 {
@@ -187,10 +188,10 @@ static void setup(CURL *hnd, int num, const char *upload)
   struct stat file_info;
   curl_off_t uploadsize;
 
-  sprintf(filename, "dl-%d", num);
+  snprintf(filename, 128, "dl-%d", num);
   out = fopen(filename, "wb");
 
-  sprintf(url, "https://localhost:8443/upload-%d", num);
+  snprintf(url, 256, "https://localhost:8443/upload-%d", num);
 
   /* get the file size of the local file */
   stat(upload, &file_info);
@@ -215,7 +216,7 @@ static void setup(CURL *hnd, int num, const char *upload)
   /* upload please */
   curl_easy_setopt(hnd, CURLOPT_UPLOAD, 1L);
 
-  /* send it verbose for max debuggaility */
+  /* please be verbose */
   curl_easy_setopt(hnd, CURLOPT_VERBOSE, 1L);
   curl_easy_setopt(hnd, CURLOPT_DEBUGFUNCTION, my_trace);
 
@@ -308,8 +309,7 @@ int main(int argc, char **argv)
     /* get file descriptors from the transfers */
     mc = curl_multi_fdset(multi_handle, &fdread, &fdwrite, &fdexcep, &maxfd);
 
-    if(mc != CURLM_OK)
-    {
+    if(mc != CURLM_OK) {
       fprintf(stderr, "curl_multi_fdset() failed, code %d.\n", mc);
       break;
     }

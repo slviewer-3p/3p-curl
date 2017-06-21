@@ -10,7 +10,7 @@
  *
  * This software is licensed as described in the file COPYING, which
  * you should have received as part of this distribution. The terms
- * are also available at http://curl.haxx.se/docs/copyright.html.
+ * are also available at https://curl.haxx.se/docs/copyright.html.
  *
  * You may opt to use, copy, modify, merge, publish, distribute and/or sell
  * copies of the Software, and permit persons to whom the Software is
@@ -37,11 +37,9 @@
 /* include memdebug.h last */
 #include "memdebug.h"
 
-#ifndef DEFAULT_LOGFILE
-#define DEFAULT_LOGFILE "log/fake_ntlm.log"
-#endif
+#define LOGFILE "log/fake_ntlm%d.log"
 
-const char *serverlogfile = DEFAULT_LOGFILE;
+const char *serverlogfile;
 
 /*
  * Returns an allocated buffer with printable representation of input
@@ -76,7 +74,7 @@ static char *printable(char *inbuf, size_t inlength)
     return NULL;
 
   if(!inlength) {
-    sprintf(&outbuf[0], "%s", NOTHING_STR);
+    snprintf(&outbuf[0], outsize, "%s", NOTHING_STR);
     return outbuf;
   }
 
@@ -98,7 +96,7 @@ static char *printable(char *inbuf, size_t inlength)
       o++;
     }
     else {
-      sprintf(&outbuf[o], HEX_FMT_STR, inbuf[i]);
+      snprintf(&outbuf[o], outsize - o, HEX_FMT_STR, inbuf[i]);
       o += HEX_STR_LEN;
     }
 
@@ -111,6 +109,7 @@ static char *printable(char *inbuf, size_t inlength)
 int main(int argc, char *argv[])
 {
   char buf[1024];
+  char logfilename[256];
   FILE *stream;
   char *filename;
   int error;
@@ -120,9 +119,9 @@ int main(int argc, char *argv[])
   long testnum;
   const char *env;
   int arg = 1;
-  char *helper_user = (char *)"unknown";
-  char *helper_proto = (char *)"unknown";
-  char *helper_domain = (char *)"unknown";
+  const char *helper_user = "unknown";
+  const char *helper_proto = "unknown";
+  const char *helper_domain = "unknown";
   bool use_cached_creds = FALSE;
   char *msgbuf;
 
@@ -158,26 +157,31 @@ int main(int argc, char *argv[])
     }
   }
 
+  env = getenv("CURL_NTLM_AUTH_TESTNUM");
+  if(env) {
+    char *endptr;
+    long lnum = strtol(env, &endptr, 10);
+    if((endptr != env + strlen(env)) || (lnum < 1L)) {
+      fprintf(stderr, "Test number not valid in CURL_NTLM_AUTH_TESTNUM");
+      exit(1);
+    }
+    testnum = lnum;
+  }
+  else {
+    fprintf(stderr, "Test number not specified in CURL_NTLM_AUTH_TESTNUM");
+    exit(1);
+  }
+
+  /* logmsg cannot be used until this file name is set */
+  snprintf(logfilename, sizeof(logfilename), LOGFILE, testnum);
+  serverlogfile = logfilename;
+
   logmsg("fake_ntlm (user: %s) (proto: %s) (domain: %s) (cached creds: %s)",
          helper_user, helper_proto, helper_domain,
          (use_cached_creds) ? "yes" : "no");
 
-  env = getenv("CURL_NTLM_AUTH_TESTNUM");
-  if (env) {
-    char *endptr;
-    long lnum = strtol(env, &endptr, 10);
-    if((endptr != env + strlen(env)) || (lnum < 1L)) {
-      logmsg("Test number not valid in CURL_NTLM_AUTH_TESTNUM");
-      exit(1);
-    }
-    testnum = lnum;
-  } else {
-    logmsg("Test number not specified in CURL_NTLM_AUTH_TESTNUM");
-    exit(1);
-  }
-
   env = getenv("CURL_NTLM_AUTH_SRCDIR");
-  if (env) {
+  if(env) {
     path = env;
   }
 
@@ -230,7 +234,8 @@ int main(int argc, char *argv[])
       }
       else {
         size = 0;
-        error = getpart(&type1_output, &size, "ntlm_auth_type1", "output", stream);
+        error = getpart(&type1_output, &size, "ntlm_auth_type1", "output",
+                        stream);
         fclose(stream);
         if(error || size == 0) {
           logmsg("getpart() type 1 output failed with error: %d", error);
@@ -251,7 +256,8 @@ int main(int argc, char *argv[])
       }
       else {
         size = 0;
-        error = getpart(&type3_output, &size, "ntlm_auth_type3", "output", stream);
+        error = getpart(&type3_output, &size, "ntlm_auth_type3", "output",
+                        stream);
         fclose(stream);
         if(error || size == 0) {
           logmsg("getpart() type 3 output failed with error: %d", error);
@@ -273,5 +279,6 @@ int main(int argc, char *argv[])
       exit(1);
     }
   }
+  logmsg("Exit");
   return 1;
 }
