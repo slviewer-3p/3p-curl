@@ -86,11 +86,18 @@ The connect section is used instead of the 'data' for all CONNECT
 requests. The remainder of the rules for the data section then apply but with
 a connect prefix.
 </connect>
-<datacheck [nonewline="yes"]>
+<datacheck [mode="text"] [nonewline="yes"]>
 if the data is sent but this is what should be checked afterwards. If
 'nonewline' is set, we will cut off the trailing newline of this given data
-before comparing with the one actually received by the client
+before comparing with the one actually received by the client.
+
+Use the mode="text" attribute if the output is in text mode on platforms that
+have a text/binary difference.
 </datacheck>
+<datacheckNUM [nonewline="yes"] [mode="text"]>
+The contents of numbered datacheck sections are appended to the non-numbered
+one.
+</datacheckNUM>
 <size>
 number to return on a ftp SIZE command (set to -1 to make this command fail)
 </size>
@@ -176,11 +183,13 @@ ftp-ipv6
 ftps
 http
 http-ipv6
+http-pipe
 http-proxy
 http-unix
 https
 httptls+srp
 httptls+srp-ipv6
+http/2
 imap
 none
 pop3
@@ -426,8 +435,9 @@ have a text/binary difference.
 Variables are substituted as in the <command> section.
 </file>
 <stripfile>
-One perl op per line that operates on the file before being compared. This is
-pretty advanced. Example: "s/^EPRT .*/EPRT stripped/"
+One perl op per line that operates on the output file or stdout before being
+compared with what is stored in the test file. This is pretty
+advanced. Example: "s/^EPRT .*/EPRT stripped/"
 </stripfile>
 <upload>
 the contents of the upload data curl should have sent

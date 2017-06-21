@@ -4,10 +4,13 @@
 #cmakedefine BUILDING_LIBCURL 1
 
 /* Location of default ca bundle */
-#cmakedefine CURL_CA_BUNDLE ${CURL_CA_BUNDLE}
+#cmakedefine CURL_CA_BUNDLE "${CURL_CA_BUNDLE}"
+
+/* define "1" to use built-in ca store of TLS backend */
+#cmakedefine CURL_CA_FALLBACK 1
 
 /* Location of default ca path */
-#cmakedefine CURL_CA_PATH ${CURL_CA_PATH}
+#cmakedefine CURL_CA_PATH "${CURL_CA_PATH}"
 
 /* to disable cookies support */
 #cmakedefine CURL_DISABLE_COOKIES 1
@@ -67,7 +70,7 @@
 #cmakedefine CURL_DISABLE_VERBOSE_STRINGS 1
 
 /* to make a symbol visible */
-#cmakedefine CURL_EXTERN_SYMBOL 1
+#cmakedefine CURL_EXTERN_SYMBOL ${CURL_EXTERN_SYMBOL}
 /* Ensure using CURL_EXTERN_SYMBOL is possible */
 #ifndef CURL_EXTERN_SYMBOL
 #define CURL_EXTERN_SYMBOL
@@ -518,6 +521,15 @@
 /* Define to 1 if you have the send function. */
 #cmakedefine HAVE_SEND 1
 
+/* Define to 1 if you have the 'fsetxattr' function. */
+#cmakedefine HAVE_FSETXATTR 1
+
+/* fsetxattr() takes 5 args */
+#cmakedefine HAVE_FSETXATTR_5 1
+
+/* fsetxattr() takes 6 args */
+#cmakedefine HAVE_FSETXATTR_6 1
+
 /* Define to 1 if you have the <setjmp.h> header file. */
 #cmakedefine HAVE_SETJMP_H 1
 
@@ -906,6 +918,9 @@
 /* Define if you want to enable POSIX threaded DNS lookup */
 #cmakedefine USE_THREADS_POSIX 1
 
+/* Define if you want to enable WIN32 threaded DNS lookup */
+#cmakedefine USE_THREADS_WIN32 1
+
 /* Define to disable non-blocking sockets. */
 #cmakedefine USE_BLOCKING_SOCKETS 1
 
@@ -914,6 +929,12 @@
 
 /* if PolarSSL is enabled */
 #cmakedefine USE_POLARSSL 1
+
+/* if DarwinSSL is enabled */
+#cmakedefine USE_DARWINSSL 1
+
+/* if mbedTLS is enabled */
+#cmakedefine USE_MBEDTLS 1
 
 /* if libSSH2 is in use */
 #cmakedefine USE_LIBSSH2 1
@@ -930,11 +951,13 @@
 /* if OpenSSL is in use */
 #cmakedefine USE_OPENSSL 1
 
+/* to enable NGHTTP2  */
+#cmakedefine USE_NGHTTP2 1
+
 /* if Unix domain sockets are enabled  */
 #cmakedefine USE_UNIX_SOCKETS
 
-/* Define to 1 if you are building a Windows target without large file
-   support. */
+/* Define to 1 if you are building a Windows target with large file support. */
 #cmakedefine USE_WIN32_LARGE_FILES 1
 
 /* to enable SSPI support */
