@@ -121,13 +121,10 @@ pushd "$CURL_BUILD_DIR"
             packages="$(cygpath -m "$stage/packages")"
             load_vsvars
 
-            if [ "$AUTOBUILD_ADDRSIZE" = 32 ]
-                then CMAKE_GEN="Visual Studio 12 2013"
-                else CMAKE_GEN="Visual Studio 12 2013 Win64"
-            fi
-
-            cmake ../${CURL_SOURCE_DIR} -G"$CMAKE_GEN" -DCMAKE_C_FLAGS:STRING="$LL_BUILD_RELEASE" \
+            cmake ../${CURL_SOURCE_DIR} -G"$AUTOBUILD_WIN_CMAKE_GEN" -DCMAKE_C_FLAGS:STRING="$LL_BUILD_RELEASE" \
                 -DCMAKE_CXX_FLAGS:STRING="$LL_BUILD_RELEASE" \
+                -DENABLE_THREADED_RESOLVER:BOOL=ON \
+                -DCMAKE_USE_OPENSSL:BOOL=TRUE \
                 -DCMAKE_INSTALL_PREFIX="$(cygpath -m "$stage")"
 
             check_damage "$AUTOBUILD_PLATFORM"
@@ -203,6 +200,7 @@ pushd "$CURL_BUILD_DIR"
             cmake ../${CURL_SOURCE_DIR} -GXcode -DCMAKE_C_FLAGS:STRING="$opts" \
                 -DCMAKE_CXX_FLAGS:STRING="$opts" -D'BUILD_SHARED_LIBS:bool=off' \
                 -DENABLE_THREADED_RESOLVER:BOOL=ON \
+                -DCMAKE_USE_OPENSSL:BOOL=TRUE \
                 -D'BUILD_CODEC:bool=off' -DCMAKE_INSTALL_PREFIX=$stage
 
             check_damage "$AUTOBUILD_PLATFORM"
@@ -297,6 +295,7 @@ pushd "$CURL_BUILD_DIR"
             cmake ../${CURL_SOURCE_DIR} -G"Unix Makefiles" \
                 -DCMAKE_C_FLAGS:STRING="$opts" -DCMAKE_CXX_FLAGS:STRING="$opts" \
                 -DENABLE_THREADED_RESOLVER:BOOL=ON \
+                -DCMAKE_USE_OPENSSL:BOOL=TRUE \
                 -DBUILD_SHARED_LIBS:bool=off -DCMAKE_INSTALL_PREFIX=$stage
             
             check_damage "$AUTOBUILD_PLATFORM"
