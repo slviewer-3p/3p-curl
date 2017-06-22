@@ -64,15 +64,11 @@
 
 #define GOOD_MULTI_HANDLE(x) \
   ((x) && (x)->type == CURL_MULTI_HANDLE)
-#define GOOD_EASY_HANDLE(x) \
-  ((x) && (((struct SessionHandle *)(x))->magic == CURLEASY_MAGIC_NUMBER))
 
 static void singlesocket(struct Curl_multi *multi,
                          struct Curl_easy *data);
 static int update_timer(struct Curl_multi *multi);
 
-static bool isHandleAtHead(struct SessionHandle *handle,
-                           struct curl_llist *pipeline);
 static CURLMcode add_next_timeout(struct timeval now,
                                   struct Curl_multi *multi,
                                   struct Curl_easy *d);
@@ -1828,12 +1824,10 @@ static CURLMcode multi_runsingle(struct Curl_multi *multi,
       }
 #ifdef DEBUGBUILD
       else {
-        infof(data, "WAITPERFORM: Conn %ld recv pipe %zu inuse %s athead %s\n",
+        infof(data, "WAITPERFORM: Conn %ld recv pipe %zu inuse %s\n",
               data->easy_conn->connection_id,
               data->easy_conn->recv_pipe->size,
-              data->easy_conn->readchannel_inuse?"TRUE":"FALSE",
-              isHandleAtHead(data,
-                             data->easy_conn->recv_pipe)?"TRUE":"FALSE");
+              data->easy_conn->readchannel_inuse?"TRUE":"FALSE");
       }
 #endif
       break;
@@ -2866,16 +2860,6 @@ static int update_timer(struct Curl_multi *multi)
   multi->timer_lastcall = multi->timetree->key;
 
   return multi->timer_cb(multi, timeout_ms, multi->timer_userp);
-}
-
-static bool isHandleAtHead(struct SessionHandle *handle,
-                           struct curl_llist *pipeline)
-{
-  struct curl_llist_element *curr = pipeline->head;
-  if(curr)
-    return (curr->ptr == handle) ? TRUE : FALSE;
-
-  return FALSE;
 }
 
 /*
