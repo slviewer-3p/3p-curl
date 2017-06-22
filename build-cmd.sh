@@ -296,6 +296,7 @@ pushd "$CURL_BUILD_DIR"
 
             cmake ../${CURL_SOURCE_DIR} -G"Unix Makefiles" \
                 -DCMAKE_C_FLAGS:STRING="$opts" -DCMAKE_CXX_FLAGS:STRING="$opts" \
+                -DENABLE_THREADED_RESOLVER:BOOL=ON \
                 -DBUILD_SHARED_LIBS:bool=off -DCMAKE_INSTALL_PREFIX=$stage
             
             check_damage "$AUTOBUILD_PLATFORM"
