@@ -1401,11 +1401,11 @@ static CURLMcode multi_runsingle(struct Curl_multi *multi,
         if(data->easy_conn) {
           infof(data, "Request timed out.  Signal all requests on connection.\n");
           data->easy_conn->bits.poisoned_1420 = TRUE;
-          multi_posttransfer(data); /* Curl_posttransfer(data); */
+          Curl_posttransfer(data);
           multi_done(&data->easy_conn, result, FALSE);
         } else {
-	  (void)multi_done(&data->easy_conn, result, TRUE);
-	}
+          (void)multi_done(&data->easy_conn, result, TRUE);
+        }
         /* Skip the statemachine and go directly to error handling section. */
         goto statemachine_end;
       }
