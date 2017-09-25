@@ -304,7 +304,7 @@ pushd "$CURL_BUILD_DIR"
                 -DCMAKE_USE_OPENSSL:BOOL=TRUE \
                 -DUSE_NGHTTP2:BOOL=TRUE \
                 -DNGHTTP2_INCLUDE_DIR:FILEPATH="$stage/packages/include" \
-                -DNGHTTP2_LIBRARY:FILEPATH="$stage/packages/lib/release/libnghttp2.so" \
+                -DNGHTTP2_LIBRARY:FILEPATH="$stage/packages/lib/release/libnghttp2.a" \
                 -DBUILD_SHARED_LIBS:bool=off -DCMAKE_INSTALL_PREFIX=$stage
             
             check_damage "$AUTOBUILD_PLATFORM"
