@@ -125,6 +125,9 @@ pushd "$CURL_BUILD_DIR"
                 -DCMAKE_CXX_FLAGS:STRING="$LL_BUILD_RELEASE" \
                 -DENABLE_THREADED_RESOLVER:BOOL=ON \
                 -DCMAKE_USE_OPENSSL:BOOL=TRUE \
+                -DUSE_NGHTTP2:BOOL=TRUE \
+                -DNGHTTP2_INCLUDE_DIR:FILEPATH="$packages/include" \
+                -DNGHTTP2_LIBRARY:FILEPATH="$packages/lib/release/nghttp2.lib" \
                 -DCMAKE_INSTALL_PREFIX="$(cygpath -m "$stage")"
 
             check_damage "$AUTOBUILD_PLATFORM"
@@ -201,6 +204,9 @@ pushd "$CURL_BUILD_DIR"
                 -DCMAKE_CXX_FLAGS:STRING="$opts" -D'BUILD_SHARED_LIBS:bool=off' \
                 -DENABLE_THREADED_RESOLVER:BOOL=ON \
                 -DCMAKE_USE_OPENSSL:BOOL=TRUE \
+                -DUSE_NGHTTP2:BOOL=TRUE \
+                -DNGHTTP2_INCLUDE_DIR:FILEPATH="$stage/packages/include" \
+                -DNGHTTP2_LIBRARY:FILEPATH="$stage/packages/lib/release/libnghttp2.dylib" \
                 -D'BUILD_CODEC:bool=off' -DCMAKE_INSTALL_PREFIX=$stage
 
             check_damage "$AUTOBUILD_PLATFORM"
@@ -296,6 +302,9 @@ pushd "$CURL_BUILD_DIR"
                 -DCMAKE_C_FLAGS:STRING="$opts" -DCMAKE_CXX_FLAGS:STRING="$opts" \
                 -DENABLE_THREADED_RESOLVER:BOOL=ON \
                 -DCMAKE_USE_OPENSSL:BOOL=TRUE \
+                -DUSE_NGHTTP2:BOOL=TRUE \
+                -DNGHTTP2_INCLUDE_DIR:FILEPATH="$stage/packages/include" \
+                -DNGHTTP2_LIBRARY:FILEPATH="$stage/packages/lib/release/libnghttp2.so" \
                 -DBUILD_SHARED_LIBS:bool=off -DCMAKE_INSTALL_PREFIX=$stage
             
             check_damage "$AUTOBUILD_PLATFORM"
