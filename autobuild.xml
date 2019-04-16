@@ -23,9 +23,9 @@ Copyright (c) 2012, 2014, 2015, 2016 nghttp2 contributors</string>
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>f51bcd9245ed4e4ca1fa250ba9b112ce</string>
+              <string>4e43828686f056e90e8a0f8b8fff9144</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/ct2/9259/41575/nghttp2-1.25.0.509246-darwin64-509246.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/ct2/31383/263318/nghttp2-1.25.0.523904-darwin64-523904.tar.bz2</string>
             </map>
             <key>name</key>
             <string>darwin64</string>
@@ -59,9 +59,9 @@ Copyright (c) 2012, 2014, 2015, 2016 nghttp2 contributors</string>
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>8367d6743356ad637e61335ee319f7a7</string>
+              <string>1670b6b47b4d33855ee17d8e058d9d5b</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/ct2/9261/41597/nghttp2-1.25.0.509246-windows-509246.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/ct2/31407/263420/nghttp2-1.25.0.523904-windows-523904.tar.bz2</string>
             </map>
             <key>name</key>
             <string>windows</string>
@@ -71,9 +71,9 @@ Copyright (c) 2012, 2014, 2015, 2016 nghttp2 contributors</string>
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>3267acca5dbfe6b8770deeebd548ee6a</string>
+              <string>e1db3ea006ce8d60cae2a9dafbe603da</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/ct2/9260/41591/nghttp2-1.25.0.509246-windows64-509246.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/ct2/31406/263413/nghttp2-1.25.0.523904-windows64-523904.tar.bz2</string>
             </map>
             <key>name</key>
             <string>windows64</string>
@@ -115,9 +115,9 @@ Copyright (c) 2012, 2014, 2015, 2016 nghttp2 contributors</string>
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>6c28cce95e3576daf66252b07d9d151f</string>
+              <string>ef7e282e40b5fec85523036dd801e775</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/ct2/8340/33489/openssl-1.0.2l.508328-darwin64-508328.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/ct2/32703/271348/openssl-1.0.2l.524573-darwin64-524573.tar.bz2</string>
             </map>
             <key>name</key>
             <string>darwin64</string>
@@ -151,9 +151,9 @@ Copyright (c) 2012, 2014, 2015, 2016 nghttp2 contributors</string>
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>ffdb11a4c7aff72086c01555f931c918</string>
+              <string>46276853513ef9083f0613a44818751d</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/ct2/8341/33481/openssl-1.0.2l.508328-windows-508328.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/ct2/32707/271362/openssl-1.0.2l.524573-windows-524573.tar.bz2</string>
             </map>
             <key>name</key>
             <string>windows</string>
@@ -163,9 +163,9 @@ Copyright (c) 2012, 2014, 2015, 2016 nghttp2 contributors</string>
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>d875fc7d1f3a7bd9f85cfde05d9ae3dc</string>
+              <string>d1c36a4b1aee9f3162cb73cdab917b94</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/ct2/8342/33480/openssl-1.0.2l.508328-windows64-508328.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/ct2/32706/271355/openssl-1.0.2l.524573-windows64-524573.tar.bz2</string>
             </map>
             <key>name</key>
             <string>windows64</string>
@@ -205,9 +205,9 @@ Copyright (c) 2012, 2014, 2015, 2016 nghttp2 contributors</string>
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>e204dee29902549f50af1af2bb098df5</string>
+              <string>0f6e23b0a1b306b5d33d755d4bcfec27</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/ct2/867/1903/zlib-1.2.8.500857-darwin64-500857.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/ct2/31964/266661/zlib-1.2.8.524196-darwin64-524196.tar.bz2</string>
             </map>
             <key>name</key>
             <string>darwin64</string>
@@ -241,9 +241,9 @@ Copyright (c) 2012, 2014, 2015, 2016 nghttp2 contributors</string>
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>f92cbb0ab5e5d20789bf6102f9a27aa6</string>
+              <string>6ebf9cc0afef74a16eaf4c9c63e24973</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/ct2/868/1906/zlib-1.2.8.500857-windows-500857.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/ct2/31987/266792/zlib-1.2.8.524196-windows-524196.tar.bz2</string>
             </map>
             <key>name</key>
             <string>windows</string>
@@ -253,9 +253,9 @@ Copyright (c) 2012, 2014, 2015, 2016 nghttp2 contributors</string>
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>70a56767f6a109af412838875d0b5f1b</string>
+              <string>af782ac55e9cd490f5b63dece3ed289f</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/ct2/869/1909/zlib-1.2.8.500857-windows64-500857.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/ct2/31986/266785/zlib-1.2.8.524196-windows64-524196.tar.bz2</string>
             </map>
             <key>name</key>
             <string>windows64</string>
