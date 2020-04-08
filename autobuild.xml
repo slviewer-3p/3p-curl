@@ -115,9 +115,9 @@ Copyright (c) 2012, 2014, 2015, 2016 nghttp2 contributors</string>
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>14d783745f618f1d6533b1df16251077</string>
+              <string>18aef0c8fc471b6539addbdc019aea25</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/ct2/55052/512069/openssl-1.0.2l.539067-darwin64-539067.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/ct2/56325/526804/openssl-1.0.2l.539874-darwin64-539874.tar.bz2</string>
             </map>
             <key>name</key>
             <string>darwin64</string>
@@ -151,9 +151,9 @@ Copyright (c) 2012, 2014, 2015, 2016 nghttp2 contributors</string>
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>318c05193d3c8f572868473868333225</string>
+              <string>2b2f61313b1cbd2893c1ba5bf15061fa</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/ct2/55130/512230/openssl-1.0.2l.539067-windows-539067.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/ct2/56328/526826/openssl-1.0.2l.539874-windows-539874.tar.bz2</string>
             </map>
             <key>name</key>
             <string>windows</string>
@@ -163,16 +163,16 @@ Copyright (c) 2012, 2014, 2015, 2016 nghttp2 contributors</string>
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>1dd7159b7fc8146dee78e16251d6dd1f</string>
+              <string>59aae854155bc7119e0dca25e65828c0</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/ct2/55129/512208/openssl-1.0.2l.539067-windows64-539067.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/ct2/56326/526811/openssl-1.0.2l.539874-windows64-539874.tar.bz2</string>
             </map>
             <key>name</key>
             <string>windows64</string>
           </map>
         </map>
         <key>version</key>
-        <string>1.0.2l.539067</string>
+        <string>1.0.2l.539874</string>
       </map>
       <key>zlib</key>
       <map>
