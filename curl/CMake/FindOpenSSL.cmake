@@ -38,29 +38,29 @@ if (IS_DIRECTORY ${PACKAGE_DIR})
     get_filename_component( DEBUG_PATH "${PACKAGE_DIR}/lib/debug" ABSOLUTE )
 
     if (WIN32)
-        find_library(LIB_EAY_RELEASE
+        find_library(LIBSSL_RELEASE
             NAMES
-                libeay32
+                libssl
             PATHS
                 ${RELEASE_PATH}
             NO_DEFAULT_PATH
         )
 
-        find_library(SSL_EAY_RELEASE
+        find_library(LIBCRYPTO_RELEASE
             NAMES
-                ssleay32
+                libcrypto
             PATHS
                 ${RELEASE_PATH}
             NO_DEFAULT_PATH
         )
 
-        if ((${LIB_EAY_RELEASE} STREQUAL "LIB_EAY_RELEASE-NOTFOUND") OR (${SSL_EAY_RELEASE} STREQUAL "SSL_EAY_RELEASE-NOTFOUND"))
+        if ((${LIBSSL_RELEASE} STREQUAL "LIBSSL_RELEASE-NOTFOUND") OR (${LIBCRYPTO_RELEASE} STREQUAL "LIBCRYPTO_RELEASE-NOTFOUND"))
             message(FATAL_ERROR "OpenSSL release libraries not found!")
         endif()
 
         list(APPEND LIBS_FINAL
-            ${LIB_EAY_RELEASE}
-            ${SSL_EAY_RELEASE}
+            ${LIBSSL_RELEASE}
+            ${LIBCRYPTO_RELEASE}
         )
     else ()
         find_library(OPENSSL_SSL_LIB_RELEASE
@@ -68,6 +68,7 @@ if (IS_DIRECTORY ${PACKAGE_DIR})
                 ssl
                 ssleasy32
                 ssleasy32MD
+                libssl
             PATHS
                 ${RELEASE_PATH}
             NO_DEFAULT_PATH
@@ -75,6 +76,7 @@ if (IS_DIRECTORY ${PACKAGE_DIR})
         find_library(OPENSSL_CRYPTO_LIB_RELEASE
             NAMES
                 crypto
+                libcrypto
             PATHS
                 ${RELEASE_PATH}
             NO_DEFAULT_PATH
