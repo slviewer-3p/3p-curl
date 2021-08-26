@@ -40,14 +40,6 @@ if (IS_DIRECTORY ${PACKAGE_DIR})
 
     get_filename_component( RELEASE_PATH "${PACKAGE_DIR}/lib/release" ABSOLUTE )
 
-    find_library(LIB_MINI_RELEASE
-        NAMES
-            minizip
-        PATHS
-            ${RELEASE_PATH}
-        NO_DEFAULT_PATH
-    )
-
     find_library(LIB_ZLIB_RELEASE
         NAMES
             zlib
@@ -57,9 +49,7 @@ if (IS_DIRECTORY ${PACKAGE_DIR})
         NO_DEFAULT_PATH
     )
 
-    if (${LIB_MINI_RELEASE} STREQUAL "LIB_MINI_RELEASE-NOTFOUND")
-        message(FATAL_ERROR "Zlib Mini not found!")
-    elseif (${LIB_ZLIB_RELEASE} STREQUAL "LIB_ZLIB_RELEASE-NOTFOUND")
+    if (${LIB_ZLIB_RELEASE} STREQUAL "LIB_ZLIB_RELEASE-NOTFOUND")
         message(FATAL_ERROR "ZLib Libraries not found!")
     endif()
 

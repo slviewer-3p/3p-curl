@@ -30,7 +30,7 @@ source_environment_tempfile="$stage/source_environment.sh"
 "$autobuild" source_environment > "$source_environment_tempfile"
 . "$source_environment_tempfile"
 
-ZLIB_INCLUDE="${stage}"/packages/include/zlib
+ZLIB_INCLUDE="${stage}"/packages/include/zlib-ng
 OPENSSL_INCLUDE="${stage}"/packages/include/openssl
 
 [ -f "$ZLIB_INCLUDE"/zlib.h ] || fail "You haven't installed the zlib package yet."
