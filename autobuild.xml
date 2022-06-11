@@ -47,9 +47,9 @@ Copyright (c) 2012, 2014, 2015, 2016 nghttp2 contributors</string>
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>c3c5ff7d2f7ac1143ef8d888192d4a53</string>
+              <string>351ebaa61c888050fb352c0d7edeb047</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/ct2/9257/41579/nghttp2-1.25.0.509246-linux64-509246.tar.bz2</string>
+              <string>jf://packages/linux64/nghttp2-1.40.0.221622222-linux64_bionic-221622222.tar.bz2</string>
             </map>
             <key>name</key>
             <string>linux64</string>
@@ -82,7 +82,7 @@ Copyright (c) 2012, 2014, 2015, 2016 nghttp2 contributors</string>
         <key>source_type</key>
         <string>hg</string>
         <key>version</key>
-        <string>1.40.0.555524</string>
+        <string>1.40.0.221622222</string>
       </map>
       <key>openssl</key>
       <map>
@@ -139,9 +139,9 @@ Copyright (c) 2012, 2014, 2015, 2016 nghttp2 contributors</string>
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>d50ccfbf0c1d249392919e2c46ad8d5c</string>
+              <string>f66040f2c4ac6d474690861a4811817d</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/ct2/8339/33495/openssl-1.0.2l.508328-linux64-508328.tar.bz2</string>
+              <string>jf://packages/linux64/openssl-1.1.1l.221612101-linux64_bionic-221612101.tar.bz2</string>
             </map>
             <key>name</key>
             <string>linux64</string>
@@ -172,7 +172,7 @@ Copyright (c) 2012, 2014, 2015, 2016 nghttp2 contributors</string>
           </map>
         </map>
         <key>version</key>
-        <string>1.1.1l.560177</string>
+        <string>1.1.1l.221612101</string>
       </map>
       <key>zlib</key>
       <map>
@@ -229,9 +229,9 @@ Copyright (c) 2012, 2014, 2015, 2016 nghttp2 contributors</string>
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>dab6be8b0596c1e3354f2b6d41335131</string>
+              <string>ecaa51df1bc359dfba7676373a1b86c6</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/ct2/866/1898/zlib-1.2.8.500857-linux64-500857.tar.bz2</string>
+              <string>jf://packages/linux64/zlib-1.2.11.221612031-linux64_bionic-221612031.tar.bz2</string>
             </map>
             <key>name</key>
             <string>linux64</string>
@@ -262,7 +262,7 @@ Copyright (c) 2012, 2014, 2015, 2016 nghttp2 contributors</string>
           </map>
         </map>
         <key>version</key>
-        <string>1.2.11.557041</string>
+        <string>1.2.11.221612031</string>
       </map>
     </map>
     <key>package_description</key>
