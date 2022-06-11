@@ -79,6 +79,7 @@ if (IS_DIRECTORY ${PACKAGE_DIR})
     list(APPEND LIBS_FINAL
         ${LIB_ZLIB_RELEASE}
         ${LIB_MINI_RELEASE}
+	dl
     )
 
     set(ZLIB_LIBRARIES ${LIBS_FINAL} CACHE FILEPATH "List of libraries when using zlib." )
