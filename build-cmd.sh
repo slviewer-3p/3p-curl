@@ -239,29 +239,6 @@ pushd "$CURL_BUILD_DIR"
         ;;
 
         linux*)
-            # Linux build environment at Linden comes pre-polluted with stuff that can
-            # seriously damage 3rd-party builds.  Environmental garbage you can expect
-            # includes:
-            #
-            #    DISTCC_POTENTIAL_HOSTS     arch           root        CXXFLAGS
-            #    DISTCC_LOCATION            top            branch      CC
-            #    DISTCC_HOSTS               build_name     suffix      CXX
-            #    LSDISTCC_ARGS              repo           prefix      CFLAGS
-            #    cxx_version                AUTOBUILD      SIGN        CPPFLAGS
-            #
-            # So, clear out bits that shouldn't affect our configure-directed build
-            # but which do nonetheless.
-            #
-            # unset DISTCC_HOSTS CC CXX CFLAGS CPPFLAGS CXXFLAGS
-
-#            ./buildconf
-
-##          # Prefer gcc-4.6 if available.
-##          if [[ -x /usr/bin/gcc-4.6 && -x /usr/bin/g++-4.6 ]]; then
-##              export CC=/usr/bin/gcc-4.6
-##              export CXX=/usr/bin/g++-4.6
-##          fi
-
             # Default target per --address-size
             opts="${TARGET_OPTS:--m$AUTOBUILD_ADDRSIZE $LL_BUILD_RELEASE}"
 
@@ -309,7 +286,7 @@ pushd "$CURL_BUILD_DIR"
             
             check_damage "$AUTOBUILD_PLATFORM"
 
-            make
+            make -j `nproc`
             make install
             mkdir -p "$stage/lib/release"
             mv "$stage/lib/libcurl.a" "$stage/lib/release/libcurl.a"
