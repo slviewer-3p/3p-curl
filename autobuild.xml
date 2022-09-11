@@ -202,7 +202,6 @@ Copyright (c) 2012, 2014, 2015, 2016 nghttp2 contributors</string>
             <key>name</key>
             <string>darwin64</string>
           </map>
-
           <key>linux64</key>
           <map>
             <key>archive</key>
@@ -247,7 +246,7 @@ Copyright (c) 2012, 2014, 2015, 2016 nghttp2 contributors</string>
     <key>package_description</key>
     <map>
       <key>canonical_repo</key>
-      <string>https://bitbucket.org/nickyd/3p-curl</string>
+      <string>https://github.com/slviewer-3p/3p-curl</string>
       <key>copyright</key>
       <string>Copyright (c) 1996 - 2014, Daniel Stenberg, (daniel@haxx.se).</string>
       <key>description</key>
